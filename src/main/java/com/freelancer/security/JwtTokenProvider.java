@@ -19,7 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.freelancer.exception.CustomException;
-import com.freelancer.model.Role;
+import com.freelancer.model.account.Role;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

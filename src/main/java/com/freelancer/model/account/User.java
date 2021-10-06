@@ -1,4 +1,4 @@
-package com.freelancer.model;
+package com.freelancer.model.account;
 
 import java.util.List;
 
