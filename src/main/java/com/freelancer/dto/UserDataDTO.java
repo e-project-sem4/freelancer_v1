@@ -2,7 +2,7 @@ package com.freelancer.dto;
 
 import java.util.List;
 
-import com.freelancer.model.account.Role;
+import com.freelancer.model.Role;
 
 import io.swagger.annotations.ApiModelProperty;
 

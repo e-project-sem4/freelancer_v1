@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.freelancer.exception.CustomException;
-import com.freelancer.model.account.User;
+import com.freelancer.model.User;
 import com.freelancer.repository.UserRepository;
 import com.freelancer.security.JwtTokenProvider;
 

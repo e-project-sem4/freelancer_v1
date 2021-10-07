@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.freelancer.dto.UserDataDTO;
 import com.freelancer.dto.UserResponseDTO;
-import com.freelancer.model.account.User;
+import com.freelancer.model.User;
 import com.freelancer.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
