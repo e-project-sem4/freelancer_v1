@@ -17,6 +17,8 @@ import com.freelancer.exception.CustomException;
 public class JwtTokenFilter extends OncePerRequestFilter {
 
   private JwtTokenProvider jwtTokenProvider;
+  
+  private static final String AUTHORIZATION = "Authorization";
 
   public JwtTokenFilter(JwtTokenProvider jwtTokenProvider) {
     this.jwtTokenProvider = jwtTokenProvider;
@@ -24,7 +26,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-    String token = jwtTokenProvider.resolveToken(httpServletRequest);
+//    String token = jwtTokenProvider.resolveToken(httpServletRequest);
+	  String token = httpServletRequest.getHeader(AUTHORIZATION);
     try {
       if (token != null && jwtTokenProvider.validateToken(token)) {
         Authentication auth = jwtTokenProvider.getAuthentication(token);

@@ -1,13 +1,19 @@
 package com.freelancer.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import lombok.Getter;
+import lombok.Setter;
 @Getter
 @Setter
 @Entity
@@ -18,7 +24,7 @@ public class User {
 	// Đọc log để lấy token
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
 	@Column(unique = true, nullable = false)
