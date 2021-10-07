@@ -22,11 +22,11 @@ import java.util.Arrays;
 public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
 
-    @Bean
-    CommandLineRunner initDatabase(UserService userService) {
-        return new CommandLineRunner() {
-            @Override
-            public void run(String... args) throws Exception {
+//    @Bean
+//    CommandLineRunner initDatabase(UserService userService) {
+//        return new CommandLineRunner() {
+//            @Override
+//            public void run(String... args) throws Exception {
 //                User user1 = new User();
 //                user1.setUsername("admin");
 //                user1.setPassword("admin");
@@ -40,10 +40,10 @@ public class Database {
 //                user2.setPhone("09123213");
 //                user2.setEmail("client@gmail.com");
 //                user2.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
-//
+////
 //                logger.info("insert data " + userService.signup(user1));
 //                logger.info("insert data " + userService.signup(user2));
-            }
-        };
-    }
+//            }
+//        };
+//    }
 }
