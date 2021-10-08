@@ -101,4 +101,7 @@ public class UserService {
 		return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
 	}
 
+    public long count() {
+		return userRepository.count();
+    }
 }

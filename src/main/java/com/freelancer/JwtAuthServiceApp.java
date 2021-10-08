@@ -1,7 +1,5 @@
 package com.freelancer;
 
-import com.freelancer.model.Role;
-import com.freelancer.model.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

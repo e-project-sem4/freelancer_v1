@@ -16,7 +16,15 @@ import javax.persistence.*;
 public class HasSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long user_freelancer_id;
-    private long skill_id;
+    private Long id;
+
+    private Long skill_id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id")
+    private UserFreelancer userFreelancer;
+
+    @ManyToOne
+    @JoinColumn(name = "skill_id",referencedColumnName = "id", insertable=false, updatable=false)
+    private Skill skill;
 }
