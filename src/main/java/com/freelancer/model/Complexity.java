@@ -22,4 +22,9 @@ public class Complexity {
 
     @OneToMany(mappedBy = "complexity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
+
+    public Complexity(long id, String complexity_text) {
+        this.id = id;
+        this.complexity_text = complexity_text;
+    }
 }

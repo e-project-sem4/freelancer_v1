@@ -28,4 +28,9 @@ public class Skill {
 
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<OtherSkill> otherSkills;
+
+    public Skill(long id, String skill_name) {
+        this.id = id;
+        this.skill_name = skill_name;
+    }
 }

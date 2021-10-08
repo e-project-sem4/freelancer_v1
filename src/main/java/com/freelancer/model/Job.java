@@ -42,4 +42,5 @@ public class Job {
 
     @OneToMany(mappedBy = "job",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Proposal> proposals;
+
 }

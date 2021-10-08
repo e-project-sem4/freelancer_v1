@@ -8,8 +8,13 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -35,6 +40,9 @@ public class User {
 	@Size(max = 12, message = "Max phone length: 12 characters")
 	private String phone;
 
+	@Size(min = 4,max = 100, message = "Minimum full name max length: 100 characters")
+	private String full_name;
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
 
@@ -45,5 +53,13 @@ public class User {
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Collection<UserBusiness> userBusinesses;
 
-
+	public User(Long id, String username, String email, String password, String phone, String full_name, List<Role> roles) {
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.phone = phone;
+		this.full_name = full_name;
+		this.roles = roles;
+	}
 }
