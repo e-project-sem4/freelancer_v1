@@ -1,6 +1,7 @@
 package com.freelancer.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,15 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.freelancer.exception.CustomException;
+import com.freelancer.model.ResponseObject;
 import com.freelancer.model.User;
 import com.freelancer.repository.UserRepository;
 import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 @Service
 public class UserService {
@@ -76,21 +75,12 @@ public class UserService {
 //		return user;
 //	}
 
-	public String search(String keysearch, int page, int size) {
-		logger.info("search user nè");
-		JsonObject json = new JsonObject();
-		json.addProperty("code", Constant.STATUS_ACTION_FAIL);
-		try {
-			List<User> list = userRepository.searchUser(keysearch, 1L, PageRequest.of(page - 1, size));
-			Long total = userRepository.countUser(keysearch, 1L);
-			JsonArray jsonA = JsonParser.parseString(gson.toJson(list)).getAsJsonArray();
-			json.add("result", jsonA);
-			json.addProperty("code", Constant.STATUS_ACTION_SUCCESS);
-			json.addProperty("total", total);
-		} catch (Exception e) {
-			return null;
-		}
-		return gson.toJson(json);
+	public ResponseObject search(String keysearch, int page, int size) {
+		logger.info("call to search user with keysearch: " + keysearch);
+		String message = "success";
+		List<User> list = userRepository.searchUser(keysearch, 1L, PageRequest.of(page - 1, size));
+		Long total = userRepository.countUser(keysearch, 1L);
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 	}
 
 	public User whoami(HttpServletRequest req) {
@@ -101,7 +91,29 @@ public class UserService {
 		return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
 	}
 
-    public long count() {
+	public long count() {
 		return userRepository.count();
-    }
+	}
+
+	public ResponseObject getUserById(Long id) {
+		logger.info("call to get user by id: " + id);
+		Optional<User> optionalUser = userRepository.findById(id);
+		String message = "can not find user";
+		User user = null;
+		if (optionalUser.isPresent()) {
+			message = "success";
+			user = optionalUser.get();
+			user.setPassword(null);
+			logger.info("get user success");
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
+	}
+
+	public ResponseObject createUser(User user) {
+		logger.info("call to create user" + user.toString());
+		String message = "success";
+		User result = userRepository.save(user);
+		logger.info("create user: " + result);
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+	}
 }
