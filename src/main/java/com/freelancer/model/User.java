@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "user_account")
+@ToString
 public class User {
 // vào package database, mở class Database, mở comment ra rồi chạy project để tạo tài khoản demo.
 	// CHạy xong thì comment lại để tránh lỗi
