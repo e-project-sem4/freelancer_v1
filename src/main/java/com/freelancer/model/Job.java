@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -17,10 +18,28 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long user_business_id;
-    private long expected_duration_id;
-    private long complexity_id;
     private String description;
-    private long other_skill_id;
     private long payment_amount;
+
+    @ManyToOne
+    @JoinColumn(name = "user_business_id",referencedColumnName = "id")
+    private UserBusiness userBusiness;
+
+    @ManyToOne
+    @JoinColumn(name = "skill_id",referencedColumnName = "id")
+    private Skill skill;
+
+    @OneToMany(mappedBy = "job",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Collection<OtherSkill> otherSkills;
+
+    @ManyToOne
+    @JoinColumn(name = "complexity_id",referencedColumnName = "id")
+    private Complexity complexity;
+
+    @ManyToOne
+    @JoinColumn(name = "expected_duration_id",referencedColumnName = "id")
+    private ExpectedDuration expectedDuration;
+
+    @OneToMany(mappedBy = "job",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Collection<Proposal> proposals;
 }
