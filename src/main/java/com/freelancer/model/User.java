@@ -2,12 +2,19 @@ package com.freelancer.model;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,20 +47,20 @@ public class User {
 	@Size(max = 12, message = "Max phone length: 12 characters")
 	private String phone;
 
-	@Size(min = 4,max = 100, message = "Minimum full name max length: 100 characters")
+	@Size(min = 4, max = 100, message = "Minimum full name max length: 100 characters")
 	private String full_name;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
 
-
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<UserFreelancer> userFreelancers;
 
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<UserBusiness> userBusinesses;
 
-	public User(Long id, String username, String email, String password, String phone, String full_name, List<Role> roles) {
+	public User(Long id, String username, String email, String password, String phone, String full_name,
+			List<Role> roles) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
