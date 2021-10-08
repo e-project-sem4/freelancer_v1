@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.freelancer.model.User;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 	boolean existsByUsername(String username);
 
