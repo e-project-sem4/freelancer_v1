@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -18,4 +19,7 @@ public class Complexity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String complexity_text;
+
+    @OneToMany(mappedBy = "complexity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Collection<Job> jobs;
 }
