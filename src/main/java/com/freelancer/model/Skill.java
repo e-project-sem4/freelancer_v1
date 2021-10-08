@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -18,4 +19,13 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String skill_name;
+
+    @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Collection<HasSkill> hasSkills;
+
+    @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Collection<Job> jobs;
+
+    @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Collection<OtherSkill> otherSkills;
 }

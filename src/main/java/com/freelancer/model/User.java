@@ -1,17 +1,13 @@
 package com.freelancer.model;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -41,5 +37,13 @@ public class User {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
+
+
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Collection<UserFreelancer> userFreelancers;
+
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Collection<UserBusiness> userBusinesses;
+
 
 }
