@@ -39,10 +39,10 @@ public class Database implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		seedUserAccount();
-//		seedComplexity();
-//		seedExpected();
-//		seedSkill();
+		seedUserAccount();
+		seedComplexity();
+		seedExpected();
+		seedSkill();
 	}
 
 	private void seedComplexity() {
