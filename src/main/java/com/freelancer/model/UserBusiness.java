@@ -19,11 +19,12 @@ public class UserBusiness {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long registration_date;
+    private Long user_account_id;
+    private long registration_date;
     private String location;
 
-    @ManyToOne
-    @JoinColumn(name = "user_account_id",referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_account_id",referencedColumnName = "id", insertable=false, updatable=false)
     private User user;
 
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -34,4 +35,11 @@ public class UserBusiness {
 
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
+
+    public UserBusiness(Long id, Long user_account_id, long registration_date, String location) {
+        this.id = id;
+        this.user_account_id = user_account_id;
+        this.registration_date = registration_date;
+        this.location = location;
+    }
 }

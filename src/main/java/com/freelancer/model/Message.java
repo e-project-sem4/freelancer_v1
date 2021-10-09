@@ -17,15 +17,18 @@ import java.util.Collection;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long user_business_id;
-    private long massage_time;
+    private Long id;
+    private Long user_business_id;
+    private Long user_freelancer_id;
+    private Long proposal_id;
+    private Long proposal_status_catalog_id;
+    private Long massage_time;
     private String massage_text;
 
 
 
     @ManyToOne
-    @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id", insertable=false, updatable=false)
     private UserFreelancer userFreelancer;
 
     @ManyToOne
@@ -33,11 +36,11 @@ public class Message {
     private UserBusiness userBusiness;
 
     @ManyToOne
-    @JoinColumn(name = "proposal_id",referencedColumnName = "id")
+    @JoinColumn(name = "proposal_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Proposal proposal;
 
     @ManyToOne
-    @JoinColumn(name = "proposal_status_catalog_id",referencedColumnName = "id")
+    @JoinColumn(name = "proposal_status_catalog_id",referencedColumnName = "id", insertable=false, updatable=false)
     private ProposalStatusCatalog proposalStatusCatalog;
 
     @OneToMany(mappedBy = "message",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

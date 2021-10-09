@@ -17,22 +17,23 @@ import java.util.Collection;
 public class Proposal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long proposal_time;
-    private long payment_amount;
+    private Long id;
+    private Long proposal_time;
+    private Long payment_amount;
     private int client_grade;
     private String client_comment;
     private int freelancer_grade;
     private String freelancer_comment;
-
-
+    private Long user_freelancer_id;
+    private Long job_id;
+    private Long proposal_status_catalog_id;
 
     @ManyToOne
-    @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id", insertable=false, updatable=false)
     private UserFreelancer userFreelancer;
 
     @ManyToOne
-    @JoinColumn(name = "job_id",referencedColumnName = "id")
+    @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Job job;
 
     @OneToMany(mappedBy = "proposal",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -42,7 +43,7 @@ public class Proposal {
     private Collection<Message> messages;
 
     @ManyToOne
-    @JoinColumn(name = "proposal_status_catalog_id",referencedColumnName = "id")
+    @JoinColumn(name = "proposal_status_catalog_id",referencedColumnName = "id", insertable=false, updatable=false)
     private ProposalStatusCatalog proposalStatusCatalog;
 
 
