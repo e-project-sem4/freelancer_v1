@@ -49,7 +49,7 @@ public class UserController {
 		ResponseObject result = userService.register(user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/changepassword", method = RequestMethod.PATCH, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<ResponseObject> changePassword(HttpServletRequest request) {
 		ResponseObject result = userService.changePassword(request);

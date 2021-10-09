@@ -160,7 +160,4 @@ public class UserService {
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Change password fail", null);
 	}
-
-//	public ResponseObject changePassword(HttpServletRequest request) {
-
 }
