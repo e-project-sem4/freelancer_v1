@@ -23,5 +23,5 @@ dist/
 nbdist/
 .nb-gradle/
 .vscode/settings.json
-#log4j.properties
+log4j.properties
 src/main/resources/application.properties
