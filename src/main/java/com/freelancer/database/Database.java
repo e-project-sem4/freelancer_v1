@@ -140,6 +140,8 @@ public class Database implements CommandLineRunner {
 			jobRepository.save((new Job(17L, 10L, 1L,4L,2L, "I'm creating youtube videos but would like make it as automated as possible If you can do it, plz bid on this project. will discuss more detail via chat. Thank you.","I need a program that will create videos for a specific template",999999999)));
 			jobRepository.save((new Job(18L, 10L, 2L,3L,2L, "I'm creating youtube videos but would like make it as automated as possible If you can do it, plz bid on this project. will discuss more detail via chat. Thank you.","I need a program that will create videos for a specific template",999999999)));
 			jobRepository.save((new Job(19L, 10L, 3L,3L,2L, "I'm creating youtube videos but would like make it as automated as possible If you can do it, plz bid on this project. will discuss more detail via chat. Thank you.","I need a program that will create videos for a specific template",999999999)));
+
+
 		}
 	}
 }
