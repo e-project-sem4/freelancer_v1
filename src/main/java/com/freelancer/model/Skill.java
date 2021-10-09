@@ -1,5 +1,6 @@
 package com.freelancer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,15 @@ public class Skill {
     private long id;
     private String skillName;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<HasSkill> hasSkills;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<OtherSkill> otherSkills;
 

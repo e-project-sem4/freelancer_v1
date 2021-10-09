@@ -51,15 +51,17 @@ public class Database implements CommandLineRunner {
     HasSkillRepository hasSkillRepository;
     @Override
     public void run(String... args) throws Exception {
-        seedUserAccount();
-        seedComplexity();
-        seedExpected();
-        seedSkill();
-        seedUserBusiness();
-        seedUserFreelancer();
-        seedJob();
-        seedOtherSkill();
-        seedHasSkill();
+        if (userService.count() == 0 ){
+            seedUserAccount();
+            seedComplexity();
+            seedExpected();
+            seedSkill();
+            seedUserBusiness();
+            seedUserFreelancer();
+            seedJob();
+            seedOtherSkill();
+            seedHasSkill();
+        }
     }
 
     public Long date() {
@@ -86,7 +88,7 @@ public class Database implements CommandLineRunner {
     }
 
     private void seedUserAccount() {
-        if (userService.count() == 0) {
+
             userService.signup(new User(1L, "admin", "admin@gmail.com", "admin", "0987654321", "admin",
                     new ArrayList<Role>(Arrays.asList(Role.ROLE_ADMIN))));
             userService.signup(new User(2L, "client", "client@gmail.com", "client", "0987654322", "client",
@@ -117,7 +119,7 @@ public class Database implements CommandLineRunner {
                     new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT))));
             userService.signup(new User(15L, "client15", "client15@gmail.com", "client", "0987654322", "client15",
                     new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT))));
-        }
+
     }
 
     private void seedUserBusiness() {
@@ -251,6 +253,7 @@ public class Database implements CommandLineRunner {
         otherSkillRepository.save(new OtherSkill(28L,18L,4L));
         otherSkillRepository.save(new OtherSkill(29L,19L,4L));
 
+
     }
     private void seedHasSkill(){
         hasSkillRepository.save(new HasSkill(1L,1L,1L));
@@ -283,4 +286,5 @@ public class Database implements CommandLineRunner {
         hasSkillRepository.save(new HasSkill(28L,10L,9L));
         hasSkillRepository.save(new HasSkill(29L,10L,10L));
     }
+
 }

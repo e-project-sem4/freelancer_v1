@@ -1,5 +1,6 @@
 package com.freelancer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,11 @@ public class ProposalStatusCatalog {
     private long id;
     private String statusName;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "proposalStatusCatalog",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Proposal> proposals;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "proposalStatusCatalog",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 }

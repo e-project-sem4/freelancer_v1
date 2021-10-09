@@ -25,16 +25,20 @@ public class UserFreelancer {
     private String overview;
     private String certifications;
 
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_account_id",referencedColumnName = "id", insertable=false, updatable=false)
     private User user;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "userFreelancer",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<HasSkill> hasSkills;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "userFreelancer",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "userFreelancer",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Proposal> proposals;
 
