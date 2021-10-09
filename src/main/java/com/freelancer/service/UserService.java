@@ -56,12 +56,14 @@ public class UserService {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 			User user = userRepository.findByUsername(username);
 			user.setPassword(null);
+			user.setUserBusinesses(null);
+			user.setUserFreelancers(null);
 			String token = jwtTokenProvider.createToken(username, user.getRoles());
 			message = token;
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
 		} catch (AuthenticationException e) {
 			message = "username or password wrong";
-			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, null);
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 		}
 	}
 
@@ -135,6 +137,7 @@ public class UserService {
 		user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
 		logger.info("call to register" + user.toString());
 		String message = "success";
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User result = userRepository.save(user);
 		logger.info("create user: " + result);
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);

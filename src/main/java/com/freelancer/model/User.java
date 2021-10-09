@@ -38,7 +38,7 @@ public class User {
 	@Column(unique = true, nullable = false)
 	private String username;
 
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String email;
 
 	@Size(min = 8, message = "Minimum password length: 8 characters")
