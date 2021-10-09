@@ -13,11 +13,11 @@ import java.util.List;
 @Repository
 public interface ComplexityRepository extends JpaRepository<Complexity, Long> {
 
-    @Query(value = "SELECT a FROM Complexity a WHERE (UPPER(a.complexity_text) like UPPER(CONCAT('%', :keysearch,'%'))) "
+    @Query(value = "SELECT a FROM Complexity a WHERE (UPPER(a.complexityText) like UPPER(CONCAT('%', :keysearch,'%'))) "
             + "ORDER BY a.id")
     List<Complexity> searchComplexity(@Param("keysearch") String keysearch, Pageable pageable);
 
-    @Query(value = "SELECT count(a) FROM Complexity a WHERE (UPPER(a.complexity_text) like UPPER(CONCAT('%', :keysearch,'%'))) "
+    @Query(value = "SELECT count(a) FROM Complexity a WHERE (UPPER(a.complexityText) like UPPER(CONCAT('%', :keysearch,'%'))) "
             + "ORDER BY a.id")
     Long countComplexity(@Param("keysearch") String keysearch);
 }

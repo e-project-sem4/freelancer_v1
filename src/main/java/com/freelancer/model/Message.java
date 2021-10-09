@@ -1,5 +1,6 @@
 package com.freelancer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +23,8 @@ public class Message {
     private Long user_freelancer_id;
     private Long proposal_id;
     private Long proposal_status_catalog_id;
-    private Long massage_time;
-    private String massage_text;
+    private Long massageTime;
+    private String massageText;
 
 
 
@@ -43,6 +44,7 @@ public class Message {
     @JoinColumn(name = "proposal_status_catalog_id",referencedColumnName = "id", insertable=false, updatable=false)
     private ProposalStatusCatalog proposalStatusCatalog;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "message",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Attachment> attachments;
 

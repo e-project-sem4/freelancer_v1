@@ -25,7 +25,8 @@ public class Job {
     private Long skill_id;
     private String name;
     private String description;
-    private long payment_amount;
+    private long paymentAmount;
+
 
     @ManyToOne
     @JoinColumn(name = "user_business_id",referencedColumnName = "id", insertable=false, updatable=false)
@@ -35,6 +36,7 @@ public class Job {
     @JoinColumn(name = "skill_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Skill skill;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "job",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<OtherSkill> otherSkills;
 
@@ -50,7 +52,7 @@ public class Job {
     @OneToMany(mappedBy = "job",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Proposal> proposals;
 
-    public Job(Long id, Long user_business_id, Long complexity_id, Long expected_duration_id, Long skill_id, String name, String description, long payment_amount) {
+    public Job(Long id, Long user_business_id, Long complexity_id, Long expected_duration_id, Long skill_id, String name, String description, long paymentAmount) {
         this.id = id;
         this.user_business_id = user_business_id;
         this.complexity_id = complexity_id;
@@ -58,6 +60,6 @@ public class Job {
         this.skill_id = skill_id;
         this.name = name;
         this.description = description;
-        this.payment_amount = payment_amount;
+        this.paymentAmount = paymentAmount;
     }
 }

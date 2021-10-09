@@ -1,5 +1,6 @@
 package com.freelancer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +19,14 @@ public class ExpectedDuration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String duration_text;
+    private String durationText;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "expectedDuration",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
-    public ExpectedDuration(long id, String duration_text) {
+    public ExpectedDuration(long id, String durationText) {
         this.id = id;
-        this.duration_text = duration_text;
+        this.durationText = durationText;
     }
 }

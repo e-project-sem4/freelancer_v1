@@ -1,5 +1,7 @@
 package com.freelancer.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,15 +16,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.freelancer.exception.CustomException;
 import com.freelancer.model.ResponseObject;
+import com.freelancer.model.Role;
 import com.freelancer.model.User;
 import com.freelancer.repository.UserRepository;
 import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Service
 public class UserService {
@@ -109,11 +115,49 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
 	}
 
-	public ResponseObject createUser(User user) {
-		logger.info("call to create user" + user.toString());
+	public ResponseObject register(User user) {
+		user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+		logger.info("call to register" + user.toString());
 		String message = "success";
 		User result = userRepository.save(user);
 		logger.info("create user: " + result);
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+	}
+
+	@Transactional
+	public ResponseObject changePassword(HttpServletRequest request) {
+		try {
+			JsonObject jsonString = JsonParser.parseReader(request.getReader()).getAsJsonObject();
+			logger.info("call to change password" + jsonString);
+			if (jsonString.get("oldPassword") == null) {
+				logger.info("old password null");
+				return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Old password is invalid", null);
+			} else if (jsonString.get("newPassword") == null) {
+				logger.info("new password null");
+				return new ResponseObject(Constant.STATUS_ACTION_FAIL, "New password is invalid", null);
+			} else if (jsonString.get("username") == null) {
+				logger.info("username null");
+				return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Username is invalid", null);
+			} else {
+				String oldPassword = jsonString.get("oldPassword").getAsString();
+				String username = jsonString.get("username").getAsString();
+				User user = userRepository.findByUsername(username);
+				if (user != null) {
+					if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+						String newPassword = jsonString.get("newPassword").getAsString();
+						userRepository.changePasswordByUsername(passwordEncoder.encode(newPassword), username);
+						logger.info("Change password success");
+						return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "Change password success", null);
+					} else {
+						logger.info("old password wrong");
+						return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Old password is wrong", null);
+					}
+				}
+				logger.info("coult not find user with: " + username);
+			}
+		} catch (Exception e) {
+			logger.error("error change password", e);
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Change password fail", null);
 	}
 }

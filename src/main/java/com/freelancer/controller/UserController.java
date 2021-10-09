@@ -33,7 +33,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping(value = "/login", consumes = "application/json")
+	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
 	public String login(@RequestBody User user) {
 		return userService.signin(user.getUsername(), user.getPassword());
 	}
@@ -46,7 +46,13 @@ public class UserController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<ResponseObject> signup(@RequestBody User user) {
-		ResponseObject result = userService.createUser(user);
+		ResponseObject result = userService.register(user);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/changepassword", method = RequestMethod.PATCH, produces = "application/json", consumes = "application/json")
+	public ResponseEntity<ResponseObject> changePassword(HttpServletRequest request) {
+		ResponseObject result = userService.changePassword(request);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -62,7 +68,7 @@ public class UserController {
 		return username;
 	}
 
-	@RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
 			@PathVariable int size) {
 		ResponseObject result = userService.search(keysearch, page, size);

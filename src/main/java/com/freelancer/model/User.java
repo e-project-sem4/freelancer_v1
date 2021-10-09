@@ -1,11 +1,20 @@
 package com.freelancer.model;
 
-import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,25 +50,27 @@ public class User {
 	private String phone;
 
 	@Size(min = 4, max = 100, message = "Minimum full name max length: 100 characters")
-	private String full_name;
+	private String fullName;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
 
+	@JsonBackReference
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserFreelancer userFreelancers;
 
+	@JsonBackReference
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserBusiness userBusinesses;
 
-	public User(Long id, String username, String email, String password, String phone, String full_name,
+	public User(Long id, String username, String email, String password, String phone, String fullName,
 				List<Role> roles) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
-		this.full_name = full_name;
+		this.fullName = fullName;
 		this.roles = roles;
 	}
 }

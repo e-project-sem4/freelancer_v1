@@ -1,5 +1,6 @@
 package com.freelancer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,26 +21,30 @@ public class UserBusiness {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long user_account_id;
-    private long registration_date;
+    private long registrationDate;
     private String location;
 
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_account_id",referencedColumnName = "id", insertable=false, updatable=false)
     private User user;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
-    public UserBusiness(Long id, Long user_account_id, long registration_date, String location) {
+    public UserBusiness(Long id, Long user_account_id, long registrationDate, String location) {
         this.id = id;
         this.user_account_id = user_account_id;
-        this.registration_date = registration_date;
+        this.registrationDate = registrationDate;
         this.location = location;
     }
 }
