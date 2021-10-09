@@ -18,7 +18,7 @@ public class Attachment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long message_id;
-    private String attachment_link;
+    private String attachmentLink;
 
     @ManyToOne
     @JoinColumn(name = "message_id",referencedColumnName = "id", insertable=false, updatable=false)

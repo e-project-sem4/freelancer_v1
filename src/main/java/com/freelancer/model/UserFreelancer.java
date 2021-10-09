@@ -20,7 +20,7 @@ public class UserFreelancer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long user_account_id;
-    private long registration_date;
+    private long registrationDate;
     private String location;
     private String overview;
     private String certifications;
@@ -38,10 +38,10 @@ public class UserFreelancer {
     @OneToMany(mappedBy = "userFreelancer",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Proposal> proposals;
 
-    public UserFreelancer(Long id, Long user_account_id, long registration_date, String location, String overview, String certifications) {
+    public UserFreelancer(Long id, Long user_account_id, long registrationDate, String location, String overview, String certifications) {
         this.id = id;
         this.user_account_id = user_account_id;
-        this.registration_date = registration_date;
+        this.registrationDate = registrationDate;
         this.location = location;
         this.overview = overview;
         this.certifications = certifications;

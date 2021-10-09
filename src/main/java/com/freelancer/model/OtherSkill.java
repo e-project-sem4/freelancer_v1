@@ -27,4 +27,10 @@ public class OtherSkill {
     @ManyToOne
     @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Job job;
+
+    public OtherSkill(Long id, Long job_id, Long skill_id) {
+        this.id = id;
+        this.job_id = job_id;
+        this.skill_id = skill_id;
+    }
 }

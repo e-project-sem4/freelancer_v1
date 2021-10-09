@@ -20,7 +20,7 @@ public class UserBusiness {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long user_account_id;
-    private long registration_date;
+    private long registrationDate;
     private String location;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -36,10 +36,10 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
-    public UserBusiness(Long id, Long user_account_id, long registration_date, String location) {
+    public UserBusiness(Long id, Long user_account_id, long registrationDate, String location) {
         this.id = id;
         this.user_account_id = user_account_id;
-        this.registration_date = registration_date;
+        this.registrationDate = registrationDate;
         this.location = location;
     }
 }
