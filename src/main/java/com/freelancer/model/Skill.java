@@ -18,7 +18,7 @@ public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String skill_name;
+    private String skillName;
 
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<HasSkill> hasSkills;
@@ -31,6 +31,6 @@ public class Skill {
 
     public Skill(long id, String skill_name) {
         this.id = id;
-        this.skill_name = skill_name;
+        this.skillName = skillName;
     }
 }

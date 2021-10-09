@@ -18,7 +18,7 @@ public class ProposalStatusCatalog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String status_name;
+    private String statusName;
 
     @OneToMany(mappedBy = "proposalStatusCatalog",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Proposal> proposals;

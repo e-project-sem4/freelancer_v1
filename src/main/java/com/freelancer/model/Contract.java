@@ -18,9 +18,9 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long start_time;
-    private Long end_time;
-    private Long payment_amount;
+    private Long startTime;
+    private Long endTime;
+    private Long paymentAmount;
     private Long user_business_id;
     private Long proposal_id;
 

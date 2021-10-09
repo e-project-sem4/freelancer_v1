@@ -22,8 +22,8 @@ public class Message {
     private Long user_freelancer_id;
     private Long proposal_id;
     private Long proposal_status_catalog_id;
-    private Long massage_time;
-    private String massage_text;
+    private Long massageTime;
+    private String massageText;
 
 
 

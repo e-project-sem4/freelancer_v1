@@ -18,12 +18,12 @@ public class Proposal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long proposal_time;
-    private Long payment_amount;
-    private int client_grade;
-    private String client_comment;
-    private int freelancer_grade;
-    private String freelancer_comment;
+    private Long proposalTime;
+    private Long paymentAmount;
+    private int clientGrade;
+    private String clientComment;
+    private int freelancerGrade;
+    private String freelancerComment;
     private Long user_freelancer_id;
     private Long job_id;
     private Long proposal_status_catalog_id;
