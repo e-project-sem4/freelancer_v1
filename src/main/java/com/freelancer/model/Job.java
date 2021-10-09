@@ -25,6 +25,7 @@ public class Job {
     private String name;
     private String description;
     private long payment_amount;
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "user_business_id",referencedColumnName = "id", insertable=false, updatable=false)
