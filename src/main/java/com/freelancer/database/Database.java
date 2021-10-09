@@ -3,13 +3,24 @@ package com.freelancer.database;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-
 import com.freelancer.model.*;
 import com.freelancer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
+import com.freelancer.model.Complexity;
+import com.freelancer.model.ExpectedDuration;
+import com.freelancer.model.Job;
+import com.freelancer.model.Role;
+import com.freelancer.model.Skill;
+import com.freelancer.model.User;
+import com.freelancer.model.UserBusiness;
+import com.freelancer.repository.ComplexityRepository;
+import com.freelancer.repository.ExpectedDurationRepository;
+import com.freelancer.repository.JobRepository;
+import com.freelancer.repository.SkillRepository;
+import com.freelancer.repository.UserBusinessRepository;
+import com.freelancer.repository.UserFreelancerRepository;
 import com.freelancer.service.UserService;
 
 //Create Docker
