@@ -12,9 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,13 +26,13 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "user_account")
 @ToString
 public class User {
-	// vào package database, mở class Database, mở comment ra rồi chạy project để tạo tài khoản demo.
+	// vào package database, mở class Database, mở comment ra rồi chạy project để
+	// tạo tài khoản demo.
 	// CHạy xong thì comment lại để tránh lỗi
 	// Đọc log để lấy token
 	@Id
@@ -49,25 +53,28 @@ public class User {
 	private String phone;
 
 	@Size(min = 4, max = 100, message = "Minimum full name max length: 100 characters")
-	private String full_name;
+	@Column(nullable = false)
+	private String fullName;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
 
+//	@JsonBackReference
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserFreelancer userFreelancers;
 
+//	@JsonBackReference
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserBusiness userBusinesses;
 
-	public User(Long id, String username, String email, String password, String phone, String full_name,
-				List<Role> roles) {
+	public User(Long id, String username, String email, String password, String phone, String fullName,
+			List<Role> roles) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
-		this.full_name = full_name;
+		this.fullName = fullName;
 		this.roles = roles;
 	}
 }

@@ -49,13 +49,19 @@ public class UserService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	public String signin(String username, String password) {
+	public ResponseObject signin(String username, String password) {
+		String message;
 		try {
 			logger.info("login nè");
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-			return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
+			User user = userRepository.findByUsername(username);
+			user.setPassword(null);
+			String token = jwtTokenProvider.createToken(username, user.getRoles());
+			message = token;
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
 		} catch (AuthenticationException e) {
-			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+			message = "username or password wrong";
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, null);
 		}
 	}
 
@@ -81,11 +87,11 @@ public class UserService {
 //		return user;
 //	}
 
-	public ResponseObject search(String keysearch, int page, int size) {
+	public ResponseObject search(String keysearch, String username, int page, int size) {
 		logger.info("call to search user with keysearch: " + keysearch);
 		String message = "success";
-		List<User> list = userRepository.searchUser(keysearch, 1L, PageRequest.of(page - 1, size));
-		Long total = userRepository.countUser(keysearch, 1L);
+		List<User> list = userRepository.searchUser(keysearch, username, PageRequest.of(page - 1, size));
+		Long total = userRepository.countUser(keysearch, username);
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 	}
 
@@ -113,6 +119,16 @@ public class UserService {
 			logger.info("get user success");
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
+	}
+
+	public ResponseObject editProfile(HttpServletRequest request, Long idUser) {
+		try {
+			JsonObject jsonString = JsonParser.parseReader(request.getReader()).getAsJsonObject();
+			logger.info("call to edit user by id: " + idUser);
+			logger.info("jsonString: " + jsonString);
+		} catch (Exception e) {
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "", null);
 	}
 
 	public ResponseObject register(User user) {

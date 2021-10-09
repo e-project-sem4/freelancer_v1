@@ -22,7 +22,6 @@ public class Job {
     private Long complexity_id;
     private Long expected_duration_id;
     private Long skill_id;
-    private String name;
     private String description;
     private long payment_amount;
     private String name;

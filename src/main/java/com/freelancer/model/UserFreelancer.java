@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+
 import java.util.Collection;
 
 @Getter
@@ -21,8 +23,14 @@ public class UserFreelancer {
     private Long id;
     private Long user_account_id;
     private long registration_date;
+    @Size(max = 255, message = "Max location length: 255 characters")
+    @Column(nullable = false)
     private String location;
+    @Size(max = 1000, message = "Max location length: 1000 characters")
+    @Column(nullable = false)
     private String overview;
+    @Size(max = 1000, message = "Max location length: 1000 characters")
+    @Column(nullable = false)
     private String certifications;
 
     @OneToOne(cascade = CascadeType.ALL)

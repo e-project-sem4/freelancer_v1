@@ -34,13 +34,21 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
-	public String login(@RequestBody User user) {
-		return userService.signin(user.getUsername(), user.getPassword());
+	public ResponseEntity<ResponseObject> login(@RequestBody User user) {
+		ResponseObject result = userService.signin(user.getUsername(), user.getPassword());
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<ResponseObject> getUserById(@PathVariable Long id) {
 		ResponseObject result = userService.getUserById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/editprofile/{id}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+	public ResponseEntity<ResponseObject> editProfile(@PathVariable Long id, HttpServletRequest request) {
+		ResponseObject result = userService.editProfile(request, id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -69,9 +77,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
-	public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
-			@PathVariable int size) {
-		ResponseObject result = userService.search(keysearch, page, size);
+	public ResponseEntity<ResponseObject> search(@RequestParam String username, @RequestParam String keysearch,
+			@PathVariable int page, @PathVariable int size) {
+		ResponseObject result = userService.search(keysearch, username, page, size);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
