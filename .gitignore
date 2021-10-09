@@ -25,3 +25,4 @@ nbdist/
 .vscode/settings.json
 #log4j.properties
 src/main/resources/application.properties
+target
