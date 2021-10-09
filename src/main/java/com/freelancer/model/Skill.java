@@ -1,13 +1,22 @@
 package com.freelancer.model;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.Collection;
 
 @Getter
 @Setter
@@ -21,11 +30,11 @@ public class Skill {
     private long id;
     private String skillName;
 
-    @JsonBackReference
+    @JsonBackReference(value = "hasSkills")
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<HasSkill> hasSkills;
 
-    @JsonBackReference
+    @JsonBackReference(value = "jobs")
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
@@ -33,7 +42,7 @@ public class Skill {
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<OtherSkill> otherSkills;
 
-    public Skill(long id, String skill_name) {
+    public Skill(long id, String skillName) {
         this.id = id;
         this.skillName = skillName;
     }

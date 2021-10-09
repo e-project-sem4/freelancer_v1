@@ -37,11 +37,11 @@ public class Proposal {
     @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Job job;
 
-    @JsonBackReference
+    @JsonBackReference(value = "contracts")
     @OneToMany(mappedBy = "proposal",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
-    @JsonBackReference
+    @JsonBackReference(value = "messages")
     @OneToMany(mappedBy = "proposal",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 

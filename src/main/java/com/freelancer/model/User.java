@@ -14,24 +14,20 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "user_account")
 @ToString
 public class User {
-	// vào package database, mở class Database, mở comment ra rồi chạy project để tạo tài khoản demo.
+	// vào package database, mở class Database, mở comment ra rồi chạy project để
+	// tạo tài khoản demo.
 	// CHạy xong thì comment lại để tránh lỗi
 	// Đọc log để lấy token
 	@Id
@@ -52,21 +48,20 @@ public class User {
 	private String phone;
 
 	@Size(min = 4, max = 100, message = "Minimum full name max length: 100 characters")
+	@Column(nullable = false)
 	private String fullName;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
 
-	@JsonBackReference
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserFreelancer userFreelancers;
 
-	@JsonBackReference
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserBusiness userBusinesses;
 
 	public User(Long id, String username, String email, String password, String phone, String fullName,
-				List<Role> roles) {
+			List<Role> roles) {
 		this.id = id;
 		this.username = username;
 		this.email = email;

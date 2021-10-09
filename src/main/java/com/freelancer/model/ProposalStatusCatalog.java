@@ -21,11 +21,11 @@ public class ProposalStatusCatalog {
     private long id;
     private String statusName;
 
-    @JsonBackReference
+    @JsonBackReference(value = "proposals")
     @OneToMany(mappedBy = "proposalStatusCatalog",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Proposal> proposals;
 
-    @JsonBackReference
+    @JsonBackReference(value = "messages")
     @OneToMany(mappedBy = "proposalStatusCatalog",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 }
