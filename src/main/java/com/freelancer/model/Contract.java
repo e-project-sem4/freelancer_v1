@@ -1,12 +1,17 @@
 package com.freelancer.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.Collection;
 
 @Getter
 @Setter
@@ -18,9 +23,9 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long start_time;
-    private Long end_time;
-    private Long payment_amount;
+    private Long startTime;
+    private Long endTime;
+    private Long paymentAmount;
     private Long user_business_id;
     private Long proposal_id;
 

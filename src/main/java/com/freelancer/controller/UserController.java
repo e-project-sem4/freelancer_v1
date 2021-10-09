@@ -34,8 +34,8 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
-	public ResponseEntity<ResponseObject> login(@RequestBody User user) {
-		ResponseObject result = userService.signin(user.getUsername(), user.getPassword());
+	public ResponseEntity<ResponseObject> login(@RequestParam String username, @RequestParam String password) {
+		ResponseObject result = userService.signin(username, password);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

@@ -3,50 +3,41 @@ package com.freelancer.dto;
 import java.util.List;
 
 import com.freelancer.model.Role;
+import com.freelancer.model.User;
+import com.freelancer.model.UserBusiness;
+import com.freelancer.model.UserFreelancer;
 
-import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDataDTO {
 
-	@ApiModelProperty(position = 0)
+	private String id;
 	private String username;
-	@ApiModelProperty(position = 1)
 	private String email;
-	@ApiModelProperty(position = 2)
 	private String password;
-	@ApiModelProperty(position = 3)
-	List<Role> roles;
+	private String phone;
+	private String fullName;
+	private List<Role> roles;
+	private UserFreelancer userFreelancers;
+	private UserBusiness userBusiness;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public UserDataDTO mappingUser(User user) {
+		this.id = user.getId().toString();
+		this.username = user.getUsername();
+		this.fullName = user.getFullName();
+		this.phone = user.getPhone();
+		this.email = user.getEmail();
+		this.roles = user.getRoles();
+		this.userFreelancers = user.getUserFreelancers();
+		this.userFreelancers.setUser(null);
+		this.userBusiness = user.getUserBusinesses();
+		this.userBusiness.setUser(null);
+		return this;
 	}
 
 }

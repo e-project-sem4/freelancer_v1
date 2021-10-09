@@ -1,5 +1,6 @@
 package com.freelancer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +19,14 @@ public class Complexity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String complexity_text;
+    private String complexityText;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "complexity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
-    public Complexity(long id, String complexity_text) {
+    public Complexity(long id, String complexityText) {
         this.id = id;
-        this.complexity_text = complexity_text;
+        this.complexityText = complexityText;
     }
 }

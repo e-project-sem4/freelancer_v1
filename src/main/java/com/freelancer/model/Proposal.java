@@ -1,5 +1,6 @@
 package com.freelancer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,12 +19,12 @@ public class Proposal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long proposal_time;
-    private Long payment_amount;
-    private int client_grade;
-    private String client_comment;
-    private int freelancer_grade;
-    private String freelancer_comment;
+    private Long proposalTime;
+    private Long paymentAmount;
+    private int clientGrade;
+    private String clientComment;
+    private int freelancerGrade;
+    private String freelancerComment;
     private Long user_freelancer_id;
     private Long job_id;
     private Long proposal_status_catalog_id;
@@ -36,9 +37,11 @@ public class Proposal {
     @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Job job;
 
+    @JsonBackReference(value = "contracts")
     @OneToMany(mappedBy = "proposal",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
+    @JsonBackReference(value = "messages")
     @OneToMany(mappedBy = "proposal",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 
