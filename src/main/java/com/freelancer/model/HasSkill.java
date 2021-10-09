@@ -17,11 +17,11 @@ public class HasSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long skill_id;
+    private Long user_freelancer_id;
 
     @ManyToOne
-    @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id", insertable=false, updatable=false)
     private UserFreelancer userFreelancer;
 
     @ManyToOne

@@ -16,11 +16,11 @@ import javax.persistence.*;
 public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+    private Long id;
+    private Long message_id;
     private String attachment_link;
 
     @ManyToOne
-    @JoinColumn(name = "message_id",referencedColumnName = "id")
+    @JoinColumn(name = "message_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Message message;
 }

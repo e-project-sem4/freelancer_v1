@@ -17,18 +17,20 @@ import java.util.Collection;
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long start_time;
-    private long end_time;
-    private long payment_amount;
+    private Long id;
+    private Long start_time;
+    private Long end_time;
+    private Long payment_amount;
+    private Long user_business_id;
+    private Long proposal_id;
 
 
     @ManyToOne
-    @JoinColumn(name = "user_business_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_business_id",referencedColumnName = "id", insertable=false, updatable=false)
     private UserBusiness userBusiness;
 
     @ManyToOne
-    @JoinColumn(name = "proposal_id",referencedColumnName = "id")
+    @JoinColumn(name = "proposal_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Proposal proposal;
 
 

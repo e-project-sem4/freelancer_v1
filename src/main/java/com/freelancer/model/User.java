@@ -3,16 +3,7 @@ package com.freelancer.model;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -29,7 +20,7 @@ import lombok.ToString;
 @Table(name = "user_account")
 @ToString
 public class User {
-// vào package database, mở class Database, mở comment ra rồi chạy project để tạo tài khoản demo.
+	// vào package database, mở class Database, mở comment ra rồi chạy project để tạo tài khoản demo.
 	// CHạy xong thì comment lại để tránh lỗi
 	// Đọc log để lấy token
 	@Id
@@ -55,14 +46,14 @@ public class User {
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Collection<UserFreelancer> userFreelancers;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private UserFreelancer userFreelancers;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Collection<UserBusiness> userBusinesses;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private UserBusiness userBusinesses;
 
 	public User(Long id, String username, String email, String password, String phone, String full_name,
-			List<Role> roles) {
+				List<Role> roles) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
