@@ -30,7 +30,6 @@ import com.freelancer.service.UserService;
 //show databases;
 //use tendatabase;
 //show tables;
-@Configuration
 @Component
 public class Database implements CommandLineRunner {
     @Autowired
@@ -63,7 +62,6 @@ public class Database implements CommandLineRunner {
             seedJob();
             seedOtherSkill();
             seedHasSkill();
-
 
         }
     }
