@@ -123,14 +123,15 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
 	}
 
-	public ResponseObject editProfile(HttpServletRequest request, Long idUser) {
+	public ResponseObject editProfile(User user) {
 		try {
-			JsonObject jsonString = JsonParser.parseReader(request.getReader()).getAsJsonObject();
-			logger.info("call to edit user by id: " + idUser);
-			logger.info("jsonString: " + jsonString);
+			logger.info("call to edit user" + user.toString());
+			user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+			User result = userRepository.save(user);
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit profile", null);
 		}
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "", null);
 	}
 
 	public ResponseObject register(User user) {

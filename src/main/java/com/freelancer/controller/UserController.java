@@ -45,10 +45,10 @@ public class UserController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/editprofile/{id}", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+	@RequestMapping(value = "/editprofile", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-	public ResponseEntity<ResponseObject> editProfile(@PathVariable Long id, HttpServletRequest request) {
-		ResponseObject result = userService.editProfile(request, id);
+	public ResponseEntity<ResponseObject> editProfile(User user) {
+		ResponseObject result = userService.editProfile(user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
