@@ -1,4 +1,4 @@
 package com.freelancer.service;
 
-public class UserFreelancerService implements InUserFreelancerService{
+public class UserFreelancerService {
 }
