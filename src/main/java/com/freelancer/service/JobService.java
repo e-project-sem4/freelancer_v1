@@ -1,145 +1,97 @@
 package com.freelancer.service;
 
+import com.freelancer.model.ExpectedDuration;
 import com.freelancer.model.Job;
+import com.freelancer.model.ResponseObject;
 import com.freelancer.repository.ComplexityRepository;
 import com.freelancer.repository.ExpectedDurationRepository;
 import com.freelancer.repository.JobRepository;
+import com.freelancer.utils.ConfigLog;
+import com.freelancer.utils.Constant;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class JobService implements InJobService{
-    @Autowired
-    private ExpectedDurationRepository expectedDurationRepository;
-    @Autowired
-    private ComplexityRepository complexityRepository;
+public class JobService {
+    Logger logger = ConfigLog.getLogger(JobService.class);
     @Autowired
     private JobRepository jobRepository;
 
-    @Override
-    public List<Job> findAll() {
-        return jobRepository.findAll();
+    public ResponseObject search(String keysearch, int page, int size) {
+        logger.info("call to search Job with key : " + keysearch);
+        List<Job> list = jobRepository.searchJob(keysearch, PageRequest.of(page - 1, size));
+        Long total = jobRepository.countJob(keysearch);
+        String message = "success";
+        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
     }
 
-    @Override
-    public List<Job> findAll(Sort sort) {
-        return jobRepository.findAll(sort);
+    //add
+    public ResponseObject save(Job obj) {
+        String message = "not success";
+        logger.info("call to Create Job" + jobRepository.toString());
+        Job result = jobRepository.save(obj);
+        if (result != null) {
+            message = "success";
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+        }
+        return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
     }
 
-    @Override
-    public List<Job> findAllById(Iterable<Long> iterable) {
-        return jobRepository.findAllById(iterable);
+    //delete
+    public ResponseObject delete(Long id) {
+        String message = "can not find job";
+        logger.info("call to get job to delete by id: " + id);
+        Optional<Job> optionalJob = jobRepository.findById(id);
+        if (optionalJob.isPresent()) {
+            jobRepository.deleteById(id);
+            message = "delete success";
+            logger.info("delete job success");
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, null);
+        } else {
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+        }
+
     }
 
-    @Override
-    public <S extends Job> List<S> saveAll(Iterable<S> iterable) {
-        return jobRepository.saveAll(iterable);
+    //update
+    public ResponseObject update(Job obj, Long id) {
+        String message = "can not Job";
+        logger.info("call to get Job to update by id: " + id);
+        Optional<Job> optionalJob = jobRepository.findById(id);
+        if (optionalJob.isPresent()) {
+            message = "update success";
+            logger.info("update Job success");
+            Job result = optionalJob.get();
+            result.setName(obj.getName());
+            result.setDescription(obj.getDescription());
+            result.setSkill_id(obj.getSkill_id());
+            result.setComplexity_id(obj.getComplexity_id());
+            result.setExpected_duration_id(obj.getExpected_duration_id());
+            result.setPaymentAmount(obj.getPaymentAmount());
+            Job success = jobRepository.save(result);
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,success);
+        } else {
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+        }
+
     }
 
-    @Override
-    public void flush() {
-        jobRepository.flush();
-    }
-
-    @Override
-    public <S extends Job> S saveAndFlush(S s) {
-        return jobRepository.saveAndFlush(s);
-    }
-
-    @Override
-    public void deleteInBatch(Iterable<Job> iterable) {
-        jobRepository.deleteInBatch(iterable);
-    }
-
-    @Override
-    public void deleteAllInBatch() {
-        jobRepository.deleteAllInBatch();
-    }
-
-    @Override
-    public Job getOne(Long aLong) {
-        return jobRepository.getOne(aLong);
-    }
-
-    @Override
-    public <S extends Job> List<S> findAll(Example<S> example) {
-        return jobRepository.findAll(example);
-    }
-
-    @Override
-    public <S extends Job> List<S> findAll(Example<S> example, Sort sort) {
-        return jobRepository.findAll(example, sort);
-    }
-
-    @Override
-    public Page<Job> findAll(Pageable pageable) {
-        return jobRepository.findAll(pageable);
-    }
-
-    @Override
-    public <S extends Job> S save(S s) {
-        return jobRepository.save(s);
-    }
-
-    @Override
-    public Optional<Job> findById(Long aLong) {
-        return jobRepository.findById(aLong);
-    }
-
-    @Override
-    public boolean existsById(Long aLong) {
-        return jobRepository.existsById(aLong);
-    }
-
-    @Override
-    public long count() {
-        return jobRepository.count();
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        jobRepository.deleteById(aLong);
-    }
-
-    @Override
-    public void delete(Job job) {
-        jobRepository.delete(job);
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends Job> iterable) {
-        jobRepository.deleteAll(iterable);
-    }
-
-    @Override
-    public void deleteAll() {
-        jobRepository.deleteAll();
-    }
-
-    @Override
-    public <S extends Job> Optional<S> findOne(Example<S> example) {
-        return jobRepository.findOne(example);
-    }
-
-    @Override
-    public <S extends Job> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return jobRepository.findAll(example, pageable);
-    }
-
-    @Override
-    public <S extends Job> long count(Example<S> example) {
-        return jobRepository.count(example);
-    }
-
-    @Override
-    public <S extends Job> boolean exists(Example<S> example) {
-        return jobRepository.exists(example);
+    //get by id
+    public ResponseObject getById(Long id) {
+        logger.info("call to get Job by id: " + id);
+        Optional<Job> optionalJob = jobRepository.findById(id);
+        String message = "can not find Job";
+        if (optionalJob.isPresent()) {
+            message = "success";
+            optionalJob.get();
+            logger.info("get Job success");
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, optionalJob.get());
+        }
+        return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
     }
 }
