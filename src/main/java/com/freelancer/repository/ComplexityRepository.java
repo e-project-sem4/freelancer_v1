@@ -17,7 +17,6 @@ public interface ComplexityRepository extends JpaRepository<Complexity, Long> {
             + "ORDER BY a.id")
     List<Complexity> searchComplexity(@Param("keysearch") String keysearch, Pageable pageable);
 
-    @Query(value = "SELECT count(a) FROM Complexity a WHERE (UPPER(a.complexityText) like UPPER(CONCAT('%', :keysearch,'%'))) "
-            + "ORDER BY a.id")
+    @Query(value = "SELECT count(a) FROM Complexity a WHERE (UPPER(a.complexityText) like UPPER(CONCAT('%', :keysearch,'%')))")
     Long countComplexity(@Param("keysearch") String keysearch);
 }

@@ -15,7 +15,6 @@ public interface ExpectedDurationRepository extends JpaRepository<ExpectedDurati
             + "ORDER BY a.id")
     List<ExpectedDuration> searchExpectedDuration(@Param("keysearch") String keysearch, Pageable pageable);
 
-    @Query(value = "SELECT count(a) FROM ExpectedDuration a WHERE (UPPER(a.durationText) like UPPER(CONCAT('%', :keysearch,'%'))) "
-            + "ORDER BY a.id")
+    @Query(value = "SELECT count(a) FROM ExpectedDuration a WHERE (UPPER(a.durationText) like UPPER(CONCAT('%', :keysearch,'%')))")
     Long countExpectedDuration(@Param("keysearch") String keysearch);
 }
