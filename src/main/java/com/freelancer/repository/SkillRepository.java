@@ -15,7 +15,6 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
             + "ORDER BY a.id")
     List<Skill> searchSkill(@Param("keysearch") String keysearch, Pageable pageable);
 
-    @Query(value = "SELECT count(a) FROM Skill a WHERE (UPPER(a.skillName) like UPPER(CONCAT('%', :keysearch,'%'))) "
-            + "ORDER BY a.id")
+    @Query(value = "SELECT count(a) FROM Skill a WHERE (UPPER(a.skillName) like UPPER(CONCAT('%', :keysearch,'%')))")
     Long countSkill(@Param("keysearch") String keysearch);
 }

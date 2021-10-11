@@ -15,7 +15,6 @@ public interface ProposalStatusCatalogRepository extends JpaRepository<ProposalS
             + "ORDER BY a.id")
     List<ProposalStatusCatalog> searchProposalSC(@Param("keysearch") String keysearch, Pageable pageable);
 
-    @Query(value = "SELECT count(a) FROM ProposalStatusCatalog a WHERE (UPPER(a.statusName) like UPPER(CONCAT('%', :keysearch,'%'))) "
-            + "ORDER BY a.id")
+    @Query(value = "SELECT count(a) FROM ProposalStatusCatalog a WHERE (UPPER(a.statusName) like UPPER(CONCAT('%', :keysearch,'%')))")
     Long countProposalSC(@Param("keysearch") String keysearch);
 }

@@ -17,8 +17,7 @@ public interface JobRepository extends JpaRepository<Job, Long> {
             + "ORDER BY a.id")
     List<Job> searchJob(@Param("keysearch") String keysearch, Pageable pageable);
 
-    @Query(value = "SELECT count(a) FROM Job a WHERE (UPPER(a.name) like UPPER(CONCAT('%', :keysearch,'%'))) "
-            + "ORDER BY a.id")
+    @Query(value = "SELECT count(a) FROM Job a WHERE (UPPER(a.name) like UPPER(CONCAT('%', :keysearch,'%')))")
     Long countJob(@Param("keysearch") String keysearch);
 
 }
