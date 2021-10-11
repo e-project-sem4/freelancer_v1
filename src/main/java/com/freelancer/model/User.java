@@ -35,7 +35,7 @@ public class User {
 	private Long id;
 
 	@Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = false, updatable = false)
 	private String username;
 
 	@Column(nullable = false)

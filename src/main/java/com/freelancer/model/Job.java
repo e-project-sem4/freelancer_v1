@@ -38,6 +38,7 @@ public class Job {
 	private long paymentAmount;
 	private String name;
 
+	@JsonBackReference(value = "userBusiness")
 	@ManyToOne
 	@JoinColumn(name = "user_business_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private UserBusiness userBusiness;

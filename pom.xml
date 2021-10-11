@@ -63,6 +63,7 @@
 		<scope>runtime</scope>
 	</dependency>
 
+<<<<<<< HEAD
 	<dependency>
 		<!-- Automated JSON API documentation for API's built with Spring -->
 		<groupId>io.springfox</groupId>
@@ -106,6 +107,56 @@
 		<artifactId>postgresql</artifactId>
 	</dependency>
 </dependencies>
+=======
+		<dependency>
+			<!-- Automated JSON API documentation for API's built with Spring -->
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<!-- Generate beautiful documentation from a Swagger-compliant API. -->
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<!-- JSON Web Token Support -->
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+		<dependency>
+			<!-- Model Mapper -->
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.3.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>4.20</version>
+		</dependency>
+	</dependencies>
+>>>>>>> 7a15f06fab7bc0c6b25146f4793b2e253fb446ec
 
 <build>
 	<plugins>

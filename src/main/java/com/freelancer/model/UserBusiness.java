@@ -16,12 +16,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -29,6 +29,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "user_business")
+@ToString
 public class UserBusiness {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +49,7 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 
-    @JsonBackReference(value = "jobs")
+    
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 

@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/api/v1/users/login").permitAll()//
 				.antMatchers("/api/v1/users/register").permitAll()//
+<<<<<<< HEAD
 				.antMatchers("/api/v1/complexities/search/**").permitAll()//
 				.antMatchers("/h2-console/**/**").permitAll()
 				.antMatchers("/demo").permitAll()
@@ -41,6 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/v1/skills/**").permitAll()//
 				.antMatchers("/api/v1/durations/**").permitAll()//
 				.antMatchers("/api/v1/proposalsc/**").permitAll()//
+=======
+				.antMatchers("/api/v1/users/test/**").permitAll()//
+>>>>>>> 7a15f06fab7bc0c6b25146f4793b2e253fb446ec
 				.antMatchers("/h2-console/**/**").permitAll()
 				// Disallow everything else..
 				.anyRequest().authenticated();

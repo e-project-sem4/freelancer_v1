@@ -49,7 +49,7 @@ public class UserFreelancer {
 	@JoinColumn(name = "user_account_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private User user;
 
-	@JsonBackReference(value = "hasSkills")
+//	@JsonBackReference(value = "hasSkills")
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<HasSkill> hasSkills;
 
