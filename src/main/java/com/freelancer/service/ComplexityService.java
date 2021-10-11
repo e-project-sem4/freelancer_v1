@@ -24,6 +24,13 @@ public class ComplexityService {
 	@Autowired
 	private ComplexityRepository complexityRepository;
 
+	public ResponseObject fillAll(){
+		String message = "success";
+		List<Complexity> list = complexityRepository.findAll();
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,null, list);
+
+	}
+
 	// add
 	public ResponseObject save(Complexity complexity) {
 		String message = "not success";

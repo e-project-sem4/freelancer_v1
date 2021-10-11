@@ -1,6 +1,7 @@
 package com.freelancer.service;
 
 import org.springframework.stereotype.Service;
+import com.freelancer.model.ExpectedDuration;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.Skill;
 import com.freelancer.repository.SkillRepository;
@@ -23,6 +24,13 @@ public class SkillService  {
     @Autowired
     private SkillRepository skillRepository;
 
+
+    public ResponseObject fillAll(){
+        String message = "success";
+        List<Skill> list = skillRepository.findAll();
+        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,null, list);
+
+    }
     //add
     public ResponseObject save(Skill skill){
         String message = "not success";

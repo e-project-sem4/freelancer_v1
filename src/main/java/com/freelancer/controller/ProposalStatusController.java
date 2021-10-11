@@ -16,7 +16,15 @@ public class ProposalStatusController {
     @Autowired
     private ProposalStatusService proposalStatusService;
 
-    //get All/SEARCH
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> fillAll(){
+        ResponseObject result = proposalStatusService.fillAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
+
+    ///SEARCH
     @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
                                                  @PathVariable int size) {
@@ -25,7 +33,7 @@ public class ProposalStatusController {
     }
 
     //Get 1 by id
-    @GetMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
 
         ResponseObject result = proposalStatusService.getById(id);
@@ -34,21 +42,21 @@ public class ProposalStatusController {
     }
 
     //Create
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<ResponseObject> add(@RequestBody ProposalStatusCatalog proposalStatusCatalog) {
         ResponseObject result = proposalStatusService.save(proposalStatusCatalog);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //Update
-    @PutMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.PATCH, produces = "application/json")
     public ResponseEntity<ResponseObject> update(@RequestBody ProposalStatusCatalog proposalStatusCatalog, @PathVariable Long id) {
 
         ResponseObject result = proposalStatusService.update(proposalStatusCatalog,id);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
         ResponseObject result = proposalStatusService.delete(id);
         return new ResponseEntity<>(result,HttpStatus.OK);

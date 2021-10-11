@@ -51,6 +51,10 @@ public class User {
 	@Column(nullable = false)
 	private String fullName;
 
+	private Long createAt;
+	private Long updateAt;
+	private Integer status;
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
 

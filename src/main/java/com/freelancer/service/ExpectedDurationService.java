@@ -4,6 +4,7 @@ package com.freelancer.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.freelancer.model.Complexity;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -93,5 +94,12 @@ public class ExpectedDurationService {
         List<ExpectedDuration> list = expectedDurationRepository.searchExpectedDuration(keysearch, PageRequest.of(page - 1, size));
         Long total = expectedDurationRepository.countExpectedDuration(keysearch);
         return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
+    }
+
+    public ResponseObject fillAll(){
+        String message = "success";
+        List<ExpectedDuration> list = expectedDurationRepository.findAll();
+        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,null, list);
+
     }
 }

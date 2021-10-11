@@ -164,7 +164,7 @@ public class UserService {
 	public ResponseObject editBusiness(UserBusiness userBusiness) {
 		try {
 			logger.info("call to edit user business" + userBusiness.toString());
-			userBusiness.setRegistrationDate(System.currentTimeMillis());
+			userBusiness.setCreateAt(System.currentTimeMillis());
 			UserBusiness result = userBusinessRepository.save(userBusiness);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -175,7 +175,7 @@ public class UserService {
 	public ResponseObject editFreelancer(UserFreelancer userFreelancer) {
 		try {
 			logger.info("call to edit user freelancer" + userFreelancer.toString());
-			userFreelancer.setRegistrationDate(System.currentTimeMillis());
+			userFreelancer.setCreateAt(System.currentTimeMillis());
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {

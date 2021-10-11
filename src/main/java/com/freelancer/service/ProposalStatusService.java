@@ -1,5 +1,6 @@
 package com.freelancer.service;
 
+import com.freelancer.model.ExpectedDuration;
 import com.freelancer.model.ProposalStatusCatalog;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.repository.ProposalStatusCatalogRepository;
@@ -21,6 +22,13 @@ public class ProposalStatusService {
 	Gson gson = new Gson();
 	@Autowired
 	private ProposalStatusCatalogRepository proposalStatusCatalogRepository;
+
+	public ResponseObject fillAll(){
+		String message = "success";
+		List<ProposalStatusCatalog> list = proposalStatusCatalogRepository.findAll();
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,null, list);
+
+	}
 
 	// add
 	public ResponseObject save(ProposalStatusCatalog proposalStatusCatalog) {

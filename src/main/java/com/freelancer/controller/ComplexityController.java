@@ -15,6 +15,12 @@ public class ComplexityController {
     @Autowired
     private ComplexityService complexityService;
 
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> fillAll(){
+        ResponseObject result = complexityService.fillAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
 
     @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
@@ -24,7 +30,7 @@ public class ComplexityController {
     }
 
     //Get 1 by id
-    @GetMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
 
         ResponseObject result = complexityService.getById(id);
@@ -33,21 +39,21 @@ public class ComplexityController {
     }
 
     //Create
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<ResponseObject> add(@RequestBody Complexity complexity) {
         ResponseObject result = complexityService.save(complexity);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //Update
-    @PutMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.PATCH, produces = "application/json")
     public ResponseEntity<ResponseObject> update(@RequestBody Complexity complexity, @PathVariable Long id) {
 
         ResponseObject result = complexityService.update(complexity,id);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
         ResponseObject result = complexityService.delete(id);
         return new ResponseEntity<>(result,HttpStatus.OK);

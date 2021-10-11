@@ -1,5 +1,6 @@
 package com.freelancer.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class OtherSkill {
     @JoinColumn(name = "skill_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Skill skill;
 
+    @JsonBackReference(value = "otherSkills")
     @ManyToOne
     @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Job job;

@@ -25,6 +25,8 @@ import com.freelancer.service.JobService;
 public class JobController {
     @Autowired
     private JobService jobService;
+//    @Autowired
+
     //get All/SEARCH
     @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
@@ -33,7 +35,7 @@ public class JobController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     //Get 1 by id
-    @GetMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
         ResponseObject result = jobService.getById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -41,20 +43,20 @@ public class JobController {
     }
 
     //Create
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<ResponseObject> add(@RequestBody Job obj) {
         ResponseObject result = jobService.save(obj);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //Update
-    @PatchMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.PATCH, produces = "application/json")
     public ResponseEntity<ResponseObject> update(@RequestBody Job obj, @PathVariable Long id) {
         ResponseObject result = jobService.update(obj,id);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
         ResponseObject result = jobService.delete(id);
         return new ResponseEntity<>(result,HttpStatus.OK);

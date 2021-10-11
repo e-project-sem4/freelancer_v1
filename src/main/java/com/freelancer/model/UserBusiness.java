@@ -35,10 +35,14 @@ public class UserBusiness {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long user_account_id;
-    private long registrationDate;
+
     @Size(max = 255, message = "Max location length: 255 characters")
     @Column(nullable = false)
     private String location;
+
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
 
     @JsonBackReference(value = "user")
     @OneToOne(cascade = CascadeType.ALL)
@@ -57,10 +61,10 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
-    public UserBusiness(Long id, Long user_account_id, long registrationDate, String location) {
+    public UserBusiness(Long id, Long user_account_id, long createAt, String location) {
         this.id = id;
         this.user_account_id = user_account_id;
-        this.registrationDate = registrationDate;
+        this.createAt =createAt;
         this.location = location;
     }
 }

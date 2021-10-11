@@ -19,6 +19,10 @@ public class Attachment {
     private Long id;
     private Long message_id;
     private String attachmentLink;
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
+
     @ManyToOne
     @JoinColumn(name = "message_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Message message;
