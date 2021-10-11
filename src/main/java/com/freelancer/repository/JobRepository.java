@@ -13,13 +13,10 @@ import java.util.List;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job, Long> {
-    @Query(value = "SELECT a.id, a.name, a.description,a.paymentAmount, a.complexity_id, a.expected_duration_id," +
-            "a.skill_id, a.user_business_id FROM Job a WHERE (UPPER(a.name) like UPPER(CONCAT('%', :keysearch,'%'))) "
-            + "ORDER BY a.id ASC")
+    @Query(value = "SELECT a FROM Job a WHERE (UPPER(a.name) like UPPER(CONCAT('%', :keysearch,'%')))")
     List<Job> searchJob(@Param("keysearch") String keysearch, Pageable pageable);
 
-    @Query(value = "SELECT count(a.id) FROM Job a WHERE (UPPER(a.name) like UPPER(CONCAT('%', :keysearch,'%'))) "
-            + "ORDER BY a.id ASC")
+    @Query(value = "SELECT count(a) FROM Job a WHERE (UPPER(a.name) like UPPER(CONCAT('%', :keysearch,'%')))")
     Long countJob(@Param("keysearch") String keysearch);
 
 }
