@@ -6,6 +6,7 @@ import com.freelancer.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,9 @@ public class SkillController {
     @Autowired
     private SkillService skillService;
 
+
     //get All/SEARCH
+    @PreAuthorize("hasRole('ROLE_CLIENT') OR hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
                                                  @PathVariable int size) {
