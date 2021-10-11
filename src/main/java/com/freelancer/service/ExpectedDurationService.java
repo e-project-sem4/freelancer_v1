@@ -1,19 +1,21 @@
 package com.freelancer.service;
 
 
+import java.util.List;
+import java.util.Optional;
+
+import com.freelancer.model.Complexity;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
 import com.freelancer.model.ExpectedDuration;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.repository.ExpectedDurationRepository;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.google.gson.Gson;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ExpectedDurationService {
@@ -41,7 +43,6 @@ public class ExpectedDurationService {
         logger.info("call to get Expected Duration to delete by id: " + id);
         Optional<ExpectedDuration> optionalExpectedDuration = expectedDurationRepository.findById(id);
         String message = "can not find Expected Duration";
-        ExpectedDuration result = null;
         if (optionalExpectedDuration.isPresent()) {
             expectedDurationRepository.deleteById(id);
             message = "delete success";
@@ -60,7 +61,6 @@ public class ExpectedDurationService {
         String message = "can not Expected Duration";
         ExpectedDuration result = null;
         if (optionalExpectedDuration.isPresent()) {
-            ExpectedDuration expectedDuration1 = optionalExpectedDuration.get();
             result = expectedDurationRepository.save(expectedDuration);
             message = "update success";
             logger.info("update Expected Duration success");
@@ -94,5 +94,12 @@ public class ExpectedDurationService {
         List<ExpectedDuration> list = expectedDurationRepository.searchExpectedDuration(keysearch, PageRequest.of(page - 1, size));
         Long total = expectedDurationRepository.countExpectedDuration(keysearch);
         return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
+    }
+
+    public ResponseObject fillAll(){
+        String message = "success";
+        List<ExpectedDuration> list = expectedDurationRepository.findAll();
+        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,null, list);
+
     }
 }

@@ -28,11 +28,15 @@ public class Proposal {
     private Long user_freelancer_id;
     private Long job_id;
     private Long proposal_status_catalog_id;
+    private String description;
+    private Integer status;
+
 
     @ManyToOne
     @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id", insertable=false, updatable=false)
     private UserFreelancer userFreelancer;
 
+    @JsonBackReference(value = "proposals")
     @ManyToOne
     @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Job job;

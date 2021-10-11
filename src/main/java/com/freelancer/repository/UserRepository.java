@@ -26,11 +26,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<User> searchUser(@Param("keysearch") String keysearch, @Param("username") String username, Pageable pageable);
 
 	@Query(value = "SELECT count(a) FROM User a WHERE (UPPER(a.username) like UPPER(CONCAT('%', :keysearch,'%')) "
-			+ "OR UPPER(a.fullName) like UPPER(CONCAT('%', :keysearch,'%'))) and username != :username ORDER BY a.username")
+			+ "OR UPPER(a.fullName) like UPPER(CONCAT('%', :keysearch,'%'))) and username != :username")
 	Long countUser(@Param("keysearch") String keysearch, @Param("username") String username);
 
 	@Modifying
 	@Query(value = "UPDATE User a SET a.password = :newPassword WHERE a.username = :username")
 	void changePasswordByUsername(@Param("newPassword") String newPassword, @Param("username") String username);
-
 }

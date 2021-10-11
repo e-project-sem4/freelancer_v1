@@ -35,7 +35,7 @@ public class User {
 	private Long id;
 
 	@Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = false, updatable = false)
 	private String username;
 
 	@Column(nullable = false)
@@ -50,6 +50,10 @@ public class User {
 	@Size(min = 4, max = 100, message = "Minimum full name max length: 100 characters")
 	@Column(nullable = false)
 	private String fullName;
+
+	private Long createAt;
+	private Long updateAt;
+	private Integer status;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;

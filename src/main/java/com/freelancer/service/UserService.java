@@ -22,6 +22,10 @@ import com.freelancer.exception.CustomException;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.Role;
 import com.freelancer.model.User;
+import com.freelancer.model.UserBusiness;
+import com.freelancer.model.UserFreelancer;
+import com.freelancer.repository.UserBusinessRepository;
+import com.freelancer.repository.UserFreelancerRepository;
 import com.freelancer.repository.UserRepository;
 import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.utils.ConfigLog;
@@ -39,6 +43,12 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UserBusinessRepository userBusinessRepository;
+
+	@Autowired
+	private UserFreelancerRepository userFreelancerRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -109,6 +119,18 @@ public class UserService {
 		return userRepository.count();
 	}
 
+	public ResponseObject viewProfile(String username) {
+		logger.info("call to view profile with username: " + username);
+		User user = userRepository.findByUsername(username);
+		String message = "can not find user";
+		if (null != user) {
+			message = "success";
+			user.setPassword(null);
+			logger.info("get user success");
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
+	}
+
 	public ResponseObject getUserById(Long id) {
 		logger.info("call to get user by id: " + id);
 		Optional<User> optionalUser = userRepository.findById(id);
@@ -117,20 +139,48 @@ public class UserService {
 		if (optionalUser.isPresent()) {
 			message = "success";
 			user = optionalUser.get();
+			user.setPhone(null);
+			user.setEmail(null);
+			user.setRoles(null);
+			user.getUserBusinesses().setLocation(null);
+			user.getUserFreelancers().setLocation(null);
 			user.setPassword(null);
 			logger.info("get user success");
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
 	}
 
-	public ResponseObject editProfile(HttpServletRequest request, Long idUser) {
+	public ResponseObject editProfile(User user) {
 		try {
-			JsonObject jsonString = JsonParser.parseReader(request.getReader()).getAsJsonObject();
-			logger.info("call to edit user by id: " + idUser);
-			logger.info("jsonString: " + jsonString);
+			logger.info("call to edit user" + user.toString());
+			user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+			User result = userRepository.save(user);
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit profile", null);
 		}
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "", null);
+	}
+
+	public ResponseObject editBusiness(UserBusiness userBusiness) {
+		try {
+			logger.info("call to edit user business" + userBusiness.toString());
+			userBusiness.setCreateAt(System.currentTimeMillis());
+			UserBusiness result = userBusinessRepository.save(userBusiness);
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
+		} catch (Exception e) {
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit business", null);
+		}
+	}
+
+	public ResponseObject editFreelancer(UserFreelancer userFreelancer) {
+		try {
+			logger.info("call to edit user freelancer" + userFreelancer.toString());
+			userFreelancer.setCreateAt(System.currentTimeMillis());
+			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
+		} catch (Exception e) {
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit freelancer", null);
+		}
 	}
 
 	public ResponseObject register(User user) {
@@ -139,7 +189,7 @@ public class UserService {
 		String message = "success";
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User result = userRepository.save(user);
-		logger.info("create user: " + result);
+		logger.info("register user: " + result);
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 	}
 
@@ -178,5 +228,16 @@ public class UserService {
 			logger.error("error change password", e);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Change password fail", null);
+	}
+
+	public ResponseObject delete(Long id) {
+		try {
+			logger.info("call to delete user by id: " + id);
+			userRepository.deleteById(id);
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", null);
+		} catch (Exception e) {
+			logger.info("error delete user by id", e);
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit freelancer", null);
+		}
 	}
 }

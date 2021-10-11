@@ -28,6 +28,7 @@ public class Contract {
     private Long paymentAmount;
     private Long user_business_id;
     private Long proposal_id;
+    private Integer status;
 
 
     @ManyToOne

@@ -29,14 +29,14 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String skillName;
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
 
     @JsonBackReference(value = "hasSkills")
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<HasSkill> hasSkills;
 
-    @JsonBackReference(value = "jobs")
-    @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Collection<Job> jobs;
 
     @JsonBackReference
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
