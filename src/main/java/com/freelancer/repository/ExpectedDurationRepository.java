@@ -1,9 +1,21 @@
 package com.freelancer.repository;
 
 import com.freelancer.model.ExpectedDuration;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ExpectedDurationRepository extends JpaRepository<ExpectedDuration, Long> {
+    @Query(value = "SELECT a FROM ExpectedDuration a WHERE (UPPER(a.durationText) like UPPER(CONCAT('%', :keysearch,'%'))) "
+            + "ORDER BY a.id")
+    List<ExpectedDuration> searchExpectedDuration(@Param("keysearch") String keysearch, Pageable pageable);
+
+    @Query(value = "SELECT count(a) FROM ExpectedDuration a WHERE (UPPER(a.durationText) like UPPER(CONCAT('%', :keysearch,'%'))) "
+            + "ORDER BY a.id")
+    Long countExpectedDuration(@Param("keysearch") String keysearch);
 }

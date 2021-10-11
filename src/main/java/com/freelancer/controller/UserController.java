@@ -7,10 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.User;
+import com.freelancer.model.UserBusiness;
+import com.freelancer.model.UserFreelancer;
+import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.service.UserService;
-
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.freelancer.utils.JWTService;
 
 @CrossOrigin
 @RestController
@@ -33,7 +31,15 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+
+	@Autowired
+	JWTService jwtService;
+
+	private static final String AUTHORIZATION = "Authorization";
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<ResponseObject> login(@RequestParam String username, @RequestParam String password) {
 		ResponseObject result = userService.signin(username, password);
 		return new ResponseEntity<>(result, HttpStatus.OK);
@@ -45,10 +51,32 @@ public class UserController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/viewprofile", method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	public ResponseEntity<ResponseObject> viewProfile(HttpServletRequest request) {
+		String token = request.getHeader(AUTHORIZATION);
+		String username = jwtTokenProvider.getUsername(token);
+		ResponseObject result = userService.viewProfile(username);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/editprofile", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
 	public ResponseEntity<ResponseObject> editProfile(User user) {
 		ResponseObject result = userService.editProfile(user);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/editprofilebusiness", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+	public ResponseEntity<ResponseObject> editBusiness(@RequestBody UserBusiness userBusiness) {
+		ResponseObject result = userService.editBusiness(userBusiness);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/editprofilefreelancer", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+	public ResponseEntity<ResponseObject> editFreelancer(@RequestBody UserFreelancer userFreelancer) {
+		ResponseObject result = userService.editFreelancer(userFreelancer);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -64,21 +92,18 @@ public class UserController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/{username}")
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@ApiResponses(value = { //
-			@ApiResponse(code = 400, message = "Something went wrong"), //
-			@ApiResponse(code = 403, message = "Access denied"), //
-			@ApiResponse(code = 404, message = "The user doesn't exist"), //
-			@ApiResponse(code = 500, message = "Expired or invalid JWT token") })
-	public String delete(@ApiParam("Username") @PathVariable String username) {
-		userService.delete(username);
-		return username;
+	public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
+		ResponseObject result = userService.delete(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
-	public ResponseEntity<ResponseObject> search(@RequestParam String username, @RequestParam String keysearch,
+	public ResponseEntity<ResponseObject> search(HttpServletRequest request, @RequestParam String keysearch,
 			@PathVariable int page, @PathVariable int size) {
+		String token = request.getHeader(AUTHORIZATION);
+		String username = jwtTokenProvider.getUsername(token);
 		ResponseObject result = userService.search(keysearch, username, page, size);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
