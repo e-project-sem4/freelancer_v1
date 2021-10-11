@@ -33,7 +33,6 @@ public class UserFreelancer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long user_account_id;
-	private long registrationDate;
 	@Size(max = 255, message = "Max location length: 255 characters")
 	@Column(nullable = false)
 	private String location;
@@ -43,6 +42,10 @@ public class UserFreelancer {
 	@Size(max = 1000, message = "Max location length: 1000 characters")
 	@Column(nullable = false)
 	private String certifications;
+
+	private Long createAt;
+	private Long updateAt;
+	private Integer status;
 
 	@JsonBackReference(value = "user")
 	@OneToOne(cascade = CascadeType.ALL)
@@ -61,11 +64,11 @@ public class UserFreelancer {
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Proposal> proposals;
 
-	public UserFreelancer(Long id, Long user_account_id, long registrationDate, String location, String overview,
+	public UserFreelancer(Long id, Long user_account_id, Long createAt, String location, String overview,
 			String certifications) {
 		this.id = id;
 		this.user_account_id = user_account_id;
-		this.registrationDate = registrationDate;
+		this.createAt = createAt;
 		this.location = location;
 		this.overview = overview;
 		this.certifications = certifications;

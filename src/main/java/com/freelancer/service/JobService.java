@@ -3,6 +3,9 @@ package com.freelancer.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.freelancer.model.OtherSkill;
+import com.freelancer.repository.HasSkillRepository;
+import com.freelancer.repository.OtherSkillRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -13,12 +16,17 @@ import com.freelancer.model.ResponseObject;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class JobService {
     Logger logger = ConfigLog.getLogger(JobService.class);
     @Autowired
     private JobRepository jobRepository;
+
+    @Autowired
+    private OtherSkillRepository otherSkillRepository;
+
 
     public ResponseObject search(String keysearch, int page, int size) {
         logger.info("call to search Job with key : " + keysearch);
@@ -29,10 +37,19 @@ public class JobService {
     }
 
     //add
+    @Transactional
     public ResponseObject save(Job obj) {
         String message = "not success";
         logger.info("call to Create Job" + jobRepository.toString());
         Job result = jobRepository.save(obj);
+
+        for (OtherSkill o:obj.getOtherSkills()
+             ) {
+            o.setJob_id(result.getId());
+            otherSkillRepository.save(o);
+
+        }
+
         if (result != null) {
             message = "success";
             return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
@@ -67,7 +84,6 @@ public class JobService {
             Job result = optionalJob.get();
             result.setName(obj.getName());
             result.setDescription(obj.getDescription());
-            result.setSkill_id(obj.getSkill_id());
             result.setComplexity_id(obj.getComplexity_id());
             result.setExpected_duration_id(obj.getExpected_duration_id());
             result.setPaymentAmount(obj.getPaymentAmount());
