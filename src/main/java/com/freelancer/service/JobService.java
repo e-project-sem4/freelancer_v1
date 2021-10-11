@@ -1,20 +1,18 @@
 package com.freelancer.service;
 
-import com.freelancer.model.ExpectedDuration;
+import java.util.List;
+import java.util.Optional;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
 import com.freelancer.model.Job;
 import com.freelancer.model.ResponseObject;
-import com.freelancer.repository.ComplexityRepository;
-import com.freelancer.repository.ExpectedDurationRepository;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class JobService {

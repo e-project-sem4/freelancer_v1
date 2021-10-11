@@ -40,7 +40,6 @@ public class SkillService  {
         logger.info("call to get skill to delete by id: " + id);
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         String message = "can not find skill";
-        Skill result = null;
         if (optionalSkill.isPresent()) {
             skillRepository.deleteById(id);
             message = "delete success";
@@ -59,7 +58,6 @@ public class SkillService  {
         String message = "can not skill";
         Skill result = null;
         if (optionalSkill.isPresent()) {
-            Skill skill1 = optionalSkill.get();
             result = skillRepository.save(skill);
             message = "update success";
             logger.info("update skill success");
