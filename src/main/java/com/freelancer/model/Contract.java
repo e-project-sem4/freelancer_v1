@@ -25,7 +25,7 @@ public class Contract {
     private Long id;
     private Long startTime;
     private Long endTime;
-    private Long paymentAmount;
+    private Double paymentAmount;
     private Long user_business_id;
     private Long proposal_id;
     private Integer status;
