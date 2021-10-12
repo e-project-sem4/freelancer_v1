@@ -20,7 +20,7 @@ public class Proposal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long proposalTime;
-    private Long paymentAmount;
+    private Double paymentAmount;
     private int clientGrade;
     private String clientComment;
     private int freelancerGrade;

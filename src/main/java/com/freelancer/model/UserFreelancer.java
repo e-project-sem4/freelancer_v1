@@ -64,13 +64,14 @@ public class UserFreelancer {
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Proposal> proposals;
 
-	public UserFreelancer(Long id, Long user_account_id, Long createAt, String location, String overview,
-			String certifications) {
+	public UserFreelancer(Long id, Long user_account_id, String location, String overview, String certifications, Long createAt, Long updateAt, Integer status) {
 		this.id = id;
 		this.user_account_id = user_account_id;
-		this.createAt = createAt;
 		this.location = location;
 		this.overview = overview;
 		this.certifications = certifications;
+		this.createAt = createAt;
+		this.updateAt = updateAt;
+		this.status = status;
 	}
 }

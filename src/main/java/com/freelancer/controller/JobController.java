@@ -1,7 +1,13 @@
 package com.freelancer.controller;
 
+import com.freelancer.model.ExpectedDuration;
+import com.freelancer.model.Job;
+import com.freelancer.model.ResponseObject;
+import com.freelancer.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,17 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.freelancer.model.Job;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.service.JobService;
-
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/job")
 public class JobController {
     @Autowired
     private JobService jobService;
-//    @Autowired
 
     //get All/SEARCH
     @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
@@ -35,6 +36,7 @@ public class JobController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     //Get 1 by id
+    @GetMapping("/{id}")
     @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
         ResponseObject result = jobService.getById(id);

@@ -61,10 +61,12 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
-    public UserBusiness(Long id, Long user_account_id, long createAt, String location) {
+    public UserBusiness(Long id, Long user_account_id, String location, Long createAt, Long updateAt, Integer status) {
         this.id = id;
         this.user_account_id = user_account_id;
-        this.createAt =createAt;
         this.location = location;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.status = status;
     }
 }
