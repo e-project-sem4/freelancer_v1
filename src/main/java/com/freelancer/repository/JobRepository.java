@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificationExecutor<Job> {
-    @Query(value = "SELECT a FROM Job a WHERE (UPPER(a.name) like UPPER(CONCAT('%', :keysearch,'%'))) "
+    @Query(value = "SELECT a FROM Job a WHERE (UPPER(a.name) like UPPER(CONCAT('%', :keysearch,'%')))"
             + "ORDER BY a.id")
     List<Job> searchJob(@Param("keysearch") String keysearch, Pageable pageable);
 

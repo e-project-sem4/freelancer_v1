@@ -16,8 +16,8 @@ public class ComplexityController {
     private ComplexityService complexityService;
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> fillAll(){
-        ResponseObject result = complexityService.fillAll();
+    public ResponseEntity<ResponseObject> findAll(){
+        ResponseObject result = complexityService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
@@ -40,16 +40,16 @@ public class ComplexityController {
 
     //Create
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<ResponseObject> add(@RequestBody Complexity complexity) {
-        ResponseObject result = complexityService.save(complexity);
+    public ResponseEntity<ResponseObject> add(@RequestBody Complexity obj) {
+        ResponseObject result = complexityService.save(obj);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //Update
     @RequestMapping(value = "/{id}",method = RequestMethod.PATCH, produces = "application/json")
-    public ResponseEntity<ResponseObject> update(@RequestBody Complexity complexity, @PathVariable Long id) {
+    public ResponseEntity<ResponseObject> update(@RequestBody Complexity obj, @PathVariable Long id) {
 
-        ResponseObject result = complexityService.update(complexity,id);
+        ResponseObject result = complexityService.update(obj,id);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 

@@ -19,14 +19,14 @@ public class ExpectedDurationController {
 //get All
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> fillAll(){
-        ResponseObject result = expectedDurationService.fillAll();
+    public ResponseEntity<ResponseObject> findAll(){
+        ResponseObject result = expectedDurationService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 
 
-    //get All/SEARCH
+    //get all/SEARCH
     @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
                                                  @PathVariable int size) {

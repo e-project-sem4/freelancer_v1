@@ -13,8 +13,8 @@ import java.util.List;
 public interface ProposalStatusCatalogRepository extends JpaRepository<ProposalStatusCatalog, Long> {
     @Query(value = "SELECT a FROM ProposalStatusCatalog a WHERE (UPPER(a.statusName) like UPPER(CONCAT('%', :keysearch,'%'))) "
             + "ORDER BY a.id")
-    List<ProposalStatusCatalog> searchProposalSC(@Param("keysearch") String keysearch, Pageable pageable);
+    List<ProposalStatusCatalog> searchObj(@Param("keysearch") String keysearch, Pageable pageable);
 
     @Query(value = "SELECT count(a) FROM ProposalStatusCatalog a WHERE (UPPER(a.statusName) like UPPER(CONCAT('%', :keysearch,'%')))")
-    Long countProposalSC(@Param("keysearch") String keysearch);
+    Long countObj(@Param("keysearch") String keysearch);
 }

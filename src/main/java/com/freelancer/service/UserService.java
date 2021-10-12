@@ -66,8 +66,6 @@ public class UserService {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 			User user = userRepository.findByUsername(username);
 			user.setPassword(null);
-			user.setUserBusinesses(null);
-			user.setUserFreelancers(null);
 			String token = jwtTokenProvider.createToken(username, user.getRoles());
 			message = token;
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);

@@ -13,8 +13,8 @@ import java.util.List;
 public interface SkillRepository extends JpaRepository<Skill, Long> {
     @Query(value = "SELECT a FROM Skill a WHERE (UPPER(a.skillName) like UPPER(CONCAT('%', :keysearch,'%'))) "
             + "ORDER BY a.id")
-    List<Skill> searchSkill(@Param("keysearch") String keysearch, Pageable pageable);
+    List<Skill> searchObj(@Param("keysearch") String keysearch, Pageable pageable);
 
     @Query(value = "SELECT count(a) FROM Skill a WHERE (UPPER(a.skillName) like UPPER(CONCAT('%', :keysearch,'%')))")
-    Long countSkill(@Param("keysearch") String keysearch);
+    Long countObj(@Param("keysearch") String keysearch);
 }

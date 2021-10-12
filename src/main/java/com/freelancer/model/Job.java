@@ -36,7 +36,6 @@ public class Job {
     private String name;
     private String description;
     private Double paymentAmount;
-    private Integer isPaymentStatus;
     private Long createAt;
     private Long updateAt;
     private Integer status;
@@ -69,7 +68,6 @@ public class Job {
         this.name = name;
         this.description = description;
         this.paymentAmount = paymentAmount;
-        this.isPaymentStatus = isPaymentStatus;
         this.createAt = createAt;
         this.updateAt = updateAt;
         this.status = status;
