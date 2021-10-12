@@ -16,6 +16,16 @@ public class ExpectedDurationController {
     @Autowired
     private ExpectedDurationService expectedDurationService;
 
+//get All
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> fillAll(){
+        ResponseObject result = expectedDurationService.fillAll();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
+
+
     //get All/SEARCH
     @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
@@ -25,7 +35,7 @@ public class ExpectedDurationController {
     }
 
     //Get 1 by id
-    @GetMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
 
         ResponseObject result = expectedDurationService.getById(id);
@@ -34,21 +44,21 @@ public class ExpectedDurationController {
     }
 
     //Create
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<ResponseObject> add(@RequestBody ExpectedDuration expectedDuration) {
         ResponseObject result = expectedDurationService.save(expectedDuration);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //Update
-    @PutMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.PATCH, produces = "application/json")
     public ResponseEntity<ResponseObject> update(@RequestBody ExpectedDuration expectedDuration, @PathVariable Long id) {
 
         ResponseObject result = expectedDurationService.update(expectedDuration,id);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
         ResponseObject result = expectedDurationService.delete(id);
         return new ResponseEntity<>(result,HttpStatus.OK);

@@ -16,12 +16,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -29,15 +29,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "user_business")
+@ToString
 public class UserBusiness {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long user_account_id;
-    private long registrationDate;
+
     @Size(max = 255, message = "Max location length: 255 characters")
     @Column(nullable = false)
     private String location;
+
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
 
     @JsonBackReference(value = "user")
     @OneToOne(cascade = CascadeType.ALL)
@@ -48,7 +53,7 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 
-    @JsonBackReference(value = "jobs")
+    
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
@@ -56,10 +61,12 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
-    public UserBusiness(Long id, Long user_account_id, long registrationDate, String location) {
+    public UserBusiness(Long id, Long user_account_id, String location, Long createAt, Long updateAt, Integer status) {
         this.id = id;
         this.user_account_id = user_account_id;
-        this.registrationDate = registrationDate;
         this.location = location;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.status = status;
     }
 }

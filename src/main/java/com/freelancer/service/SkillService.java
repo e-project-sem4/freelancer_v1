@@ -1,5 +1,6 @@
 package com.freelancer.service;
 
+import com.freelancer.model.ExpectedDuration;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.Skill;
 import com.freelancer.repository.SkillRepository;
@@ -22,6 +23,13 @@ public class SkillService  {
     @Autowired
     private SkillRepository skillRepository;
 
+
+    public ResponseObject fillAll(){
+        String message = "success";
+        List<Skill> list = skillRepository.findAll();
+        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,null, list);
+
+    }
     //add
     public ResponseObject save(Skill skill){
         String message = "not success";
@@ -40,7 +48,6 @@ public class SkillService  {
         logger.info("call to get skill to delete by id: " + id);
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         String message = "can not find skill";
-        Skill result = null;
         if (optionalSkill.isPresent()) {
             skillRepository.deleteById(id);
             message = "delete success";
@@ -59,7 +66,6 @@ public class SkillService  {
         String message = "can not skill";
         Skill result = null;
         if (optionalSkill.isPresent()) {
-            Skill skill1 = optionalSkill.get();
             result = skillRepository.save(skill);
             message = "update success";
             logger.info("update skill success");

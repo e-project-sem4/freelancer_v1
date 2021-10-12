@@ -20,6 +20,10 @@ public class Complexity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String complexityText;
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
+
 
     @JsonBackReference
     @OneToMany(mappedBy = "complexity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
