@@ -27,7 +27,7 @@ import lombok.Setter;
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String skillName;
     private Long createAt;
     private Long updateAt;

@@ -33,8 +33,8 @@ public class SkillController {
 
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> fillAll(){
-        ResponseObject result = skillService.fillAll();
+    public ResponseEntity<ResponseObject> findAll(){
+        ResponseObject result = skillService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }

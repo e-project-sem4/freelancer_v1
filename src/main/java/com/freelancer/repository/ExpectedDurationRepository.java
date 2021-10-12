@@ -13,8 +13,8 @@ import java.util.List;
 public interface ExpectedDurationRepository extends JpaRepository<ExpectedDuration, Long> {
     @Query(value = "SELECT a FROM ExpectedDuration a WHERE (UPPER(a.durationText) like UPPER(CONCAT('%', :keysearch,'%'))) "
             + "ORDER BY a.id")
-    List<ExpectedDuration> searchExpectedDuration(@Param("keysearch") String keysearch, Pageable pageable);
+    List<ExpectedDuration> searchObj(@Param("keysearch") String keysearch, Pageable pageable);
 
     @Query(value = "SELECT count(a) FROM ExpectedDuration a WHERE (UPPER(a.durationText) like UPPER(CONCAT('%', :keysearch,'%')))")
-    Long countExpectedDuration(@Param("keysearch") String keysearch);
+    Long countObj(@Param("keysearch") String keysearch);
 }
