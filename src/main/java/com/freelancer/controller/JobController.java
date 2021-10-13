@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Console;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -63,7 +64,9 @@ public class JobController {
     public ResponseEntity<ResponseObject> search(@RequestParam(value = "keySearch", required = false) Optional<String> keySearch
             , @RequestParam(value = "complexity_id", required = false) Optional<Long> complexity_id
             , @RequestParam(value = "expected_duration_id", required = false) Optional<Long> expected_duration_id
-            , HttpServletRequest request
+            , HttpServletRequest request,
+                                                 @RequestParam(value = "skill_id", required = false) Optional<ArrayList<Long>> skill_id
+
             , @RequestParam(value = "status", required = false) Optional<Long> status
             , @RequestParam(value = "page", required = false) Optional<Integer> page
             , @RequestParam(value = "size", required = false) Optional<Integer> size
@@ -80,21 +83,13 @@ public class JobController {
         if (expected_duration_id.isPresent() && expected_duration_id.get() > 0) {
             specification = specification.and(new JobSpecification(new SearchCriteria("expected_duration_id", "==", expected_duration_id.get())));
         }
-        try {
-            JsonObject jsonSkillId = JsonParser.parseReader(request.getReader()).getAsJsonObject();
-            if (jsonSkillId.get("skill_id").getAsJsonArray()!=null)
-            {
-                for (JsonElement s:jsonSkillId.get("skill_id").getAsJsonArray()
-                     ) {
-                    System.out.println(s);
-                    specification = specification.and(new JobSpecification(new SearchCriteria("skill_id", "==skill", s.getAsLong())));
 
-                }
+        if (skill_id.isPresent()&&skill_id.get().get(0)>0){
+            for (Long s: skill_id.get()
+                 ) {
+                specification = specification.and(new JobSpecification(new SearchCriteria("skill_id", "==skill", s)));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
 
         if (status.isPresent()) {
             specification = specification.and(new JobSpecification(new SearchCriteria("status", "==", status.get())));
