@@ -11,6 +11,8 @@ import com.freelancer.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.freelancer.repository.JobRepository;
@@ -28,16 +30,22 @@ public class JobService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseObject search(String keysearch,Long skill_Id,Long complexityText, int page, int size) {
-        logger.info("call to search Job with key : " + keysearch);
-        List<Job> list = jobRepository.searchJob(keysearch, PageRequest.of(page - 1, size));
-//       for (int x=0;x<list.size();x++){
-//            if (skill_Id!=null){
-//           while (list.)
-//            }
-//
-//        }
-        Long total = jobRepository.countJob(keysearch);
+    public ResponseObject search(Specification<Job> specification, int page, int size,int sort) {
+        List<Job> list = null;
+        if (page>0&&size>0&&(sort>4||sort<1)){
+             list = jobRepository.findAll(specification,PageRequest.of(page-1,size)).getContent();
+        }else if (page>0&&size>0&&sort==1){
+            list = jobRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
+        }else if (page>0&&size>0&&sort==2){
+            list = jobRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").ascending())).getContent();
+        }else if (page>0&&size>0&&sort==3){
+            list = jobRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("paymentAmount").descending())).getContent();
+        }else if (page>0&&size>0&&sort==4) {
+            list = jobRepository.findAll(specification, PageRequest.of(page - 1, size, Sort.by("paymentAmount").ascending())).getContent();
+        }else if (page==0&&size==0&&sort==0){
+            list = jobRepository.findAll(specification);
+        }
+        Long total= Long.valueOf(jobRepository.findAll(specification).size());
         String message = "success";
         return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
     }
@@ -49,14 +57,14 @@ public class JobService {
         String message = "not success";
         logger.info("call to Create Job" + jobRepository.toString());
         obj.setCreateAt(DateUtil.getTimeLongCurrent());
-        if (user.getUserBusinesses().getId()==null){
-             message = "Account not mapping Business";
+        if (user.getUserBusinesses().getId() == null) {
+            message = "Account not mapping Business";
             return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
         }
         obj.setUser_business_id(user.getUserBusinesses().getId());
         Job result = jobRepository.save(obj);
-        for (OtherSkill o:obj.getOtherSkills()
-             ) {
+        for (OtherSkill o : obj.getOtherSkills()
+        ) {
             o.setJob_id(result.getId());
             otherSkillRepository.save(o);
         }
@@ -73,7 +81,7 @@ public class JobService {
         Job obj = jobRepository.getOne(id);
         String message = "can not find obj";
         Job result = null;
-        if (obj.getId()!=null) {
+        if (obj.getId() != null) {
             obj.setStatus(0);
             result = jobRepository.save(obj);
             message = "delete success";
@@ -93,24 +101,24 @@ public class JobService {
         Job obj1 = jobRepository.getOne(id);
         String message = "can not find obj";
         Job result = null;
-        if (obj.getId()!=null) {
-            if (obj.getComplexity_id()!=null){
+        if (obj.getId() != null) {
+            if (obj.getComplexity_id() != null) {
                 obj1.setComplexity_id(obj.getComplexity_id());
             }
-            if (obj.getName()!=null){
+            if (obj.getName() != null) {
                 obj1.setName(obj.getName());
             }
-            if (obj.getDescription()!=null){
+            if (obj.getDescription() != null) {
                 obj1.setDescription(obj.getDescription());
             }
-            if (obj.getExpected_duration_id()!=null){
+            if (obj.getExpected_duration_id() != null) {
                 obj1.setExpected_duration_id(obj.getExpected_duration_id());
             }
-            if (obj.getPaymentAmount()!=null){
+            if (obj.getPaymentAmount() != null) {
                 obj1.setPaymentAmount(obj.getPaymentAmount());
             }
 
-            if (obj.getStatus()!=null){
+            if (obj.getStatus() != null) {
                 obj1.setStatus(obj.getStatus());
             }
             obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
@@ -118,7 +126,7 @@ public class JobService {
             message = "update success";
             logger.info("update obj success");
 
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,result);
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
         } else {
             return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
         }
@@ -131,11 +139,15 @@ public class JobService {
         Optional<Job> optionalJob = jobRepository.findById(id);
         String message = "can not find Job";
         if (optionalJob.isPresent()) {
-            message = "success";
-            optionalJob.get();
-            logger.info("get Job success");
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, optionalJob.get());
+            if (optionalJob.get().getStatus()!=0){
+                message = "success";
+                logger.info("get Job success");
+                return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, optionalJob.get());
+            }
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+
         }
         return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+
     }
 }

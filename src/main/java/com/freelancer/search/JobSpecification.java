@@ -1,7 +1,6 @@
 package com.freelancer.search;
 
-import com.freelancer.model.Complexity;
-import com.freelancer.model.Job;
+import com.freelancer.model.*;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.EntityManager;
@@ -36,29 +35,27 @@ public class JobSpecification implements Specification<Job>{
                                  CriteriaQuery<?> criteriaQuery,
                                  CriteriaBuilder criteriaBuilder) {
 
-
-        Join<Job, Complexity> job_complexity = root.join("complexity");
-
         if (this.searchCriteria.getKey() == null) {
             return null;
         }
 
         switch (this.searchCriteria.getOperation()){
+
             case "==":
-                return criteriaBuilder.equal(job_complexity.get(this.searchCriteria.getKey()),searchCriteria.getValue());
+                return criteriaBuilder.equal(root.get(this.searchCriteria.getKey()),searchCriteria.getValue());
+            case "like":
+                return criteriaBuilder.like(root.get(searchCriteria.getKey()), "%" + searchCriteria.getValue().toString() + "%");
+            case ">=":
+                return criteriaBuilder.greaterThanOrEqualTo(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+            case "<=":
+                return criteriaBuilder.lessThanOrEqualTo(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+
+
+            case "==skill":
+                Join<Object, Object> jobOtherSkillJoin = root.join("otherSkills");
+                return criteriaBuilder.equal(jobOtherSkillJoin.get(searchCriteria.getKey()),searchCriteria.getValue());
+            default:return null;
+
         }
-
-
-//        if (this.searchCriteria.getOperation().equals("like")) {
-//            return criteriaBuilder.like(root.get(searchCriteria.getKey()), "%" + searchCriteria.getValue().toString() + "%");
-//        } else if (this.searchCriteria.getOperation().equals("==")) {
-//            return criteriaBuilder.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue());
-//        } else if (this.searchCriteria.getOperation().equals(">=")) {
-//            return criteriaBuilder.greaterThanOrEqualTo(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-//        }
-//        else if (this.searchCriteria.getOperation().equals("<=")) {
-//            return criteriaBuilder.lessThanOrEqualTo(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-//        }
-        return null;
     }
 }
