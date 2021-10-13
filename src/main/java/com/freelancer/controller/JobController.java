@@ -49,16 +49,12 @@ public class JobController {
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
-
     private static final String AUTHORIZATION = "Authorization";
     @Autowired
     private JobService jobService;
     @Autowired
     private JobRepository jobRepository;
     private Gson gson;
-
-
-
     //get All/SEARCH
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> search(@RequestParam(value = "keySearch", required = false) Optional<String> keySearch
