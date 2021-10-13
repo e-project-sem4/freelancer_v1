@@ -28,8 +28,9 @@ public class ExpectedDuration {
     @OneToMany(mappedBy = "expectedDuration",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
-    public ExpectedDuration(long id, String durationText) {
+    public ExpectedDuration(long id, String durationText,Integer status) {
         this.id = id;
         this.durationText = durationText;
+        this.status = status;
     }
 }

@@ -72,20 +72,20 @@ public class Database implements CommandLineRunner {
 //        return d.getTime();
 //    }
     private void seedComplexity() {
-        complexityRepository.save(new Complexity(1L, "Easy"));
-        complexityRepository.save(new Complexity(2L, "Intermediate"));
-        complexityRepository.save(new Complexity(3L, "Hard"));
+        complexityRepository.save(new Complexity(1L, "Easy",1));
+        complexityRepository.save(new Complexity(2L, "Intermediate",1));
+        complexityRepository.save(new Complexity(3L, "Hard",1));
 
     }
 
     private void seedExpected() {
-        edRepository.save(new ExpectedDuration(1L, "1 day"));
-        edRepository.save(new ExpectedDuration(2L, "2-5 days"));
-        edRepository.save(new ExpectedDuration(3L, "5-10 days"));
-        edRepository.save(new ExpectedDuration(4L, "less than 1 month"));
-        edRepository.save(new ExpectedDuration(5L, "1-3 months"));
-        edRepository.save(new ExpectedDuration(6L, "3-6 months"));
-        edRepository.save(new ExpectedDuration(7L, "6 or more months"));
+        edRepository.save(new ExpectedDuration(1L, "1 day",1));
+        edRepository.save(new ExpectedDuration(2L, "2-5 days",1));
+        edRepository.save(new ExpectedDuration(3L, "5-10 days",1));
+        edRepository.save(new ExpectedDuration(4L, "less than 1 month",1));
+        edRepository.save(new ExpectedDuration(5L, "1-3 months",1));
+        edRepository.save(new ExpectedDuration(6L, "3-6 months",1));
+        edRepository.save(new ExpectedDuration(7L, "6 or more months",1));
     }
 
     private void seedUserAccount() {
@@ -150,16 +150,16 @@ public class Database implements CommandLineRunner {
     }
 
     private void seedSkill() {
-        skillRepository.save(new Skill(1L, "JavaScript"));
-        skillRepository.save(new Skill(2L, "Python"));
-        skillRepository.save(new Skill(3L, "C/C++"));
-        skillRepository.save(new Skill(4L, "Java"));
-        skillRepository.save(new Skill(5L, "PHP"));
-        skillRepository.save(new Skill(6L, "Swift"));
-        skillRepository.save(new Skill(7L, "C# (C-Sharp)"));
-        skillRepository.save(new Skill(8L, "Ruby"));
-        skillRepository.save(new Skill(9L, "Objective-C"));
-        skillRepository.save(new Skill(10L, "SQL"));
+        skillRepository.save(new Skill(1L, "JavaScript",1));
+        skillRepository.save(new Skill(2L, "Python",1));
+        skillRepository.save(new Skill(3L, "C/C++",1));
+        skillRepository.save(new Skill(4L, "Java",1));
+        skillRepository.save(new Skill(5L, "PHP",1));
+        skillRepository.save(new Skill(6L, "Swift",1));
+        skillRepository.save(new Skill(7L, "C# (C-Sharp)",1));
+        skillRepository.save(new Skill(8L, "Ruby",1));
+        skillRepository.save(new Skill(9L, "Objective-C",1));
+        skillRepository.save(new Skill(10L, "SQL",1));
 
     }
 

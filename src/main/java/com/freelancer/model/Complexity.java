@@ -29,8 +29,9 @@ public class Complexity {
     @OneToMany(mappedBy = "complexity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
-    public Complexity(long id, String complexityText) {
+    public Complexity(long id, String complexityText,Integer status) {
         this.id = id;
         this.complexityText = complexityText;
+        this.status = status;
     }
 }

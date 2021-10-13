@@ -24,8 +24,6 @@ import com.google.gson.Gson;
 public class ComplexityService {
 
 	Logger logger = ConfigLog.getLogger(ComplexityService.class);
-
-	Gson gson = new Gson();
 	@Autowired
 	private ComplexityRepository complexityRepository;
 
@@ -98,7 +96,7 @@ public class ComplexityService {
 		if (obj.isPresent()) {
 			if (obj.get().getStatus()!=0){
 				message = "success";
-				logger.info("get Job success");
+				logger.info("get obj success");
 				return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, obj.get());
 			}
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);

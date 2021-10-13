@@ -1,6 +1,11 @@
 package com.freelancer.controller;
 
+import com.freelancer.model.Complexity;
+import com.freelancer.search.ComplexitySpecification;
+import com.freelancer.search.SearchCriteria;
+import com.freelancer.search.SkillSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +27,8 @@ import com.freelancer.model.ResponseObject;
 import com.freelancer.model.Skill;
 import com.freelancer.service.SkillService;
 
+import java.util.Optional;
+
 
 @RestController
 @CrossOrigin
@@ -32,18 +39,33 @@ public class SkillController {
 
 
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> findAll(){
-        ResponseObject result = skillService.findAll();
-        return new ResponseEntity<>(result, HttpStatus.OK);
 
-    }
     //get All/SEARCH
 
-    @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
-                                                 @PathVariable int size) {
-        ResponseObject result = skillService.search(keysearch, page, size);
+    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> search(
+            @RequestParam(value = "keySearch", required = false) Optional<String> keySearch
+            , @RequestParam(value = "status", required = false) Optional<Long> status
+            , @RequestParam(value = "page", required = false) Optional<Integer> page
+            , @RequestParam(value = "size", required = false) Optional<Integer> size
+            , @RequestParam(value = "sort", required = false) Optional<Integer> sort
+    ) {
+        Specification<Skill> specification = Specification.where(null);
+        if (keySearch.isPresent()) {
+            specification = specification.and(new SkillSpecification(new SearchCriteria("skillName"  , "like", keySearch.get()))
+            );
+        }
+        if (status.isPresent()) {
+            specification = specification.and(new SkillSpecification(new SearchCriteria("status", "==", status.get())));
+        }
+        ResponseObject result =null;
+        if (page.isPresent() && size.isPresent() && sort.isPresent()) {
+            result = skillService.search(specification, page.get(), size.get(), sort.get());
+        }
+
+        if (!page.isPresent()||!size.isPresent()||!sort.isPresent()){
+            result = skillService.search(specification, 0,0,0);
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
