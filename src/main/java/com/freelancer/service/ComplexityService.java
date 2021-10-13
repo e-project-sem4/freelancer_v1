@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.freelancer.model.Job;
 import com.freelancer.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.freelancer.model.Complexity;
@@ -93,27 +96,33 @@ public class ComplexityService {
 		String message = "can not find obj";
 		Complexity obj1 = null;
 		if (obj.isPresent()) {
-			message = "success";
-			obj1 = obj.get();
-			logger.info("get obj success");
-		}
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, obj1);
-	}
+			if (obj.get().getStatus()!=0){
+				message = "success";
+				logger.info("get Job success");
+				return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, obj.get());
+			}
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 
-//All
-	public ResponseObject findAll(){
-		String message = "success";
-		List<Complexity> list = complexityRepository.findAll();
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,null, list);
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 
 	}
 
 	// Search/list
-	public ResponseObject search(String keysearch, int page, int size) {
-		logger.info("call to search obj with keysearch: " + keysearch);
+	public ResponseObject search(Specification<Complexity> specification, int page, int size, int sort) {
+		List<Complexity> list = null;
+		if (page>0&&size>0&&(sort>2||sort<1)){
+			list = complexityRepository.findAll(specification,PageRequest.of(page-1,size)).getContent();
+		}else if (page>0&&size>0&&sort==1){
+			list = complexityRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
+		}else if (page>0&&size>0&&sort==2){
+			list = complexityRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
+		}else if (page==0&&size==0&&sort==0){
+			list = complexityRepository.findAll(specification);
+		}
+
+		Long total = Long.valueOf(complexityRepository.findAll(specification).size());
 		String message = "success";
-		List<Complexity> list = complexityRepository.searchObj(keysearch, PageRequest.of(page - 1, size));
-		Long total = complexityRepository.countObj(keysearch);
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 	}
 }

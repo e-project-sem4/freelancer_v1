@@ -9,12 +9,20 @@ import com.freelancer.search.SearchCriteria;
 import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.service.JobService;
 import com.freelancer.utils.Constant;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +54,8 @@ public class JobController {
     private JobService jobService;
     @Autowired
     private JobRepository jobRepository;
+    private Gson gson;
+
 
 
     //get All/SEARCH
@@ -53,14 +63,16 @@ public class JobController {
     public ResponseEntity<ResponseObject> search(@RequestParam(value = "keySearch", required = false) Optional<String> keySearch
             , @RequestParam(value = "complexity_id", required = false) Optional<Long> complexity_id
             , @RequestParam(value = "expected_duration_id", required = false) Optional<Long> expected_duration_id
-            , @RequestParam(value = "skill_id", required = false) Optional<Long> skill_id
+            , HttpServletRequest request
             , @RequestParam(value = "status", required = false) Optional<Long> status
             , @RequestParam(value = "page", required = false) Optional<Integer> page
             , @RequestParam(value = "size", required = false) Optional<Integer> size
             , @RequestParam(value = "sort", required = false) Optional<Integer> sort) {
         Specification<Job> specification = Specification.where(null);
         if (keySearch.isPresent()) {
-            specification = specification.and(new JobSpecification(new SearchCriteria("name", "like", keySearch.get())));
+            specification = specification.and(new JobSpecification(new SearchCriteria("name"  , "like", keySearch.get())).
+                    or(new JobSpecification(new SearchCriteria("description"  , "like", keySearch.get()))
+                    ));
         }
         if (complexity_id.isPresent() && complexity_id.get() > 0) {
             specification = specification.and(new JobSpecification(new SearchCriteria("complexity_id", "==", complexity_id.get())));
@@ -68,9 +80,22 @@ public class JobController {
         if (expected_duration_id.isPresent() && expected_duration_id.get() > 0) {
             specification = specification.and(new JobSpecification(new SearchCriteria("expected_duration_id", "==", expected_duration_id.get())));
         }
-        if (skill_id.isPresent() && skill_id.get() > 0) {
-            specification = specification.and(new JobSpecification(new SearchCriteria("skill_id", "==skill", skill_id.get())));
+        try {
+            JsonObject jsonSkillId = JsonParser.parseReader(request.getReader()).getAsJsonObject();
+            if (jsonSkillId.get("skill_id").getAsJsonArray()!=null)
+            {
+                for (JsonElement s:jsonSkillId.get("skill_id").getAsJsonArray()
+                     ) {
+                    System.out.println(s);
+                    specification = specification.and(new JobSpecification(new SearchCriteria("skill_id", "==skill", s.getAsLong())));
+
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
         if (status.isPresent()) {
             specification = specification.and(new JobSpecification(new SearchCriteria("status", "==", status.get())));
         }
