@@ -22,12 +22,7 @@ public class ComplexityController {
     @Autowired
     private ComplexityService complexityService;
 
-//    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-//    public ResponseEntity<ResponseObject> findAll(){
-//        ResponseObject result = complexityService.findAll();
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//
-//    }
+
 
 
 

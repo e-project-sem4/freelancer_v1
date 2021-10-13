@@ -10,6 +10,8 @@ import com.freelancer.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.freelancer.model.ExpectedDuration;
@@ -91,27 +93,34 @@ public class ExpectedDurationService {
         String message = "can not find obj";
         ExpectedDuration obj1 = null;
         if (obj.isPresent()) {
-            message = "success";
-            obj1 = obj.get();
-            logger.info("get obj success");
+            if (obj.get().getStatus()!=0){
+                message = "success";
+                logger.info("get obj success");
+                return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, obj.get());
+            }
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+
         }
-        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, obj1);
+        return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
     }
 
-    //All
-    public ResponseObject findAll(){
-        String message = "success";
-        List<ExpectedDuration> list = expectedDurationRepository.findAll();
-        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message,null, list);
 
-    }
 
     // Search/list
-    public ResponseObject search(String keysearch, int page, int size) {
-        logger.info("call to search obj with keysearch: " + keysearch);
+    public ResponseObject search(Specification<ExpectedDuration> specification, int page, int size, int sort) {
+        List<ExpectedDuration> list = null;
+        if (page>0&&size>0&&(sort>2||sort<1)){
+            list = expectedDurationRepository.findAll(specification,PageRequest.of(page-1,size)).getContent();
+        }else if (page>0&&size>0&&sort==1){
+            list = expectedDurationRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
+        }else if (page>0&&size>0&&sort==2){
+            list = expectedDurationRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
+        }else if (page==0&&size==0&&sort==0){
+            list = expectedDurationRepository.findAll(specification);
+        }
+
+        Long total = Long.valueOf(expectedDurationRepository.findAll(specification).size());
         String message = "success";
-        List<ExpectedDuration> list = expectedDurationRepository.searchObj(keysearch, PageRequest.of(page - 1, size));
-        Long total = expectedDurationRepository.countObj(keysearch);
         return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
     }
 }

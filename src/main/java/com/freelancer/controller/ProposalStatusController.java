@@ -1,34 +1,54 @@
 package com.freelancer.controller;
 
+import com.freelancer.model.Complexity;
 import com.freelancer.model.ProposalStatusCatalog;
 import com.freelancer.model.ResponseObject;
+import com.freelancer.search.ComplexitySpecification;
+import com.freelancer.search.ProposalCatalogSpecification;
+import com.freelancer.search.SearchCriteria;
 import com.freelancer.service.ProposalStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/api/v1/proposals")
+@RequestMapping("/api/v1/proposalscs")
 public class ProposalStatusController {
 
     @Autowired
     private ProposalStatusService proposalStatusService;
 
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> findAll(){
-        ResponseObject result = proposalStatusService.findAll();
-        return new ResponseEntity<>(result, HttpStatus.OK);
 
-    }
+    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> search(
+            @RequestParam(value = "keySearch", required = false) Optional<String> keySearch
+            , @RequestParam(value = "status", required = false) Optional<Long> status
+            , @RequestParam(value = "page", required = false) Optional<Integer> page
+            , @RequestParam(value = "size", required = false) Optional<Integer> size
+            , @RequestParam(value = "sort", required = false) Optional<Integer> sort
+    ) {
+        Specification<ProposalStatusCatalog> specification = Specification.where(null);
+        if (keySearch.isPresent()) {
+            specification = specification.and(new ProposalCatalogSpecification(new SearchCriteria("statusName"  , "like", keySearch.get()))
+            );
+        }
+        if (status.isPresent()) {
+            specification = specification.and(new ProposalCatalogSpecification(new SearchCriteria("status", "==", status.get())));
+        }
+        ResponseObject result =null;
+        if (page.isPresent() && size.isPresent() && sort.isPresent()) {
+            result = proposalStatusService.search(specification, page.get(), size.get(), sort.get());
+        }
 
-    ///SEARCH
-    @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
-                                                 @PathVariable int size) {
-        ResponseObject result = proposalStatusService.search(keysearch, page, size);
+        if (!page.isPresent()||!size.isPresent()||!sort.isPresent()){
+            result = proposalStatusService.search(specification, 0,0,0);
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -41,6 +41,7 @@ public class UserFreelancer {
 	private String overview;
 	@Size(max = 1000, message = "Max location length: 1000 characters")
 
+	private String certifications;
 
 	private Long createAt;
 	private Long updateAt;
@@ -59,7 +60,7 @@ public class UserFreelancer {
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Message> messages;
 
-	@JsonBackReference(value = "proposals")
+
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Proposal> proposals;
 
@@ -68,7 +69,7 @@ public class UserFreelancer {
 		this.user_account_id = user_account_id;
 		this.location = location;
 		this.overview = overview;
-
+		this.certifications = certifications;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
 		this.status = status;
