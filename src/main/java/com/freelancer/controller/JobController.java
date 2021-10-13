@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -47,34 +48,49 @@ public class JobController {
     private JobRepository jobRepository;
 
 
-
     //get All/SEARCH
-    @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> search(
-                                                @RequestParam(value = "complexityText", required = false) Optional<Long> complexity_id
-
-                                                , @PathVariable int page,
-                                                 @PathVariable int size) {
+    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> search(@RequestParam(value = "keySearch", required = false) Optional<String> keySearch
+            , @RequestParam(value = "complexity_id", required = false) Optional<Long> complexity_id
+            , @RequestParam(value = "expected_duration_id", required = false) Optional<Long> expected_duration_id
+            , @RequestParam(value = "skill_id", required = false) Optional<Long> skill_id
+            , @RequestParam(value = "status", required = false) Optional<Long> status
+            , @RequestParam(value = "page", required = false) Optional<Integer> page
+            , @RequestParam(value = "size", required = false) Optional<Integer> size
+            , @RequestParam(value = "sort", required = false) Optional<Integer> sort) {
         Specification<Job> specification = Specification.where(null);
+        if (keySearch.isPresent()) {
+            specification = specification.and(new JobSpecification(new SearchCriteria("name", "like", keySearch.get())));
+        }
         if (complexity_id.isPresent() && complexity_id.get() > 0) {
             specification = specification.and(new JobSpecification(new SearchCriteria("complexity_id", "==", complexity_id.get())));
         }
-//        if(pay.isPresent()){
-//            specification = specification.and(new JobSpecification(new SearchCriteria("paymentAmount", "==", pay.get()))); // tìm chính xác
-//        }
-//        if(start.isPresent()){
-//            specification = specification.and(new JobSpecification(new SearchCriteria("createAt", ">=", start.get())));
-//        }
-//        if(end.isPresent()){
-//            specification = specification.and(new JobSpecification(new SearchCriteria("createAt", "<=", end.get())));
-//        }
+        if (expected_duration_id.isPresent() && expected_duration_id.get() > 0) {
+            specification = specification.and(new JobSpecification(new SearchCriteria("expected_duration_id", "==", expected_duration_id.get())));
+        }
+        if (skill_id.isPresent() && skill_id.get() > 0) {
+            specification = specification.and(new JobSpecification(new SearchCriteria("skill_id", "==skill", skill_id.get())));
+        }
+        if (status.isPresent()) {
+            specification = specification.and(new JobSpecification(new SearchCriteria("status", "==", status.get())));
+        }
+
+        ResponseObject result =null;
+        if (page.isPresent() && size.isPresent() && sort.isPresent()) {
+             result = jobService.search(specification, page.get(), size.get(), sort.get());
+        }
+
+        if (!page.isPresent()||!size.isPresent()||!sort.isPresent()){
+            result = jobService.search(specification, 0,0,0);
+        }
 
 
-        return new ResponseEntity<>(new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "ok", null, jobRepository.findAll(specification)), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
     //Get 1 by id
     @GetMapping("/{id}")
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
         ResponseObject result = jobService.getById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -87,20 +103,20 @@ public class JobController {
     public ResponseEntity<ResponseObject> add(@RequestBody Job obj, HttpServletRequest request) {
         String token = request.getHeader(AUTHORIZATION);
         String username = jwtTokenProvider.getUsername(token);
-        ResponseObject result = jobService.save(obj,username);
+        ResponseObject result = jobService.save(obj, username);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //Update
-    @RequestMapping(value = "/{id}",method = RequestMethod.PATCH, produces = "application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH, produces = "application/json")
     public ResponseEntity<ResponseObject> update(@RequestBody Job obj, @PathVariable Long id) {
-        ResponseObject result = jobService.update(obj,id);
-        return new ResponseEntity<>(result,HttpStatus.OK);
+        ResponseObject result = jobService.update(obj, id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
         ResponseObject result = jobService.delete(id);
-        return new ResponseEntity<>(result,HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
