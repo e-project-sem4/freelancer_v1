@@ -18,8 +18,8 @@ public class ProposalStatusController {
 
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> fillAll(){
-        ResponseObject result = proposalStatusService.fillAll();
+    public ResponseEntity<ResponseObject> findAll(){
+        ResponseObject result = proposalStatusService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }

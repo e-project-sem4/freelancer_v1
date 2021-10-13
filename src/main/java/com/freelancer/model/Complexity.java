@@ -18,7 +18,7 @@ import java.util.Collection;
 public class Complexity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String complexityText;
     private Long createAt;
     private Long updateAt;

@@ -5,9 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
-    public static void main(String[] args) {
-        System.out.println(setDateLong(-10));
-    }
     public static Long getTimeLongCurrent(){
         return System.currentTimeMillis();
     }
