@@ -40,8 +40,7 @@ public class UserFreelancer {
 	@Column(nullable = false)
 	private String overview;
 	@Size(max = 1000, message = "Max location length: 1000 characters")
-	@Column(nullable = false)
-	private String certifications;
+
 
 	private Long createAt;
 	private Long updateAt;
@@ -69,7 +68,7 @@ public class UserFreelancer {
 		this.user_account_id = user_account_id;
 		this.location = location;
 		this.overview = overview;
-		this.certifications = certifications;
+
 		this.createAt = createAt;
 		this.updateAt = updateAt;
 		this.status = status;
