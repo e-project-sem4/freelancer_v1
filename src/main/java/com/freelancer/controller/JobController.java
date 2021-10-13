@@ -64,9 +64,7 @@ public class JobController {
     public ResponseEntity<ResponseObject> search(@RequestParam(value = "keySearch", required = false) Optional<String> keySearch
             , @RequestParam(value = "complexity_id", required = false) Optional<Long> complexity_id
             , @RequestParam(value = "expected_duration_id", required = false) Optional<Long> expected_duration_id
-            , HttpServletRequest request,
-                                                 @RequestParam(value = "skill_id", required = false) Optional<ArrayList<Long>> skill_id
-
+            , @RequestParam(value = "skill_id", required = false) Optional<ArrayList<Long>> skill_id
             , @RequestParam(value = "status", required = false) Optional<Long> status
             , @RequestParam(value = "page", required = false) Optional<Integer> page
             , @RequestParam(value = "size", required = false) Optional<Integer> size

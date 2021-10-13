@@ -32,6 +32,7 @@ public class Proposal {
     private Integer status;
 
 
+    @JsonBackReference(value = "proposals")
     @ManyToOne
     @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id", insertable=false, updatable=false)
     private UserFreelancer userFreelancer;

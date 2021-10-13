@@ -1,12 +1,19 @@
 package com.freelancer.controller;
 
+import com.freelancer.model.Complexity;
 import com.freelancer.model.ExpectedDuration;
 import com.freelancer.model.ResponseObject;
+import com.freelancer.search.ComplexitySpecification;
+import com.freelancer.search.DurationSpecification;
+import com.freelancer.search.SearchCriteria;
 import com.freelancer.service.ExpectedDurationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -16,21 +23,34 @@ public class ExpectedDurationController {
     @Autowired
     private ExpectedDurationService expectedDurationService;
 
-//get All
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> findAll(){
-        ResponseObject result = expectedDurationService.findAll();
-        return new ResponseEntity<>(result, HttpStatus.OK);
-
-    }
 
 
     //get all/SEARCH
-    @RequestMapping(value = "/search/{page}/{size}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ResponseObject> search(@RequestParam String keysearch, @PathVariable int page,
-                                                 @PathVariable int size) {
-        ResponseObject result = expectedDurationService.search(keysearch, page, size);
+    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> search(
+            @RequestParam(value = "keySearch", required = false) Optional<String> keySearch
+            , @RequestParam(value = "status", required = false) Optional<Long> status
+            , @RequestParam(value = "page", required = false) Optional<Integer> page
+            , @RequestParam(value = "size", required = false) Optional<Integer> size
+            , @RequestParam(value = "sort", required = false) Optional<Integer> sort
+    ) {
+        Specification<ExpectedDuration> specification = Specification.where(null);
+        if (keySearch.isPresent()) {
+            specification = specification.and(new DurationSpecification(new SearchCriteria("durationText"  , "like", keySearch.get()))
+            );
+        }
+        if (status.isPresent()) {
+            specification = specification.and(new DurationSpecification(new SearchCriteria("status", "==", status.get())));
+        }
+        ResponseObject result =null;
+        if (page.isPresent() && size.isPresent() && sort.isPresent()) {
+            result = expectedDurationService.search(specification, page.get(), size.get(), sort.get());
+        }
+
+        if (!page.isPresent()||!size.isPresent()||!sort.isPresent()){
+            result = expectedDurationService.search(specification, 0,0,0);
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
