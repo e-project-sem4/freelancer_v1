@@ -44,7 +44,7 @@ public class UserBusiness {
     private Long updateAt;
     private Integer status;
 
-    @JsonBackReference(value = "user")
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_account_id",referencedColumnName = "id", insertable=false, updatable=false)
     private User user;
