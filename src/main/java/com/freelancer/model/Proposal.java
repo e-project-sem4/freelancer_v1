@@ -21,14 +21,14 @@ public class Proposal {
     private Long id;
     private Long proposalTime;
     private Double paymentAmount;
-    private int clientGrade;
+    private String description;
+    private Integer clientGrade;
     private String clientComment;
-    private int freelancerGrade;
+    private Integer freelancerGrade;
     private String freelancerComment;
     private Long user_freelancer_id;
     private Long job_id;
     private Long proposal_status_catalog_id;
-    private String description;
     private Integer status;
 
 
@@ -54,5 +54,29 @@ public class Proposal {
     @JoinColumn(name = "proposal_status_catalog_id",referencedColumnName = "id", insertable=false, updatable=false)
     private ProposalStatusCatalog proposalStatusCatalog;
 
+    public Proposal(Long id, Long proposalTime, Double paymentAmount, String description, Integer clientGrade, String clientComment, Integer freelancerGrade, String freelancerComment, Long user_freelancer_id, Long job_id, Long proposal_status_catalog_id, Integer status) {
+        this.id = id;
+        this.proposalTime = proposalTime;
+        this.paymentAmount = paymentAmount;
+        this.description = description;
+        this.clientGrade = clientGrade;
+        this.clientComment = clientComment;
+        this.freelancerGrade = freelancerGrade;
+        this.freelancerComment = freelancerComment;
+        this.user_freelancer_id = user_freelancer_id;
+        this.job_id = job_id;
+        this.proposal_status_catalog_id = proposal_status_catalog_id;
+        this.status = status;
+    }
 
+    public Proposal(Long id, Long proposalTime, Double paymentAmount, String description, Long user_freelancer_id, Long job_id, Long proposal_status_catalog_id, Integer status) {
+        this.id = id;
+        this.proposalTime = proposalTime;
+        this.paymentAmount = paymentAmount;
+        this.description = description;
+        this.user_freelancer_id = user_freelancer_id;
+        this.job_id = job_id;
+        this.proposal_status_catalog_id = proposal_status_catalog_id;
+        this.status = status;
+    }
 }
