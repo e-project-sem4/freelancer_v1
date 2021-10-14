@@ -40,7 +40,7 @@ public class Job {
     private Long updateAt;
     private Integer status;
 
-    @JsonBackReference(value = "userBusiness")
+
     @ManyToOne
     @JoinColumn(name = "user_business_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserBusiness userBusiness;
