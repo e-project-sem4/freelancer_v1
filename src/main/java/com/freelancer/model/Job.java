@@ -41,6 +41,7 @@ public class Job {
     private Integer status;
 
 
+
     @ManyToOne
     @JoinColumn(name = "user_business_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserBusiness userBusiness;
