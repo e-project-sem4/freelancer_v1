@@ -1,11 +1,16 @@
 package com.freelancer.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+import com.freelancer.model.Job;
+import com.freelancer.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.freelancer.model.Complexity;
@@ -19,16 +24,20 @@ import com.google.gson.Gson;
 public class ComplexityService {
 
 	Logger logger = ConfigLog.getLogger(ComplexityService.class);
-
-	Gson gson = new Gson();
 	@Autowired
 	private ComplexityRepository complexityRepository;
 
+
+
+
+
 	// add
-	public ResponseObject save(Complexity complexity) {
+	public ResponseObject save(Complexity obj) {
 		String message = "not success";
-		logger.info("call to Create complexity" + complexity.toString());
-		Complexity result = complexityRepository.save(complexity);
+		logger.info("call to Create obj" + obj.toString());
+		obj.setCreateAt(DateUtil.getTimeLongCurrent());
+		obj.setStatus(1);
+		Complexity result = complexityRepository.save(obj);
 		if (result != null) {
 			message = "success";
 		}
@@ -38,14 +47,16 @@ public class ComplexityService {
 	// delete
 	public ResponseObject delete(Long id) {
 
-		logger.info("call to get Complexity to delete by id: " + id);
-		Optional<Complexity> optionalComplexity = complexityRepository.findById(id);
-		String message = "can not find complexity";
-		if (optionalComplexity.isPresent()) {
-			complexityRepository.deleteById(id);
+		logger.info("call to get obj to delete by id: " + id);
+		Complexity obj = complexityRepository.getOne(id);
+		String message = "can not find obj";
+		Complexity result = null;
+		if (obj.getId()!=null) {
+			obj.setStatus(0);
+			result = complexityRepository.save(obj);
 			message = "delete success";
-			logger.info("delete complexity success");
-			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, null);
+			logger.info("delete obj success");
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		} else {
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 		}
@@ -53,15 +64,22 @@ public class ComplexityService {
 	}
 
 	// update
-	public ResponseObject update(Complexity complexity, Long id) {
-		logger.info("call to get Complexity to update by id: " + id);
-		Optional<Complexity> optionalComplexity = complexityRepository.findById(id);
-		String message = "can not find complexity";
+	public ResponseObject update(Complexity obj, Long id) {
+		logger.info("call to get obj to update by id: " + id);
+		Complexity obj1 = complexityRepository.getOne(id);
+		String message = "can not find obj";
 		Complexity result = null;
-		if (optionalComplexity.isPresent()) {
-			result = complexityRepository.save(complexity);
+		if (obj.getId()!=null) {
+			if (obj.getComplexityText()!=null){
+				obj1.setComplexityText(obj.getComplexityText());
+			}
+			if (obj.getStatus()!=null){
+				obj1.setStatus(obj.getStatus());
+			}
+			obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
+			result = complexityRepository.save(obj1);
 			message = "update success";
-			logger.info("update complexity success");
+			logger.info("update obj success");
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		} else {
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
@@ -71,24 +89,38 @@ public class ComplexityService {
 
 	// get by id
 	public ResponseObject getById(Long id) {
-		logger.info("call to get Complexity by id: " + id);
-		Optional<Complexity> optionalComplexity = complexityRepository.findById(id);
-		String message = "can not find complexity";
-		Complexity complexity = null;
-		if (optionalComplexity.isPresent()) {
-			message = "success";
-			complexity = optionalComplexity.get();
-			logger.info("get complexity success");
+		logger.info("call to get obj by id: " + id);
+		Optional<Complexity> obj = complexityRepository.findById(id);
+		String message = "can not find obj";
+		Complexity obj1 = null;
+		if (obj.isPresent()) {
+			if (obj.get().getStatus()!=0){
+				message = "success";
+				logger.info("get obj success");
+				return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, obj.get());
+			}
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+
 		}
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, complexity);
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+
 	}
 
 	// Search/list
-	public ResponseObject search(String keysearch, int page, int size) {
-		logger.info("call to search user with keysearch: " + keysearch);
+	public ResponseObject search(Specification<Complexity> specification, int page, int size, int sort) {
+		List<Complexity> list = null;
+		if (page>0&&size>0&&(sort>2||sort<1)){
+			list = complexityRepository.findAll(specification,PageRequest.of(page-1,size)).getContent();
+		}else if (page>0&&size>0&&sort==1){
+			list = complexityRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
+		}else if (page>0&&size>0&&sort==2){
+			list = complexityRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
+		}else if (page==0&&size==0&&sort==0){
+			list = complexityRepository.findAll(specification);
+		}
+
+		Long total = Long.valueOf(complexityRepository.findAll(specification).size());
 		String message = "success";
-		List<Complexity> list = complexityRepository.searchComplexity(keysearch, PageRequest.of(page - 1, size));
-		Long total = complexityRepository.countComplexity(keysearch);
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 	}
 }

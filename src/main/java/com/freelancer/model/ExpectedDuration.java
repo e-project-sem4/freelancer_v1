@@ -18,15 +18,19 @@ import java.util.Collection;
 public class ExpectedDuration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String durationText;
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
 
     @JsonBackReference
     @OneToMany(mappedBy = "expectedDuration",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
-    public ExpectedDuration(long id, String durationText) {
+    public ExpectedDuration(long id, String durationText,Integer status) {
         this.id = id;
         this.durationText = durationText;
+        this.status = status;
     }
 }

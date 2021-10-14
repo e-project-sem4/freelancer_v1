@@ -18,8 +18,11 @@ import java.util.Collection;
 public class ProposalStatusCatalog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String statusName;
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
 
     @JsonBackReference(value = "proposals")
     @OneToMany(mappedBy = "proposalStatusCatalog",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

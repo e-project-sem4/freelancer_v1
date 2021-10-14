@@ -50,9 +50,12 @@ public class User {
 	@Size(min = 4, max = 100, message = "Minimum full name max length: 100 characters")
 	@Column(nullable = false)
 	private String fullName;
-
 	@ElementCollection(fetch = FetchType.EAGER)
 	List<Role> roles;
+	private Double balance;
+	private Long createAt;
+	private Long updateAt;
+	private Integer status;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserFreelancer userFreelancers;
@@ -60,8 +63,7 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserBusiness userBusinesses;
 
-	public User(Long id, String username, String email, String password, String phone, String fullName,
-			List<Role> roles) {
+	public User(Long id, String username, String email, String password, String phone, String fullName, List<Role> roles, Double balance, Long createAt, Long updateAt, Integer status) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -69,5 +71,9 @@ public class User {
 		this.phone = phone;
 		this.fullName = fullName;
 		this.roles = roles;
+		this.balance = balance;
+		this.createAt = createAt;
+		this.updateAt = updateAt;
+		this.status = status;
 	}
 }

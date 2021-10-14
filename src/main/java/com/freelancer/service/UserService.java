@@ -66,8 +66,6 @@ public class UserService {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 			User user = userRepository.findByUsername(username);
 			user.setPassword(null);
-			user.setUserBusinesses(null);
-			user.setUserFreelancers(null);
 			String token = jwtTokenProvider.createToken(username, user.getRoles());
 			message = token;
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
@@ -155,20 +153,17 @@ public class UserService {
 		try {
 			logger.info("call to edit user" + user.toString());
 			user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
-			Integer result = userRepository.updateProfileByUsername(user.getFullName(), user.getEmail(),
-					user.getPhone(), user.getUsername());
-			if (result == 1)
-				return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", null);
+			User result = userRepository.save(user);
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
-			logger.error("error update profile", e);
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit profile", null);
 		}
-		return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit profile", null);
 	}
 
 	public ResponseObject editBusiness(UserBusiness userBusiness) {
 		try {
 			logger.info("call to edit user business" + userBusiness.toString());
-			userBusiness.setRegistrationDate(System.currentTimeMillis());
+			userBusiness.setCreateAt(System.currentTimeMillis());
 			UserBusiness result = userBusinessRepository.save(userBusiness);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -179,7 +174,7 @@ public class UserService {
 	public ResponseObject editFreelancer(UserFreelancer userFreelancer) {
 		try {
 			logger.info("call to edit user freelancer" + userFreelancer.toString());
-			userFreelancer.setRegistrationDate(System.currentTimeMillis());
+			userFreelancer.setCreateAt(System.currentTimeMillis());
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {

@@ -27,23 +27,24 @@ import lombok.Setter;
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String skillName;
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
 
     @JsonBackReference(value = "hasSkills")
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<HasSkill> hasSkills;
 
-    @JsonBackReference(value = "jobs")
-    @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Collection<Job> jobs;
 
     @JsonBackReference
     @OneToMany(mappedBy = "skill",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<OtherSkill> otherSkills;
 
-    public Skill(long id, String skillName) {
+    public Skill(long id, String skillName,Integer status) {
         this.id = id;
         this.skillName = skillName;
+        this.status = status;
     }
 }

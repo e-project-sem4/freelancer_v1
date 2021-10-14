@@ -18,15 +18,20 @@ import java.util.Collection;
 public class Complexity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String complexityText;
+    private Long createAt;
+    private Long updateAt;
+    private Integer status;
+
 
     @JsonBackReference
     @OneToMany(mappedBy = "complexity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
-    public Complexity(long id, String complexityText) {
+    public Complexity(long id, String complexityText,Integer status) {
         this.id = id;
         this.complexityText = complexityText;
+        this.status = status;
     }
 }
