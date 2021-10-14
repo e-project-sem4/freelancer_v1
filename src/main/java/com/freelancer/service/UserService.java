@@ -150,15 +150,19 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
 	}
 
+	@Transactional
 	public ResponseObject editProfile(User user) {
 		try {
 			logger.info("call to edit user" + user.toString());
 			user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
-			User result = userRepository.save(user);
-			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
+			Integer result = userRepository.updateProfileByUsername(user.getFullName(), user.getEmail(),
+					user.getPhone(), user.getUsername());
+			if (result == 1)
+				return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", null);
 		} catch (Exception e) {
-			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit profile", null);
+			logger.error("error update profile", e);
 		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit profile", null);
 	}
 
 	public ResponseObject editBusiness(UserBusiness userBusiness) {
