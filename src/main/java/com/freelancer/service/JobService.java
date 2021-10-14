@@ -45,6 +45,11 @@ public class JobService {
         }else if (page==0&&size==0&&sort==0){
             list = jobRepository.findAll(specification);
         }
+        for (Job j: list
+             ) {
+            j.getUserBusiness().getUser().setPassword(null);
+            j.getUserBusiness().getUser().setPhone(null);
+        }
         Long total= Long.valueOf(jobRepository.findAll(specification).size());
         String message = "success";
         return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
@@ -142,6 +147,9 @@ public class JobService {
             if (optionalJob.get().getStatus()!=0){
                 message = "success";
                 logger.info("get Job success");
+                Job j = optionalJob.get();
+                j.getUserBusiness().getUser().setPassword(null);
+                j.getUserBusiness().getUser().setPhone(null);
                 return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, optionalJob.get());
             }
             return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);

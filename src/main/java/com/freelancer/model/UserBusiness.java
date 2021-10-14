@@ -45,6 +45,7 @@ public class UserBusiness {
     private Integer status;
 
 
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_account_id",referencedColumnName = "id", insertable=false, updatable=false)
     private User user;
@@ -53,7 +54,7 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 
-    
+    @JsonBackReference
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 

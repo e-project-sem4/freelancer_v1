@@ -47,7 +47,6 @@ public class UserFreelancer {
 	private Long updateAt;
 	private Integer status;
 
-	@JsonBackReference(value = "user")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_account_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private User user;
@@ -59,6 +58,7 @@ public class UserFreelancer {
 	@JsonBackReference(value = "messages")
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Message> messages;
+
 
 
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
