@@ -172,7 +172,7 @@ public class Database implements CommandLineRunner {
         jobRepository.save((new Job(1L, 1L, 1L, 1L,
                 "Wix/Wordpress Website landing page",
                 "Job description: - Stage of work: Basic design and construction design - Deploy design documents in each phase and according to the Company's regulations and standards. - Additional structure details and.",
-                1000.0, 1, DateUtil.setDateLong(-40), DateUtil.setDateLong(-45), 1)));
+                1000.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-45), 1)));
         jobRepository.save((new Job(2L, 1L, 2L, 2L,
                 "Build a web app to exchange old books",
                 "Description: A website for students to exchange books with each other, the upper class gives way to the lower class, the scope is in a university Requirements: - Build a website from back - end to front",
@@ -324,43 +324,43 @@ public class Database implements CommandLineRunner {
         proposalStatus.save(new ProposalStatusCatalog(7L,"Công việc đã hoàn thành (không thành công)", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
     }
     private void seedProposal(){
-        proposal.save(new Proposal(1L ,DateUtil.getTimeLongCurrent(), 200.0, "I look forward to working with you", 2L, 1L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(2L ,DateUtil.getTimeLongCurrent(), 200.1, "I look forward to working with you", 3L, 1L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(3L ,DateUtil.getTimeLongCurrent(), 200.2, "I look forward to working with you", 4L, 1L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(4L ,DateUtil.getTimeLongCurrent(), 200.3, "I look forward to working with you", 5L, 2L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(5L ,DateUtil.getTimeLongCurrent(), 200.4, "I look forward to working with you", 6L, 2L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(6L ,DateUtil.getTimeLongCurrent(), 200.5, "I look forward to working with you", 7L, 2L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(7L ,DateUtil.getTimeLongCurrent(), 200.6, "I look forward to working with you", 1L, 3L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(8L ,DateUtil.getTimeLongCurrent(), 200.7, "I look forward to working with you", 3L, 3L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(9L ,DateUtil.getTimeLongCurrent(), 200.8, "I look forward to working with you", 2L, 4L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(10L ,DateUtil.getTimeLongCurrent(), 200.9, "I look forward to working with you", 4L, 4L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(11L ,DateUtil.getTimeLongCurrent(), 200.10, "I look forward to working with you", 5L, 5L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(12L ,DateUtil.getTimeLongCurrent(), 200.11, "I look forward to working with you", 6L, 5L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(13L ,DateUtil.getTimeLongCurrent(), 200.12, "I look forward to working with you", 7L, 6L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(14L ,DateUtil.getTimeLongCurrent(), 200.13, "I look forward to working with you", 8L, 6L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(15L ,DateUtil.getTimeLongCurrent(), 200.14, "I look forward to working with you", 9L, 7L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(16L ,DateUtil.getTimeLongCurrent(), 200.15, "I look forward to working with you", 10L, 8L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(17L ,DateUtil.getTimeLongCurrent(), 200.16, "I look forward to working with you", 9L, 8L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(18L ,DateUtil.getTimeLongCurrent(), 200.17, "I look forward to working with you", 1L, 9L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(19L ,DateUtil.getTimeLongCurrent(), 200.18, "I look forward to working with you", 2L, 9L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(20L ,DateUtil.getTimeLongCurrent(), 200.19, "I look forward to working with you", 2L, 10L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(21L ,DateUtil.getTimeLongCurrent(), 200.20, "I look forward to working with you", 3L, 10L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(22L ,DateUtil.getTimeLongCurrent(), 200.21, "I look forward to working with you", 4L, 11L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(23L ,DateUtil.getTimeLongCurrent(), 200.22, "I look forward to working with you", 5L, 11L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(24L ,DateUtil.getTimeLongCurrent(), 200.23, "I look forward to working with you", 1L, 12L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(25L ,DateUtil.getTimeLongCurrent(), 200.24, "I look forward to working with you", 2L, 13L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(26L ,DateUtil.getTimeLongCurrent(), 200.25, "I look forward to working with you", 3L, 13L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(27L ,DateUtil.getTimeLongCurrent(), 200.26, "I look forward to working with you", 4L, 14L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(28L ,DateUtil.getTimeLongCurrent(), 200.27, "I look forward to working with you", 5L, 14L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(29L ,DateUtil.getTimeLongCurrent(), 200.28, "I look forward to working with you", 6L, 15L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(30L ,DateUtil.getTimeLongCurrent(), 200.29, "I look forward to working with you", 7L, 15L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(31L ,DateUtil.getTimeLongCurrent(), 200.30, "I look forward to working with you", 8L, 16L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(32L ,DateUtil.getTimeLongCurrent(), 200.31, "I look forward to working with you", 10L, 16L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(33L ,DateUtil.getTimeLongCurrent(), 200.32, "I look forward to working with you", 9L, 17L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(34L ,DateUtil.getTimeLongCurrent(), 200.33, "I look forward to working with you", 8L, 17L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(35L ,DateUtil.getTimeLongCurrent(), 200.34, "I look forward to working with you", 7L, 18L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(36L ,DateUtil.getTimeLongCurrent(), 200.35, "I look forward to working with you", 6L, 19L, 1L, 1)); //Đề xuất được gửi
-        proposal.save(new Proposal(37L ,DateUtil.getTimeLongCurrent(), 200.36, "I look forward to working with you", 5L, 19L, 1L, 1)); //Đề xuất được gửi
+        proposal.save(new Proposal(1L ,DateUtil.getTimeLongCurrent(), 200.0, "I look forward to working with you", 2L, 1L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(2L ,DateUtil.getTimeLongCurrent(), 200.1, "I look forward to working with you", 3L, 1L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(3L ,DateUtil.getTimeLongCurrent(), 200.2, "I look forward to working with you", 4L, 1L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(4L ,DateUtil.getTimeLongCurrent(), 200.3, "I look forward to working with you", 5L, 2L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(5L ,DateUtil.getTimeLongCurrent(), 200.4, "I look forward to working with you", 6L, 2L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(6L ,DateUtil.getTimeLongCurrent(), 200.5, "I look forward to working with you", 7L, 2L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(7L ,DateUtil.getTimeLongCurrent(), 200.6, "I look forward to working with you", 1L, 3L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(8L ,DateUtil.getTimeLongCurrent(), 200.7, "I look forward to working with you", 3L, 3L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(9L ,DateUtil.getTimeLongCurrent(), 200.8, "I look forward to working with you", 2L, 4L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(10L ,DateUtil.getTimeLongCurrent(), 200.9, "I look forward to working with you", 4L, 4L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(11L ,DateUtil.getTimeLongCurrent(), 200.10, "I look forward to working with you", 5L, 5L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(12L ,DateUtil.getTimeLongCurrent(), 200.11, "I look forward to working with you", 6L, 5L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(13L ,DateUtil.getTimeLongCurrent(), 200.12, "I look forward to working with you", 7L, 6L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(14L ,DateUtil.getTimeLongCurrent(), 200.13, "I look forward to working with you", 8L, 6L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(15L ,DateUtil.getTimeLongCurrent(), 200.14, "I look forward to working with you", 9L, 7L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(16L ,DateUtil.getTimeLongCurrent(), 200.15, "I look forward to working with you", 10L, 8L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(17L ,DateUtil.getTimeLongCurrent(), 200.16, "I look forward to working with you", 9L, 8L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(18L ,DateUtil.getTimeLongCurrent(), 200.17, "I look forward to working with you", 1L, 9L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(19L ,DateUtil.getTimeLongCurrent(), 200.18, "I look forward to working with you", 2L, 9L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(20L ,DateUtil.getTimeLongCurrent(), 200.19, "I look forward to working with you", 2L, 10L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(21L ,DateUtil.getTimeLongCurrent(), 200.20, "I look forward to working with you", 3L, 10L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(22L ,DateUtil.getTimeLongCurrent(), 200.21, "I look forward to working with you", 4L, 11L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(23L ,DateUtil.getTimeLongCurrent(), 200.22, "I look forward to working with you", 5L, 11L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(24L ,DateUtil.getTimeLongCurrent(), 200.23, "I look forward to working with you", 1L, 12L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(25L ,DateUtil.getTimeLongCurrent(), 200.24, "I look forward to working with you", 2L, 13L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(26L ,DateUtil.getTimeLongCurrent(), 200.25, "I look forward to working with you", 3L, 13L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(27L ,DateUtil.getTimeLongCurrent(), 200.26, "I look forward to working with you", 4L, 14L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(28L ,DateUtil.getTimeLongCurrent(), 200.27, "I look forward to working with you", 5L, 14L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(29L ,DateUtil.getTimeLongCurrent(), 200.28, "I look forward to working with you", 6L, 15L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(30L ,DateUtil.getTimeLongCurrent(), 200.29, "I look forward to working with you", 7L, 15L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(31L ,DateUtil.getTimeLongCurrent(), 200.30, "I look forward to working with you", 8L, 16L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(32L ,DateUtil.getTimeLongCurrent(), 200.31, "I look forward to working with you", 10L, 16L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(33L ,DateUtil.getTimeLongCurrent(), 200.32, "I look forward to working with you", 9L, 17L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(34L ,DateUtil.getTimeLongCurrent(), 200.33, "I look forward to working with you", 8L, 17L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(35L ,DateUtil.getTimeLongCurrent(), 200.34, "I look forward to working with you", 7L, 18L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(36L ,DateUtil.getTimeLongCurrent(), 200.35, "I look forward to working with you", 6L, 19L, 1L)); //Đề xuất được gửi
+        proposal.save(new Proposal(37L ,DateUtil.getTimeLongCurrent(), 200.36, "I look forward to working with you", 5L, 19L, 1L)); //Đề xuất được gửi
 
     }
 }

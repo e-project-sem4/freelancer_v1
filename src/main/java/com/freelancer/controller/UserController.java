@@ -61,7 +61,10 @@ public class UserController {
 
 	@RequestMapping(value = "/editprofile", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-	public ResponseEntity<ResponseObject> editProfile(User user) {
+	public ResponseEntity<ResponseObject> editProfile(@RequestBody User user, HttpServletRequest request) {
+		String token = request.getHeader(AUTHORIZATION);
+		String username = jwtTokenProvider.getUsername(token);
+		user.setUsername(username);
 		ResponseObject result = userService.editProfile(user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
