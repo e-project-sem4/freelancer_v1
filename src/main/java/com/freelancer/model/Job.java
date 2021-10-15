@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -30,11 +32,17 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private Long user_business_id;
+    @NotNull
     private Long complexity_id;
+    @NotNull
     private Long expected_duration_id;
+    @Size(min = 5, message = "Minimum name length: 8 characters")
     private String name;
+    @Size(min = 10, message = "Minimum description length: 10 characters")
     private String description;
+    @NotNull
     private Double paymentAmount;
     private Long createAt;
     private Long updateAt;
