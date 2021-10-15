@@ -69,7 +69,7 @@ public class ExpectedDurationService {
         String message = "can not find obj";
         ExpectedDuration result = null;
         if (obj.getId()!=null) {
-            if (obj.getDurationText()!=null){
+            if (obj.getDurationText()!=null && !obj.getDurationText().isEmpty()){
                 obj1.setDurationText(obj.getDurationText());
             }
             if (obj.getStatus()!=null){

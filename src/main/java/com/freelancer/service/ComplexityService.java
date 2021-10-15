@@ -70,7 +70,7 @@ public class ComplexityService {
 		String message = "can not find obj";
 		Complexity result = null;
 		if (obj.getId()!=null) {
-			if (obj.getComplexityText()!=null){
+			if (obj.getComplexityText()!=null && !obj.getComplexityText().isEmpty()){
 				obj1.setComplexityText(obj.getComplexityText());
 			}
 			if (obj.getStatus()!=null){
