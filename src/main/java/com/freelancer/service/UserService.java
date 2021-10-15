@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.Role;
@@ -119,14 +120,18 @@ public class UserService {
 
 	public ResponseObject viewProfile(String username) {
 		logger.info("call to view profile with username: " + username);
+		ResponseProfileUserDto profileUserDto = null;
 		User user = userRepository.findByUsername(username);
 		String message = "can not find user";
 		if (null != user) {
 			message = "success";
 			user.setPassword(null);
 			logger.info("get user success");
+			UserBusiness business = userBusinessRepository.getBusinessByUserAccountId(user.getId());
+			UserFreelancer freelancer = userFreelancerRepository.getFreelancerByUserAccountId(user.getId());
+			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
 		}
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
 	}
 
 	public ResponseObject getUserById(Long id) {
