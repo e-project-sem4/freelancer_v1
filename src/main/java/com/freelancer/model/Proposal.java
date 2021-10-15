@@ -29,12 +29,9 @@ public class Proposal {
     private String freelancerComment;
     private Long createAt;
     private Long proposal_status_catalog_id;
-
+    private Integer status;
     @Transient
     private String jobName;
-
-
-
 
     @JsonBackReference(value = "freelancer")
     @ManyToOne
@@ -69,6 +66,7 @@ public class Proposal {
         this.user_freelancer_id = user_freelancer_id;
         this.job_id = job_id;
         this.proposal_status_catalog_id = proposal_status_catalog_id;
+        this.status = status;
     }
 
     public Proposal(Long id,Long createAt, Double paymentAmount, String description, Long user_freelancer_id, Long job_id, Long proposal_status_catalog_id) {
@@ -79,5 +77,6 @@ public class Proposal {
         this.user_freelancer_id = user_freelancer_id;
         this.job_id = job_id;
         this.proposal_status_catalog_id = proposal_status_catalog_id;
+        this.status = status;
     }
 }

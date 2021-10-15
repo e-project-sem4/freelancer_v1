@@ -172,7 +172,7 @@ public class Database implements CommandLineRunner {
         jobRepository.save((new Job(1L, 1L, 1L, 1L,
                 "Wix/Wordpress Website landing page",
                 "Job description: - Stage of work: Basic design and construction design - Deploy design documents in each phase and according to the Company's regulations and standards. - Additional structure details and.",
-                1000.0, 1, DateUtil.setDateLong(-40), DateUtil.setDateLong(-45), 1)));
+                1000.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-45), 1)));
         jobRepository.save((new Job(2L, 1L, 2L, 2L,
                 "Build a web app to exchange old books",
                 "Description: A website for students to exchange books with each other, the upper class gives way to the lower class, the scope is in a university Requirements: - Build a website from back - end to front",
