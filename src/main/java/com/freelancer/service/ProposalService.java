@@ -56,48 +56,61 @@ public class ProposalService {
         return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
     }
 
-//    // delete
-//    public ResponseObject delete(Long id) {
-//
-//        logger.info("call to get obj to delete by id: " + id);
-//        ExpectedDuration obj = expectedDurationRepository.getOne(id);
-//        String message = "can not find obj";
-//        ExpectedDuration result = null;
-//        if (obj.getId()!=null) {
-//            obj.setStatus(0);
-//            result = expectedDurationRepository.save(obj);
-//            message = "delete success";
-//            logger.info("delete obj success");
-//            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
-//        } else {
-//            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-//        }
-//
-//    }
-//
-//    // update
-//    public ResponseObject update(ExpectedDuration obj, Long id) {
-//        logger.info("call to get obj to update by id: " + id);
-//        ExpectedDuration obj1 = expectedDurationRepository.getOne(id);
-//        String message = "can not find obj";
-//        ExpectedDuration result = null;
-//        if (obj.getId()!=null) {
-//            if (obj.getDurationText()!=null){
-//                obj1.setDurationText(obj.getDurationText());
-//            }
-//            if (obj.getStatus()!=null){
-//                obj1.setStatus(obj.getStatus());
-//            }
-//            obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
-//            result = expectedDurationRepository.save(obj1);
-//            message = "update success";
-//            logger.info("update obj success");
-//            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
-//        } else {
-//            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-//        }
-//
-//    }
+    public ResponseObject getByJob(Long jobId) {
+        List<Proposal> proposals = proposalRepository.findAllByJob_id(jobId);
+        String message ="success";
+        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, proposals);
+    }
+
+    // delete
+    public ResponseObject delete(Long id) {
+
+        logger.info("call to get obj to delete by id: " + id);
+        Proposal obj = proposalRepository.getOne(id);
+        String message = "can not find obj";
+        Proposal result = null;
+        if (obj.getId()!=null) {
+            obj.setProposal_status_catalog_id(4L);
+            result = proposalRepository.save(obj);
+            message = "delete success";
+            logger.info("delete obj success");
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+        } else {
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+        }
+
+    }
+
+    // update
+    public ResponseObject update(Proposal obj, Long id) {
+        logger.info("call to get obj to update by id: " + id);
+        Proposal obj1 = proposalRepository.getOne(id);
+        String message = "can not find obj";
+        Proposal result = null;
+        if (obj.getId()!=null) {
+            if (obj.getDescription()!=null && !obj.getDescription().isEmpty()){
+                obj1.setDescription(obj.getDescription());
+            }
+            if (obj.getPaymentAmount()!=null && obj.getPaymentAmount()>0){
+                obj1.setPaymentAmount(obj.getPaymentAmount());
+            }
+            if (obj.getJob_id()!=null && obj.getJob_id()>0){
+                obj1.setJob_id(obj.getJob_id());
+            }
+            if (obj.getProposal_status_catalog_id()!=null &&obj.getProposal_status_catalog_id()>0&&obj.getProposal_status_catalog_id()<5){
+                obj1.setProposal_status_catalog_id(obj.getProposal_status_catalog_id());
+            }
+
+            obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
+            result = proposalRepository.save(obj1);
+            message = "update success";
+            logger.info("update obj success");
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+        } else {
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+        }
+
+    }
 //
 //    // get by id
 //    public ResponseObject getById(Long id) {

@@ -1,5 +1,6 @@
 package com.freelancer.controller;
 
+import com.freelancer.model.Complexity;
 import com.freelancer.model.Job;
 import com.freelancer.model.Proposal;
 import com.freelancer.model.ResponseObject;
@@ -24,6 +25,7 @@ public class ProposalController {
     private static final String AUTHORIZATION = "Authorization";
     @Autowired
     private ProposalService proposalService;
+
     //Create
     @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_CLIENT')")
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
@@ -33,4 +35,26 @@ public class ProposalController {
         ResponseObject result = proposalService.save(obj, username);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getByJob", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> getByJob(@RequestParam Long jobId) {
+        ResponseObject result = proposalService.getByJob(jobId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
+
+    //Update
+    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH, produces = "application/json")
+    public ResponseEntity<ResponseObject> update(@RequestBody Proposal obj, @PathVariable Long id) {
+
+        ResponseObject result = proposalService.update(obj, id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
+        ResponseObject result = proposalService.delete(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }
