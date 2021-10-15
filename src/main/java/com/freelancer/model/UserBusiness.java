@@ -31,9 +31,7 @@ public class UserBusiness {
     @Column(nullable = false)
     private String location;
 
-    private Long createAt;
     private Long updateAt;
-    private Integer status;
 
     @Transient
     private List<Job> listJob;
@@ -60,8 +58,6 @@ public class UserBusiness {
         this.id = id;
         this.user_account_id = user_account_id;
         this.location = location;
-        this.createAt = createAt;
         this.updateAt = updateAt;
-        this.status = status;
     }
 }
