@@ -19,25 +19,29 @@ public class Proposal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long proposalTime;
+    private Long user_freelancer_id;
+    private Long job_id;
     private Double paymentAmount;
     private String description;
     private Integer clientGrade;
     private String clientComment;
     private Integer freelancerGrade;
     private String freelancerComment;
-    private Long user_freelancer_id;
-    private Long job_id;
+    private Long createAt;
     private Long proposal_status_catalog_id;
-    private Integer status;
+
+    @Transient
+    private String jobName;
 
 
-    @JsonBackReference(value = "proposals")
+
+
+    @JsonBackReference(value = "freelancer")
     @ManyToOne
     @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id", insertable=false, updatable=false)
     private UserFreelancer userFreelancer;
 
-    @JsonBackReference(value = "proposals")
+    @JsonBackReference(value = "job")
     @ManyToOne
     @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Job job;
@@ -54,9 +58,8 @@ public class Proposal {
     @JoinColumn(name = "proposal_status_catalog_id",referencedColumnName = "id", insertable=false, updatable=false)
     private ProposalStatusCatalog proposalStatusCatalog;
 
-    public Proposal(Long id, Long proposalTime, Double paymentAmount, String description, Integer clientGrade, String clientComment, Integer freelancerGrade, String freelancerComment, Long user_freelancer_id, Long job_id, Long proposal_status_catalog_id, Integer status) {
+    public Proposal(Long id, Double paymentAmount, String description, Integer clientGrade, String clientComment, Integer freelancerGrade, String freelancerComment, Long user_freelancer_id, Long job_id, Long proposal_status_catalog_id, Integer status) {
         this.id = id;
-        this.proposalTime = proposalTime;
         this.paymentAmount = paymentAmount;
         this.description = description;
         this.clientGrade = clientGrade;
@@ -66,17 +69,15 @@ public class Proposal {
         this.user_freelancer_id = user_freelancer_id;
         this.job_id = job_id;
         this.proposal_status_catalog_id = proposal_status_catalog_id;
-        this.status = status;
     }
 
-    public Proposal(Long id, Long proposalTime, Double paymentAmount, String description, Long user_freelancer_id, Long job_id, Long proposal_status_catalog_id, Integer status) {
+    public Proposal(Long id,Long createAt, Double paymentAmount, String description, Long user_freelancer_id, Long job_id, Long proposal_status_catalog_id) {
         this.id = id;
-        this.proposalTime = proposalTime;
+        this.createAt = createAt;
         this.paymentAmount = paymentAmount;
         this.description = description;
         this.user_freelancer_id = user_freelancer_id;
         this.job_id = job_id;
         this.proposal_status_catalog_id = proposal_status_catalog_id;
-        this.status = status;
     }
 }

@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.freelancer.model.*;
+import com.freelancer.repository.JobRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -18,12 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.Role;
-import com.freelancer.model.User;
-import com.freelancer.model.UserBusiness;
-import com.freelancer.model.UserFreelancer;
 import com.freelancer.repository.UserBusinessRepository;
 import com.freelancer.repository.UserFreelancerRepository;
 import com.freelancer.repository.UserRepository;
@@ -40,6 +38,9 @@ public class UserService {
 	Logger logger = ConfigLog.getLogger(UserService.class);
 
 	Gson gson = new Gson();
+
+	@Autowired
+	private JobRepository jobRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -119,18 +120,29 @@ public class UserService {
 
 	public ResponseObject viewProfile(String username) {
 		logger.info("call to view profile with username: " + username);
+		ResponseProfileUserDto profileUserDto = null;
 		User user = userRepository.findByUsername(username);
 		String message = "can not find user";
 		if (null != user) {
 			message = "success";
 			user.setPassword(null);
 			logger.info("get user success");
+			UserBusiness business = user.getUserBusinesses();
+			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+			business.setListJob(listJob);
+			UserFreelancer freelancer = user.getUserFreelancers();
+			for (Proposal p: freelancer.getProposals()
+			) {
+				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+			}
+			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
 		}
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
 	}
 
 	public ResponseObject getUserById(Long id) {
 		logger.info("call to get user by id: " + id);
+		ResponseProfileUserDto profileUserDto = null;
 		Optional<User> optionalUser = userRepository.findById(id);
 		String message = "can not find user";
 		User user = null;
@@ -144,10 +156,25 @@ public class UserService {
 			user.getUserFreelancers().setLocation(null);
 			user.setPassword(null);
 			logger.info("get user success");
+			UserBusiness business = user.getUserBusinesses();
+			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+			for (Job j: listJob
+				 ) {
+				j.setUserBusiness(null);
+			}
+			business.setListJob(listJob);
+			UserFreelancer freelancer = user.getUserFreelancers();
+
+			for (Proposal p: freelancer.getProposals()
+				 ) {
+				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+			}
+			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
 		}
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
 	}
 
+	@Transactional
 	public ResponseObject editProfile(User user) {
 		try {
 			logger.info("call to edit user" + user.toString());
