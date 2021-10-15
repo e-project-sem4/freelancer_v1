@@ -54,7 +54,7 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
-    public UserBusiness(Long id, Long user_account_id, String location, Long createAt, Long updateAt, Integer status) {
+    public UserBusiness(Long id, Long user_account_id, String location, Long updateAt) {
         this.id = id;
         this.user_account_id = user_account_id;
         this.location = location;
