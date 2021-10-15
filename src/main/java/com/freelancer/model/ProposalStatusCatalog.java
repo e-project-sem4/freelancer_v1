@@ -23,7 +23,6 @@ public class ProposalStatusCatalog {
     private Long createAt;
     private Long updateAt;
     private Integer status;
-
     @JsonBackReference(value = "proposals")
     @OneToMany(mappedBy = "proposalStatusCatalog",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Proposal> proposals;
@@ -31,4 +30,12 @@ public class ProposalStatusCatalog {
     @JsonBackReference(value = "messages")
     @OneToMany(mappedBy = "proposalStatusCatalog",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
+
+    public ProposalStatusCatalog(Long id, String statusName, Long createAt, Long updateAt, Integer status) {
+        this.id = id;
+        this.statusName = statusName;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.status = status;
+    }
 }
