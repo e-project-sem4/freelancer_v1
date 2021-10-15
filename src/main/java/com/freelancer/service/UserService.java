@@ -121,16 +121,23 @@ public class UserService {
 	public ResponseObject viewProfile(String username) {
 		logger.info("call to view profile with username: " + username);
 		ResponseProfileUserDto profileUserDto = null;
-		User user = userRepository.findByUsername(username);
+		Optional<User> optionalUser = userRepository.findById(userRepository.findByUsername(username).getId());
 		String message = "can not find user";
-		if (null != user) {
+		User user = null;
+		if (optionalUser.isPresent()) {
 			message = "success";
+			user = optionalUser.get();
 			user.setPassword(null);
 			logger.info("get user success");
 			UserBusiness business = user.getUserBusinesses();
 			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+			for (Job j: listJob
+			) {
+				j.setUserBusiness(null);
+			}
 			business.setListJob(listJob);
 			UserFreelancer freelancer = user.getUserFreelancers();
+
 			for (Proposal p: freelancer.getProposals()
 			) {
 				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
