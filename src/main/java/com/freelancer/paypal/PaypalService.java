@@ -18,9 +18,7 @@ public class PaypalService {
 	private APIContext apiContext;
 
 	public Payment createPayment(
-			Double paymentAmount,
-			String cancelUrl,
-			String successUrl) throws PayPalRESTException{
+			Double paymentAmount) throws PayPalRESTException{
 		Amount amount = new Amount();
 		amount.setCurrency("USD");
 		paymentAmount = new BigDecimal(paymentAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
@@ -41,10 +39,10 @@ public class PaypalService {
 		payment.setIntent("sale");
 		payment.setPayer(payer);  
 		payment.setTransactions(transactions);
-		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl(cancelUrl);
-		redirectUrls.setReturnUrl(successUrl);
-		payment.setRedirectUrls(redirectUrls);
+//		RedirectUrls redirectUrls = new RedirectUrls();
+//		redirectUrls.setCancelUrl(cancelUrl);
+//		redirectUrls.setReturnUrl(successUrl);
+//		payment.setRedirectUrls(redirectUrls);
 		return payment.create(apiContext);
 	}
 	
