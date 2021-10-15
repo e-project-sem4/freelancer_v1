@@ -43,9 +43,7 @@ public class UserFreelancer {
 
 	private String certifications;
 
-	private Long createAt;
 	private Long updateAt;
-	private Integer status;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_account_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -59,19 +57,15 @@ public class UserFreelancer {
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Message> messages;
 
-
-
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Proposal> proposals;
 
-	public UserFreelancer(Long id, Long user_account_id, String location, String overview, String certifications, Long createAt, Long updateAt, Integer status) {
+	public UserFreelancer(Long id, Long user_account_id, String location, String overview, String certifications, Long updateAt) {
 		this.id = id;
 		this.user_account_id = user_account_id;
 		this.location = location;
 		this.overview = overview;
 		this.certifications = certifications;
-		this.createAt = createAt;
 		this.updateAt = updateAt;
-		this.status = status;
 	}
 }
