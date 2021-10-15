@@ -68,7 +68,7 @@ public class SkillService  {
         String message = "can not find obj";
         Skill result = null;
         if (obj.getId()!=null) {
-            if (obj.getSkillName()!=null){
+            if (obj.getSkillName()!=null && !obj.getSkillName().isEmpty()){
                 obj1.setSkillName(obj.getSkillName());
             }
             if (obj.getStatus()!=null){
