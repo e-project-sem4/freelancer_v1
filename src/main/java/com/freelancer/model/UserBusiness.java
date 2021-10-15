@@ -31,9 +31,7 @@ public class UserBusiness {
     @Column(nullable = false)
     private String location;
 
-    private Long createAt;
     private Long updateAt;
-    private Integer status;
 
     @Transient
     private List<Job> listJob;
@@ -56,12 +54,10 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Contract> contracts;
 
-    public UserBusiness(Long id, Long user_account_id, String location, Long createAt, Long updateAt, Integer status) {
+    public UserBusiness(Long id, Long user_account_id, String location, Long updateAt) {
         this.id = id;
         this.user_account_id = user_account_id;
         this.location = location;
-        this.createAt = createAt;
         this.updateAt = updateAt;
-        this.status = status;
     }
 }

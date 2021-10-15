@@ -43,12 +43,13 @@ public class PaypalController {
 				} catch (PayPalRESTException e) {
 					e.printStackTrace();
 				}
+				System.out.println(payment.toJSON());
 				return payment;
 			}
 		return payment;
 	}
 
-	@PostMapping(value = "/execute-payment")
+	@GetMapping(value = "/execute-payment")
 	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID) {
 		try {
 			payment = service.executePayment(paymentId, PayerID);
@@ -59,9 +60,8 @@ public class PaypalController {
 //					Job rl = finJob.get();
 //					rl.setIsPaymentStatus(1);
 //					System.out.println("Lưu được Job rồi" + jobService.update(rl, id));
-//					return payment;
+					return payment;
 //				}
-				return payment;
 			}
 		} catch (PayPalRESTException e) {
 			System.out.println(e.getMessage());

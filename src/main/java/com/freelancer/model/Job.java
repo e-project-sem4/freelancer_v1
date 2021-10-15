@@ -48,7 +48,7 @@ public class Job {
     private Long createAt;
     private Long updateAt;
     private Integer status;
-
+    private String orderId;
 
 
     @ManyToOne

@@ -7,8 +7,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.freelancer.model.*;
-import com.freelancer.repository.JobRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
+import com.freelancer.model.Job;
+import com.freelancer.model.Proposal;
+import com.freelancer.model.ResponseObject;
+import com.freelancer.model.Role;
+import com.freelancer.model.User;
+import com.freelancer.model.UserBusiness;
+import com.freelancer.model.UserFreelancer;
+import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.UserBusinessRepository;
 import com.freelancer.repository.UserFreelancerRepository;
 import com.freelancer.repository.UserRepository;
@@ -79,6 +85,8 @@ public class UserService {
 	public String signup(User user) {
 		if (!userRepository.existsByUsername(user.getUsername())) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setStatus(1);
+			user.setCreateAt(System.currentTimeMillis());
 			userRepository.save(user);
 			return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
 		} else {
@@ -131,15 +139,13 @@ public class UserService {
 			logger.info("get user success");
 			UserBusiness business = user.getUserBusinesses();
 			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
-			for (Job j: listJob
-			) {
+			for (Job j : listJob) {
 				j.setUserBusiness(null);
 			}
 			business.setListJob(listJob);
 			UserFreelancer freelancer = user.getUserFreelancers();
 
-			for (Proposal p: freelancer.getProposals()
-			) {
+			for (Proposal p : freelancer.getProposals()) {
 				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
 			}
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
@@ -165,15 +171,13 @@ public class UserService {
 			logger.info("get user success");
 			UserBusiness business = user.getUserBusinesses();
 			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
-			for (Job j: listJob
-				 ) {
+			for (Job j : listJob) {
 				j.setUserBusiness(null);
 			}
 			business.setListJob(listJob);
 			UserFreelancer freelancer = user.getUserFreelancers();
 
-			for (Proposal p: freelancer.getProposals()
-				 ) {
+			for (Proposal p : freelancer.getProposals()) {
 				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
 			}
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
@@ -181,22 +185,32 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
 	}
 
-	@Transactional
 	public ResponseObject editProfile(User user) {
 		try {
 			logger.info("call to edit user" + user.toString());
+			User returnUser = userRepository.findByUsername(user.getUsername());
+			if (user.getEmail() != null && !user.getEmail().isEmpty())
+				returnUser.setEmail(user.getEmail());
+			if (user.getPhone() != null && !user.getPhone().isEmpty())
+				returnUser.setPhone(user.getPhone());
+			if (user.getPhone() != null && !user.getPhone().isEmpty())
+				returnUser.setFullName(user.getFullName());
 			user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
-			User result = userRepository.save(user);
+			user.setUpdateAt(System.currentTimeMillis());
+			User result = userRepository.save(returnUser);
+			result.setPassword(null);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit profile", null);
 		}
 	}
 
-	public ResponseObject editBusiness(UserBusiness userBusiness) {
+	public ResponseObject editBusiness(String userCreate, UserBusiness userBusiness) {
 		try {
 			logger.info("call to edit user business" + userBusiness.toString());
-			userBusiness.setCreateAt(System.currentTimeMillis());
+			userBusiness.setUpdateAt(System.currentTimeMillis());
+			Long userId = userRepository.getIdByUsername(userCreate);
+			userBusiness.setUser_account_id(userId);
 			UserBusiness result = userBusinessRepository.save(userBusiness);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -204,10 +218,12 @@ public class UserService {
 		}
 	}
 
-	public ResponseObject editFreelancer(UserFreelancer userFreelancer) {
+	public ResponseObject editFreelancer(String userCreate, UserFreelancer userFreelancer) {
 		try {
 			logger.info("call to edit user freelancer" + userFreelancer.toString());
-			userFreelancer.setCreateAt(System.currentTimeMillis());
+			userFreelancer.setUpdateAt(System.currentTimeMillis());
+			Long userId = userRepository.getIdByUsername(userCreate);
+			userFreelancer.setUser_account_id(userId);
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -218,6 +234,8 @@ public class UserService {
 	public ResponseObject register(User user) {
 		user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
 		logger.info("call to register" + user.toString());
+		user.setCreateAt(System.currentTimeMillis());
+		user.setStatus(1);
 		String message = "success";
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User result = userRepository.save(user);

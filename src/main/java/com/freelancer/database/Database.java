@@ -2,28 +2,35 @@ package com.freelancer.database;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
-import com.freelancer.model.*;
-import com.freelancer.repository.*;
-import com.freelancer.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
 import com.freelancer.model.Complexity;
 import com.freelancer.model.ExpectedDuration;
+import com.freelancer.model.HasSkill;
 import com.freelancer.model.Job;
+import com.freelancer.model.OtherSkill;
+import com.freelancer.model.Proposal;
+import com.freelancer.model.ProposalStatusCatalog;
 import com.freelancer.model.Role;
 import com.freelancer.model.Skill;
 import com.freelancer.model.User;
 import com.freelancer.model.UserBusiness;
+import com.freelancer.model.UserFreelancer;
 import com.freelancer.repository.ComplexityRepository;
 import com.freelancer.repository.ExpectedDurationRepository;
+import com.freelancer.repository.HasSkillRepository;
 import com.freelancer.repository.JobRepository;
+import com.freelancer.repository.OtherSkillRepository;
+import com.freelancer.repository.ProposalRepository;
+import com.freelancer.repository.ProposalStatusCatalogRepository;
 import com.freelancer.repository.SkillRepository;
 import com.freelancer.repository.UserBusinessRepository;
 import com.freelancer.repository.UserFreelancerRepository;
 import com.freelancer.service.UserService;
+import com.freelancer.utils.DateUtil;
 
 //Create Docker
 //docker run -d --name mysql-spring-boot-tutorial -e MYSQL_ALLOW_EMPTY_PASSWORD=true -e MYSQL_USER=root -e MYSQL_PASSWORD= -e MYSQL_DATABASE=spring_master -p 3309:3306 --volume mysql-spring-boot-tutorial-volume:/var/lib/mysql mysql:5.7.32
@@ -129,29 +136,29 @@ public class Database implements CommandLineRunner {
     }
 
     private void seedUserBusiness() {
-        business.save(new UserBusiness(1L, 2L, "Cong ty Le Lê Hoàng Trình", DateUtil.setDateLong(-45), null, 1));
-        business.save(new UserBusiness(2L, 3L, "Cong ty Nguyễn Xuân Phúc", DateUtil.setDateLong(-35), null, 1));
-        business.save(new UserBusiness(3L, 4L, "Cong ty Lý Lê Trọng Phú", DateUtil.setDateLong(-30), null, 1));
-        business.save(new UserBusiness(4L, 5L, "Cong ty Phạm Văn Hòa", DateUtil.setDateLong(-25), null, 1));
-        business.save(new UserBusiness(5L, 6L, "Cong ty Nguyễn Xuân Lộc", DateUtil.setDateLong(-20), null, 1));
-        business.save(new UserBusiness(6L, 7L, "Cong ty Nguyễn Thành Dương", DateUtil.setDateLong(-15), null, 1));
-        business.save(new UserBusiness(7L, 8L, "Cong ty HoangLong", DateUtil.setDateLong(-10), null, 1));
-        business.save(new UserBusiness(8L, 9L, "Cong ty Hung Nguyen", DateUtil.setDateLong(-5), null, 1));
-        business.save(new UserBusiness(9L, 10L, "Cong ty Thanh Phat", DateUtil.setDateLong(0), null, 1));
-        business.save(new UserBusiness(10L, 11L, "Cong ty Ha Noi", DateUtil.setDateLong(0), null, 1));
+        business.save(new UserBusiness(1L, 2L, "Cong ty Le Lê Hoàng Trình", null));
+        business.save(new UserBusiness(2L, 3L, "Cong ty Nguyễn Xuân Phúc", DateUtil.setDateLong(-35)));
+        business.save(new UserBusiness(3L, 4L, "Cong ty Lý Lê Trọng Phú", DateUtil.setDateLong(-30)));
+        business.save(new UserBusiness(4L, 5L, "Cong ty Phạm Văn Hòa", DateUtil.setDateLong(-25)));
+        business.save(new UserBusiness(5L, 6L, "Cong ty Nguyễn Xuân Lộc", DateUtil.setDateLong(-20)));
+        business.save(new UserBusiness(6L, 7L, "Cong ty Nguyễn Thành Dương", DateUtil.setDateLong(-15)));
+        business.save(new UserBusiness(7L, 8L, "Cong ty HoangLong", DateUtil.setDateLong(-10)));
+        business.save(new UserBusiness(8L, 9L, "Cong ty Hung Nguyen", DateUtil.setDateLong(-5)));
+        business.save(new UserBusiness(9L, 10L, "Cong ty Thanh Phat", DateUtil.setDateLong(0)));
+        business.save(new UserBusiness(10L, 11L, "Cong ty Ha Noi", DateUtil.setDateLong(0)));
     }
 
     private void seedUserFreelancer() {
-        freelancer.save(new UserFreelancer(1L, 2L, "Hà Nội", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(2L, 3L, "HCM", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(3L, 4L, "Đà Nẵng", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(4L, 5L, "Quảng Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(5L, 6L, "Quảng Ninh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(6L, 7L, "Hà Nam", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(7L, 8L, "Hòa Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(8L, 9L, "Hà Giang", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(9L, 10L, "Hà Tĩnh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
-        freelancer.save(new UserFreelancer(10L, 11L, "Vinh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
+        freelancer.save(new UserFreelancer(1L, 2L, "Hà Nội", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(2L, 3L, "HCM", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(3L, 4L, "Đà Nẵng", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(4L, 5L, "Quảng Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(5L, 6L, "Quảng Ninh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(6L, 7L, "Hà Nam", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(7L, 8L, "Hòa Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(8L, 9L, "Hà Giang", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(9L, 10L, "Hà Tĩnh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+        freelancer.save(new UserFreelancer(10L, 11L, "Vinh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ", DateUtil.getTimeLongCurrent()));
     }
 
     private void seedSkill() {
@@ -315,13 +322,11 @@ public class Database implements CommandLineRunner {
     }
 
     private void seedProposalStatus(){
-        proposalStatus.save(new ProposalStatusCatalog(1L,"Đề xuất được gửi", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(2L,"Giai đoạn thương lượng", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(3L,"Đề xuất bị rút lại", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(4L,"Đề xuất được chấp nhận", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(5L,"Công việc đã bắt đầu", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(6L,"Công việc đã hoàn thành (thành công)", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(7L,"Công việc đã hoàn thành (không thành công)", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(1L,"Đã gửi", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(2L,"Chấp thuận", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(3L,"Hoàn thành", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(4L,"Hủy", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+
     }
     private void seedProposal(){
         proposal.save(new Proposal(1L ,DateUtil.getTimeLongCurrent(), 200.0, "I look forward to working with you", 2L, 1L, 1L)); //Đề xuất được gửi

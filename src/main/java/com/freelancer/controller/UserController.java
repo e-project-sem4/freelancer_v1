@@ -71,15 +71,21 @@ public class UserController {
 
 	@RequestMapping(value = "/editprofilebusiness", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-	public ResponseEntity<ResponseObject> editBusiness(@RequestBody UserBusiness userBusiness) {
-		ResponseObject result = userService.editBusiness(userBusiness);
+	public ResponseEntity<ResponseObject> editBusiness(@RequestBody UserBusiness userBusiness,
+			HttpServletRequest request) {
+		String token = request.getHeader(AUTHORIZATION);
+		String username = jwtTokenProvider.getUsername(token);
+		ResponseObject result = userService.editBusiness(username, userBusiness);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/editprofilefreelancer", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-	public ResponseEntity<ResponseObject> editFreelancer(@RequestBody UserFreelancer userFreelancer) {
-		ResponseObject result = userService.editFreelancer(userFreelancer);
+	public ResponseEntity<ResponseObject> editFreelancer(@RequestBody UserFreelancer userFreelancer,
+			HttpServletRequest request) {
+		String token = request.getHeader(AUTHORIZATION);
+		String username = jwtTokenProvider.getUsername(token);
+		ResponseObject result = userService.editFreelancer(username, userFreelancer);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
