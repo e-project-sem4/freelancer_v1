@@ -116,10 +116,10 @@ public class JobService {
 			if (obj.getComplexity_id() != null) {
 				obj1.setComplexity_id(obj.getComplexity_id());
 			}
-			if (obj.getName() != null) {
+			if (obj.getName() != null && !obj.getName().isEmpty()) {
 				obj1.setName(obj.getName());
 			}
-			if (obj.getDescription() != null) {
+			if (obj.getDescription() != null && !obj.getDescription().isEmpty()) {
 				obj1.setDescription(obj.getDescription());
 			}
 			if (obj.getExpected_duration_id() != null) {

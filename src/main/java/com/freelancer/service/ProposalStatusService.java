@@ -63,7 +63,7 @@ public class ProposalStatusService {
 		String message = "can not find obj";
 		ProposalStatusCatalog result = null;
 		if (obj.getId()!=null) {
-			if (obj.getStatusName()!=null){
+			if (obj.getStatusName()!=null && !obj.getStatusName().isEmpty()){
 				obj1.setStatusName(obj.getStatusName());
 			}
 			if (obj.getStatus()!=null){
