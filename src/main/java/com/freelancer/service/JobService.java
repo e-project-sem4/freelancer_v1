@@ -75,6 +75,7 @@ public class JobService {
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 		}
 		obj.setUser_business_id(user.getUserBusinesses().getId());
+		obj.setStatus(1);
 		Job result = jobRepository.save(obj);
 		for (OtherSkill o : obj.getOtherSkills()) {
 			o.setJob_id(result.getId());

@@ -20,11 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
+import com.freelancer.model.Job;
+import com.freelancer.model.Proposal;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.Role;
 import com.freelancer.model.User;
 import com.freelancer.model.UserBusiness;
 import com.freelancer.model.UserFreelancer;
+import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.UserBusinessRepository;
 import com.freelancer.repository.UserFreelancerRepository;
 import com.freelancer.repository.UserRepository;
@@ -41,6 +44,9 @@ public class UserService {
 	Logger logger = ConfigLog.getLogger(UserService.class);
 
 	Gson gson = new Gson();
+
+	@Autowired
+	private JobRepository jobRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -79,6 +85,8 @@ public class UserService {
 	public String signup(User user) {
 		if (!userRepository.existsByUsername(user.getUsername())) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setStatus(1);
+			user.setCreateAt(System.currentTimeMillis());
 			userRepository.save(user);
 			return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
 		} else {
@@ -121,14 +129,25 @@ public class UserService {
 	public ResponseObject viewProfile(String username) {
 		logger.info("call to view profile with username: " + username);
 		ResponseProfileUserDto profileUserDto = null;
-		User user = userRepository.findByUsername(username);
+		Optional<User> optionalUser = userRepository.findById(userRepository.findByUsername(username).getId());
 		String message = "can not find user";
-		if (null != user) {
+		User user = null;
+		if (optionalUser.isPresent()) {
 			message = "success";
+			user = optionalUser.get();
 			user.setPassword(null);
 			logger.info("get user success");
-			UserBusiness business = userBusinessRepository.getBusinessByUserAccountId(user.getId());
-			UserFreelancer freelancer = userFreelancerRepository.getFreelancerByUserAccountId(user.getId());
+			UserBusiness business = user.getUserBusinesses();
+			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+			for (Job j : listJob) {
+				j.setUserBusiness(null);
+			}
+			business.setListJob(listJob);
+			UserFreelancer freelancer = user.getUserFreelancers();
+
+			for (Proposal p : freelancer.getProposals()) {
+				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+			}
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
@@ -136,6 +155,7 @@ public class UserService {
 
 	public ResponseObject getUserById(Long id) {
 		logger.info("call to get user by id: " + id);
+		ResponseProfileUserDto profileUserDto = null;
 		Optional<User> optionalUser = userRepository.findById(id);
 		String message = "can not find user";
 		User user = null;
@@ -149,15 +169,35 @@ public class UserService {
 			user.getUserFreelancers().setLocation(null);
 			user.setPassword(null);
 			logger.info("get user success");
+			UserBusiness business = user.getUserBusinesses();
+			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+			for (Job j : listJob) {
+				j.setUserBusiness(null);
+			}
+			business.setListJob(listJob);
+			UserFreelancer freelancer = user.getUserFreelancers();
+
+			for (Proposal p : freelancer.getProposals()) {
+				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+			}
+			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
 		}
-		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
 	}
 
 	@Transactional
 	public ResponseObject editProfile(User user) {
 		try {
 			logger.info("call to edit user" + user.toString());
+			User returnUser = userRepository.getOne(user.getId());
+			if (user.getEmail() != null && !user.getEmail().isEmpty())
+				returnUser.setEmail(user.getEmail());
+			if (user.getPhone() != null && !user.getPhone().isEmpty())
+				returnUser.setPhone(user.getPhone());
+			if (user.getPhone() != null && !user.getPhone().isEmpty())
+				returnUser.setFullName(user.getFullName());
 			user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+			user.setUpdateAt(System.currentTimeMillis());
 			User result = userRepository.save(user);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -165,10 +205,12 @@ public class UserService {
 		}
 	}
 
-	public ResponseObject editBusiness(UserBusiness userBusiness) {
+	public ResponseObject editBusiness(String userCreate, UserBusiness userBusiness) {
 		try {
 			logger.info("call to edit user business" + userBusiness.toString());
-			userBusiness.setCreateAt(System.currentTimeMillis());
+			userBusiness.setUpdateAt(System.currentTimeMillis());
+			Long userId = userRepository.getIdByUsername(userCreate);
+			userBusiness.setUser_account_id(userId);
 			UserBusiness result = userBusinessRepository.save(userBusiness);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -176,10 +218,12 @@ public class UserService {
 		}
 	}
 
-	public ResponseObject editFreelancer(UserFreelancer userFreelancer) {
+	public ResponseObject editFreelancer(String userCreate, UserFreelancer userFreelancer) {
 		try {
 			logger.info("call to edit user freelancer" + userFreelancer.toString());
-			userFreelancer.setCreateAt(System.currentTimeMillis());
+			userFreelancer.setUpdateAt(System.currentTimeMillis());
+			Long userId = userRepository.getIdByUsername(userCreate);
+			userFreelancer.setUser_account_id(userId);
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -190,6 +234,8 @@ public class UserService {
 	public ResponseObject register(User user) {
 		user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
 		logger.info("call to register" + user.toString());
+		user.setCreateAt(System.currentTimeMillis());
+		user.setStatus(1);
 		String message = "success";
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User result = userRepository.save(user);
