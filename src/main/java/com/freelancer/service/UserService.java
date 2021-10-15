@@ -185,11 +185,10 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
 	}
 
-	@Transactional
 	public ResponseObject editProfile(User user) {
 		try {
 			logger.info("call to edit user" + user.toString());
-			User returnUser = userRepository.getOne(user.getId());
+			User returnUser = userRepository.findByUsername(user.getUsername());
 			if (user.getEmail() != null && !user.getEmail().isEmpty())
 				returnUser.setEmail(user.getEmail());
 			if (user.getPhone() != null && !user.getPhone().isEmpty())
@@ -198,7 +197,8 @@ public class UserService {
 				returnUser.setFullName(user.getFullName());
 			user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
 			user.setUpdateAt(System.currentTimeMillis());
-			User result = userRepository.save(user);
+			User result = userRepository.save(returnUser);
+			result.setPassword(null);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit profile", null);
