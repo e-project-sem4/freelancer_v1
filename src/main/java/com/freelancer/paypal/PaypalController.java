@@ -30,7 +30,7 @@ public class PaypalController {
 	@RequestMapping(value = "/create-payment",method = RequestMethod.POST)
 	public Payment payment(@RequestParam Long id, HttpServletRequest request){
 			String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-					.replacePath(null)
+					.replacePath("/api/v1/job/payment/")
 					.build()
 					.toUriString();
 			Optional<Job> finJob = jobRepository.findById(id);
@@ -48,7 +48,7 @@ public class PaypalController {
 	}
 
 	@RequestMapping(value = "/execute-payment",method = RequestMethod.GET)
-	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId, HttpServletResponse response) {
+	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("payerId") String payerId, HttpServletResponse response) {
 		try {
 			payment = service.executePayment(paymentId, payerId);
 			if (payment.getState().equals("approved")) {
