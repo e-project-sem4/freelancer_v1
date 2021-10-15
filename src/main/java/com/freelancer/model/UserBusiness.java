@@ -54,7 +54,7 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Message> messages;
 
-    @JsonBackReference
+    @JsonBackReference(value = "jobs")
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 

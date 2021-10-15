@@ -19,25 +19,25 @@ public class Proposal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long proposalTime;
+    private Long user_freelancer_id;
+    private Long job_id;
     private Double paymentAmount;
+    private String description;
     private int clientGrade;
     private String clientComment;
     private int freelancerGrade;
     private String freelancerComment;
-    private Long user_freelancer_id;
-    private Long job_id;
+    private Long createAt;
     private Long proposal_status_catalog_id;
-    private String description;
-    private Integer status;
 
 
-    @JsonBackReference(value = "proposals")
+
+    @JsonBackReference(value = "freelancer")
     @ManyToOne
     @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id", insertable=false, updatable=false)
     private UserFreelancer userFreelancer;
 
-    @JsonBackReference(value = "proposals")
+    @JsonBackReference(value = "job")
     @ManyToOne
     @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
     private Job job;

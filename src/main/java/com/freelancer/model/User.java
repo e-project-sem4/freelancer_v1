@@ -58,11 +58,11 @@ public class User {
 	private Long updateAt;
 	private Integer status;
 
-	@JsonBackReference
+	@JsonBackReference(value = "freelancer")
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserFreelancer userFreelancers;
 
-	@JsonBackReference
+	@JsonBackReference(value = "business")
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserBusiness userBusinesses;
 
