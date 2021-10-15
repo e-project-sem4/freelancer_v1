@@ -11,6 +11,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,28 +39,29 @@ public class PaypalController {
 			if(finJob.isPresent()){
 				Job rl = finJob.get();
 				try {
-					payment = service.createPayment(rl.getPaymentAmount());
+					payment = service.createPayment(String.valueOf(id),rl.getPaymentAmount(), baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
 				} catch (PayPalRESTException e) {
 					e.printStackTrace();
 				}
+				System.out.println(payment.toJSON());
 				return payment;
 			}
 		return payment;
 	}
 
-	@RequestMapping(value = "/execute-payment",method = RequestMethod.GET)
-	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("payerId") String payerId, HttpServletResponse response) {
+	@GetMapping(value = "/execute-payment")
+	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID) {
 		try {
-			payment = service.executePayment(paymentId, payerId);
+			payment = service.executePayment(paymentId, PayerID);
 			if (payment.getState().equals("approved")) {
-				String id = payment.getExperienceProfileId();
-				Optional<Job> finJob = jobRepository.findById(Long.valueOf(id));
-				if(finJob.isPresent()){
-					Job rl = finJob.get();
-					rl.setIsPaymentStatus(1);
-					jobService.update(rl, Long.valueOf(id));
-				}
-				return payment;
+//				Optional<Job> finJob = jobRepository.findById(id);
+//				System.out.println("tìm đk job rồi nè " + finJob);
+//				if(finJob.isPresent()){
+//					Job rl = finJob.get();
+//					rl.setIsPaymentStatus(1);
+//					System.out.println("Lưu được Job rồi" + jobService.update(rl, id));
+					return payment;
+//				}
 			}
 		} catch (PayPalRESTException e) {
 			System.out.println(e.getMessage());
