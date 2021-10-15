@@ -44,10 +44,10 @@ public class Job {
     private String description;
     @NotNull
     private Double paymentAmount;
+    private Integer isPaymentStatus;
     private Long createAt;
     private Long updateAt;
     private Integer status;
-    private Integer isPaymentStatus;
 
 
 
@@ -78,6 +78,7 @@ public class Job {
         this.name = name;
         this.description = description;
         this.paymentAmount = paymentAmount;
+        this.isPaymentStatus = isPaymentStatus;
         this.createAt = createAt;
         this.updateAt = updateAt;
         this.status = status;
