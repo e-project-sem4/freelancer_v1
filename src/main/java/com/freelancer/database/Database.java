@@ -323,13 +323,11 @@ public class Database implements CommandLineRunner {
     }
 
     private void seedProposalStatus(){
-        proposalStatus.save(new ProposalStatusCatalog(1L,"Đề xuất được gửi", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(2L,"Giai đoạn thương lượng", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(3L,"Đề xuất bị rút lại", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(4L,"Đề xuất được chấp nhận", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(5L,"Công việc đã bắt đầu", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(6L,"Công việc đã hoàn thành (thành công)", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(7L,"Công việc đã hoàn thành (không thành công)", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(1L,"Đã gửi", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(2L,"Chấp thuận", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(3L,"Hoàn thành", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(4L,"Hủy", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+
     }
     private void seedProposal(){
         proposal.save(new Proposal(1L ,DateUtil.getTimeLongCurrent(), 200.0, "I look forward to working with you", 2L, 1L, 1L)); //Đề xuất được gửi
