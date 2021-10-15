@@ -96,7 +96,10 @@ public class JobService {
             return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
         }
 
-    }
+	public static void main(String[] args) {
+		String a = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(4576834753L));
+		System.out.println(a);
+	}
 
     //update
     public ResponseObject update(Job obj, Long id) {
@@ -136,7 +139,7 @@ public class JobService {
             return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
         }
 
-    }
+	}
 
     //get by id
     public ResponseObject getById(Long id) {
