@@ -209,8 +209,11 @@ public class UserService {
 		try {
 			logger.info("call to edit user business" + userBusiness.toString());
 			userBusiness.setUpdateAt(System.currentTimeMillis());
-			Long userId = userRepository.getIdByUsername(userCreate);
-			userBusiness.setUser_account_id(userId);
+			User user = userRepository.findByUsername(userCreate);
+			userBusiness.setUser_account_id(user.getId());
+			if(user.getUserFreelancers() != null) {
+				userBusiness.setId(user.getUserBusinesses().getId());
+			}
 			UserBusiness result = userBusinessRepository.save(userBusiness);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -222,8 +225,11 @@ public class UserService {
 		try {
 			logger.info("call to edit user freelancer" + userFreelancer.toString());
 			userFreelancer.setUpdateAt(System.currentTimeMillis());
-			Long userId = userRepository.getIdByUsername(userCreate);
-			userFreelancer.setUser_account_id(userId);
+			User user = userRepository.findByUsername(userCreate);
+			userFreelancer.setUser_account_id(user.getId());
+			if(user.getUserFreelancers() != null) {
+				userFreelancer.setId(user.getUserFreelancers().getId());
+			}
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
