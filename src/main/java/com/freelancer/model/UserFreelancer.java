@@ -40,9 +40,7 @@ public class UserFreelancer {
 	@Column(nullable = false)
 	private String overview;
 	@Size(max = 1000, message = "Max location length: 1000 characters")
-
 	private String certifications;
-
 	private Long updateAt;
 
 	@OneToOne(cascade = CascadeType.ALL)

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -209,8 +211,11 @@ public class UserService {
 		try {
 			logger.info("call to edit user business" + userBusiness.toString());
 			userBusiness.setUpdateAt(System.currentTimeMillis());
-			Long userId = userRepository.getIdByUsername(userCreate);
-			userBusiness.setUser_account_id(userId);
+			User user = userRepository.findByUsername(userCreate);
+			userBusiness.setUser_account_id(user.getId());
+			if(user.getUserBusinesses() != null) {
+				userBusiness.setId(user.getUserBusinesses().getId());
+			}
 			UserBusiness result = userBusinessRepository.save(userBusiness);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -222,8 +227,11 @@ public class UserService {
 		try {
 			logger.info("call to edit user freelancer" + userFreelancer.toString());
 			userFreelancer.setUpdateAt(System.currentTimeMillis());
-			Long userId = userRepository.getIdByUsername(userCreate);
-			userFreelancer.setUser_account_id(userId);
+			User user = userRepository.findByUsername(userCreate);
+			userFreelancer.setUser_account_id(user.getId());
+			if(user.getUserFreelancers() != null) {
+				userFreelancer.setId(user.getUserFreelancers().getId());
+			}
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
@@ -289,5 +297,32 @@ public class UserService {
 			logger.info("error delete user by id", e);
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit freelancer", null);
 		}
+	}
+
+	public ResponseObject searchFreelancer(Specification<UserFreelancer> specification, int page, int size, int sort) {
+		List<UserFreelancer> list = null;
+		if (page > 0 && size > 0 && (sort > 4 || sort < 1)) {
+			list = userFreelancerRepository.findAll(specification, PageRequest.of(page - 1, size)).getContent();
+		} else if (page > 0 && size > 0 && sort == 1) {
+			list = userFreelancerRepository
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").descending()))
+					.getContent();
+		} else if (page > 0 && size > 0 && sort == 2) {
+			list = userFreelancerRepository.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
+					.getContent();
+		} else if (page == 0 && size == 0 && sort == 0) {
+			list = userFreelancerRepository.findAll(specification);
+		}
+		for (UserFreelancer j : list) {
+			j.setProposals(null);
+			j.getUser().setPassword(null);
+			j.getUser().setPhone(null);
+			j.getUser().setEmail(null);
+			j.getUser().setUsername(null);
+			j.getUser().setBalance(null);
+		}
+		Long total = Long.valueOf(userFreelancerRepository.findAll(specification).size());
+		String message = "success";
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 	}
 }
