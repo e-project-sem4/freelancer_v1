@@ -34,6 +34,9 @@ public class Proposal {
     @Transient
     private String jobName;
 
+    @Transient
+    private String freeLancerName;
+
     @JsonBackReference(value = "freelancer")
     @ManyToOne
     @JoinColumn(name = "user_freelancer_id",referencedColumnName = "id", insertable=false, updatable=false)
