@@ -1,18 +1,19 @@
 package com.freelancer.paypal;
 
 import com.freelancer.model.Job;
+import com.freelancer.model.ResponseObject;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.service.JobService;
 import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -50,21 +51,16 @@ public class PaypalController {
 	}
 
 	@GetMapping(value = "/execute-payment")
-	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID) {
+	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID,@RequestParam("id") Long id) {
 		try {
 			payment = service.executePayment(paymentId, PayerID);
 			if (payment.getState().equals("approved")) {
-//				Optional<Job> finJob = jobRepository.findById(id);
-//				System.out.println("tìm đk job rồi nè " + finJob);
-//				if(finJob.isPresent()){
-//					Job rl = finJob.get();
-//					rl.setIsPaymentStatus(1);
-//					System.out.println("Lưu được Job rồi" + jobService.update(rl, id));
-					return payment;
-//				}
+				System.out.println("id la " + id);
+				jobService.setIsPaymentStatusJob(id);
+				return payment;
 			}
 		} catch (PayPalRESTException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return payment;
 	}
