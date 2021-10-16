@@ -55,6 +55,7 @@ public class JobController {
     @Autowired
     private JobRepository jobRepository;
     private Gson gson;
+
     //get All/SEARCH
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ResponseObject> search(@RequestParam(value = "keySearch", required = false) Optional<String> keySearch
@@ -62,13 +63,14 @@ public class JobController {
             , @RequestParam(value = "expected_duration_id", required = false) Optional<Long> expected_duration_id
             , @RequestParam(value = "skill_id", required = false) Optional<ArrayList<Long>> skill_id
             , @RequestParam(value = "status", required = false) Optional<Long> status
+            , @RequestParam(value = "isPaymentStatus", required = false) Optional<Integer> isPaymentStatus
             , @RequestParam(value = "page", required = false) Optional<Integer> page
             , @RequestParam(value = "size", required = false) Optional<Integer> size
             , @RequestParam(value = "sort", required = false) Optional<Integer> sort) {
         Specification<Job> specification = Specification.where(null);
         if (keySearch.isPresent()) {
-            specification = specification.and(new JobSpecification(new SearchCriteria("name"  , "like", keySearch.get())).
-                    or(new JobSpecification(new SearchCriteria("description"  , "like", keySearch.get()))
+            specification = specification.and(new JobSpecification(new SearchCriteria("name", "like", keySearch.get())).
+                    or(new JobSpecification(new SearchCriteria("description", "like", keySearch.get()))
                     ));
         }
         if (complexity_id.isPresent() && complexity_id.get() > 0) {
@@ -78,24 +80,27 @@ public class JobController {
             specification = specification.and(new JobSpecification(new SearchCriteria("expected_duration_id", "==", expected_duration_id.get())));
         }
 
-        if (skill_id.isPresent()&&skill_id.get().get(0)>0){
-            for (Long s: skill_id.get()
-                 ) {
+        if (skill_id.isPresent() && skill_id.get().get(0) > 0) {
+            for (Long s : skill_id.get()
+            ) {
                 specification = specification.and(new JobSpecification(new SearchCriteria("skill_id", "==skill", s)));
             }
         }
+        if (isPaymentStatus.isPresent()&& isPaymentStatus.get()>=0&&isPaymentStatus.get()<=1) {
+            specification = specification.and(new JobSpecification(new SearchCriteria("isPaymentStatus", "==", isPaymentStatus.get())));
+        }
 
-        if (status.isPresent()) {
+        if (status.isPresent()&& status.get()>=0&&status.get()<=3) {
             specification = specification.and(new JobSpecification(new SearchCriteria("status", "==", status.get())));
         }
 
-        ResponseObject result =null;
+        ResponseObject result = null;
         if (page.isPresent() && size.isPresent() && sort.isPresent()) {
-             result = jobService.search(specification, page.get(), size.get(), sort.get());
+            result = jobService.search(specification, page.get(), size.get(), sort.get());
         }
 
-        if (!page.isPresent()||!size.isPresent()||!sort.isPresent()){
-            result = jobService.search(specification, 0,0,0);
+        if (!page.isPresent() || !size.isPresent() || !sort.isPresent()) {
+            result = jobService.search(specification, 0, 0, 0);
         }
 
 
