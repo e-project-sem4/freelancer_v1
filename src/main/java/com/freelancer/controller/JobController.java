@@ -92,7 +92,7 @@ public class JobController {
             specification = specification.and(new JobSpecification(new SearchCriteria("isPaymentStatus", "==", isPaymentStatus.get())));
         }
 
-        if (status.isPresent()&& status.get()>=0&&status.get()<=3) {
+        if (status.isPresent()&& status.get()>=0&&status.get()<3) {
             specification = specification.and(new JobSpecification(new SearchCriteria("status", "==", status.get())));
         }
 
