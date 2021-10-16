@@ -74,6 +74,15 @@ public class JobService {
 			message = "Account not mapping Business";
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 		}
+		// check số dư tài khoản
+		if(user.getBalance() < obj.getPaymentAmount()){
+			obj.setIsPaymentStatus(0);
+		}
+		obj.setIsPaymentStatus(1);
+		Double balanceNew = user.getBalance()- obj.getPaymentAmount();
+		user.setBalance(balanceNew);
+		userRepository.save(user);
+
 		obj.setUser_business_id(user.getUserBusinesses().getId());
 		obj.setStatus(1);
 		Job result = jobRepository.save(obj);
@@ -164,4 +173,16 @@ public class JobService {
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 
 	}
+	public ResponseObject setIsPaymentStatusJob(Long id){
+		logger.info("call to get setIsPaymentStatusJob by id: " + id);
+		Optional<Job> optionalJob = jobRepository.findById(id);
+		if (optionalJob.isPresent()){
+			Job rl = optionalJob.get();
+			rl.setIsPaymentStatus(1);
+			rl.setUpdateAt(DateUtil.getTimeLongCurrent());
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "Thanh toan thanh cong", jobRepository.save(rl));
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Khong tim thay Job can thanh toan", null);
+	}
+
 }
