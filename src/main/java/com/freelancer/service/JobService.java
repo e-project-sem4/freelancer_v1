@@ -75,13 +75,15 @@ public class JobService {
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 		}
 		// check số dư tài khoản
+
 		if(user.getBalance() < obj.getPaymentAmount()){
 			obj.setIsPaymentStatus(0);
+		} else {
+			obj.setIsPaymentStatus(1);
+			Double balanceNew = user.getBalance()- obj.getPaymentAmount();
+			user.setBalance(balanceNew);
+			userRepository.save(user);
 		}
-		obj.setIsPaymentStatus(1);
-		Double balanceNew = user.getBalance()- obj.getPaymentAmount();
-		user.setBalance(balanceNew);
-		userRepository.save(user);
 
 		obj.setUser_business_id(user.getUserBusinesses().getId());
 		obj.setStatus(1);
