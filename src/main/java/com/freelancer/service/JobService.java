@@ -3,6 +3,8 @@ package com.freelancer.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.freelancer.model.*;
+import com.freelancer.repository.UserFreelancerRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -11,10 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.freelancer.model.Job;
-import com.freelancer.model.OtherSkill;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.User;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.OtherSkillRepository;
 import com.freelancer.repository.UserRepository;
@@ -31,6 +29,8 @@ public class JobService {
 	private OtherSkillRepository otherSkillRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserFreelancerRepository userFreelancerRepository;
 
 	public ResponseObject search(Specification<Job> specification, int page, int size, int sort) {
 		List<Job> list = null;
@@ -167,6 +167,13 @@ public class JobService {
 				Job j = optionalJob.get();
 				j.getUserBusiness().getUser().setPassword(null);
 				j.getUserBusiness().getUser().setPhone(null);
+				for (Proposal p: j.getProposals()
+					 ) {
+					if (p!=null){
+						p.setFreeLancerName(userRepository.findById(userFreelancerRepository.findById(p.getUser_freelancer_id()).
+								get().getUser_account_id()).get().getFullName());
+					}
+				}
 				return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, optionalJob.get());
 			}
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
