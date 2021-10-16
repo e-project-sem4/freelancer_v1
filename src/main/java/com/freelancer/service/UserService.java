@@ -213,7 +213,7 @@ public class UserService {
 			userBusiness.setUpdateAt(System.currentTimeMillis());
 			User user = userRepository.findByUsername(userCreate);
 			userBusiness.setUser_account_id(user.getId());
-			if(user.getUserFreelancers() != null) {
+			if(user.getUserBusinesses() != null) {
 				userBusiness.setId(user.getUserBusinesses().getId());
 			}
 			UserBusiness result = userBusinessRepository.save(userBusiness);
