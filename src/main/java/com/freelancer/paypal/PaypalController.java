@@ -1,16 +1,19 @@
 package com.freelancer.paypal;
 
 import com.freelancer.model.Job;
+import com.freelancer.model.ResponseObject;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.service.JobService;
 import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @RestController
@@ -30,38 +33,34 @@ public class PaypalController {
 	@RequestMapping(value = "/create-payment",method = RequestMethod.POST)
 	public Payment payment(@RequestParam Long id, HttpServletRequest request){
 			String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-					.replacePath(null)
+					.replacePath("/api/v1/job/payment/")
 					.build()
 					.toUriString();
 			Optional<Job> finJob = jobRepository.findById(id);
 			if(finJob.isPresent()){
 				Job rl = finJob.get();
 				try {
-					payment = service.createPayment(rl.getPaymentAmount());
+					payment = service.createPayment(String.valueOf(id),rl.getPaymentAmount(), baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
 				} catch (PayPalRESTException e) {
 					e.printStackTrace();
 				}
+				System.out.println(payment.toJSON());
 				return payment;
 			}
 		return payment;
 	}
 
-	@RequestMapping(value = "/execute-payment",method = RequestMethod.GET)
-	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId, HttpServletResponse response) {
+	@GetMapping(value = "/execute-payment")
+	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID,@RequestParam("id") Long id) {
 		try {
-			payment = service.executePayment(paymentId, payerId);
+			payment = service.executePayment(paymentId, PayerID);
 			if (payment.getState().equals("approved")) {
-				String id = payment.getExperienceProfileId();
-				Optional<Job> finJob = jobRepository.findById(Long.valueOf(id));
-				if(finJob.isPresent()){
-					Job rl = finJob.get();
-					rl.setIsPaymentStatus(1);
-					jobService.update(rl, Long.valueOf(id));
-				}
+				System.out.println("id la " + id);
+				jobService.setIsPaymentStatusJob(id);
 				return payment;
 			}
 		} catch (PayPalRESTException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return payment;
 	}
