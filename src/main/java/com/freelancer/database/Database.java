@@ -326,7 +326,9 @@ public class Database implements CommandLineRunner {
         proposalStatus.save(new ProposalStatusCatalog(1L,"Đã gửi", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
         proposalStatus.save(new ProposalStatusCatalog(2L,"Chấp thuận", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
         proposalStatus.save(new ProposalStatusCatalog(3L,"Hoàn thành", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
-        proposalStatus.save(new ProposalStatusCatalog(4L,"Hủy", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(4L,"Business Hủy", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(5L,"FreeLancer Hủy", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
+        proposalStatus.save(new ProposalStatusCatalog(99L,"Xóa", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(),1));
 
     }
     private void seedProposal(){

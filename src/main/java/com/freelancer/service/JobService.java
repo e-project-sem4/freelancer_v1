@@ -203,6 +203,8 @@ public class JobService {
                     if (p != null) {
                         p.setFreeLancerName(userRepository.findById(userFreelancerRepository.findById(p.getUser_freelancer_id()).
                                 get().getUser_account_id()).get().getFullName());
+                        p.setUserAccountId(userRepository.findById(userFreelancerRepository.findById(p.getUser_freelancer_id()).
+                                get().getUser_account_id()).get().getId());
                     }
                 }
                 return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, optionalJob.get());
