@@ -127,12 +127,15 @@ public class JobController {
     }
 
     //Update
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_CLIENT')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH, produces = "application/json")
-    public ResponseEntity<ResponseObject> update(@RequestBody Job obj, @PathVariable Long id) {
-        ResponseObject result = jobService.update(obj, id);
+    public ResponseEntity<ResponseObject> update(@RequestBody Job obj, @PathVariable Long id, HttpServletRequest request) {
+        String token = request.getHeader(AUTHORIZATION);
+        String username = jwtTokenProvider.getUsername(token);
+        ResponseObject result = jobService.update(obj, id,username);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_CLIENT')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
         ResponseObject result = jobService.delete(id);
