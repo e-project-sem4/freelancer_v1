@@ -17,7 +17,6 @@ import java.util.Collection;
 @Table(name = "proposal_status_catalog")
 public class ProposalStatusCatalog {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String statusName;
     private Long createAt;

@@ -39,14 +39,14 @@ public class ContractService {
         Optional<Proposal> currentProposalOptional = proposalRepository.findById(obj.getProposal_id());
         if (!currentProposalOptional.isPresent()){
             message="This Proposal no longer exists";
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, null);
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
         }
         Proposal currentProposal = currentProposalOptional.get();
         Long proposalFreelancerId =currentProposal.getUser_freelancer_id();
         Optional<Job> currentJobOptional = jobRepository.findById(currentProposal.getJob_id());
         if (!currentJobOptional.isPresent()){
             message="This Job no longer exists";
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, null);
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
         }
         Long currentBusinessJobId = currentJobOptional.get().getUser_business_id();
         if (currentBusinessId == currentBusinessJobId && currentFreelancerId!=proposalFreelancerId){
@@ -55,6 +55,9 @@ public class ContractService {
             obj.setUser_business_id(currentBusinessId);
             Contract result = contractRepository.save(obj);
             message = "success";
+            Proposal proposalUpdate = proposalRepository.getOne(obj.getProposal_id());
+            proposalUpdate.setProposal_status_catalog_id(2L);
+            proposalRepository.save(proposalUpdate);
             return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 
         }
