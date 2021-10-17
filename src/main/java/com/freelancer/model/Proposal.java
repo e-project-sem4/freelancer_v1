@@ -33,6 +33,9 @@ public class Proposal {
     private Long proposal_status_catalog_id;
 
     @Transient
+    private Long userAccountId;
+
+    @Transient
     private String jobName;
 
     @Transient
