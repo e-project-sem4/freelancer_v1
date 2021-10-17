@@ -50,9 +50,7 @@ public class UserBusiness {
     @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Job> jobs;
 
-    @JsonBackReference(value = "contracts")
-    @OneToMany(mappedBy = "userBusiness",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Collection<Contract> contracts;
+
 
     public UserBusiness(Long id, Long user_account_id, String location, Long updateAt) {
         this.id = id;
