@@ -40,7 +40,7 @@ public class PaypalController {
 			if(finJob.isPresent()){
 				Job rl = finJob.get();
 				try {
-					payment = service.createPayment(String.valueOf(id),rl.getPaymentAmount(), baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
+					payment = service.createPayment(rl.getPaymentAmount(), baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
 				} catch (PayPalRESTException e) {
 					e.printStackTrace();
 				}
@@ -64,10 +64,7 @@ public class PaypalController {
 		}
 		return payment;
 	}
-
-
-
-
+	
 	 	@GetMapping(value = CANCEL_URL)
 	    public String cancelPay() {
 	        return "Thất bại";
