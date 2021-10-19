@@ -55,7 +55,7 @@ public class User {
 
 
 
-	@JsonManagedReference(value = "transaction")
+	
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Collection<Transaction> transactions;
 

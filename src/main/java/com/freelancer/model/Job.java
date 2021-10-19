@@ -54,7 +54,7 @@ public class Job {
 
 
 
-    @JsonManagedReference(value = "transaction")
+    
     @OneToMany(mappedBy = "job",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Collection<Transaction> transactions;
 
