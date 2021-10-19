@@ -64,10 +64,7 @@ public class PaypalController {
 		}
 		return payment;
 	}
-
-
-
-
+	
 	 	@GetMapping(value = CANCEL_URL)
 	    public String cancelPay() {
 	        return "Thất bại";
