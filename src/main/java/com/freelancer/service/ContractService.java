@@ -35,7 +35,7 @@ public class ContractService {
         logger.info("call to Create obj" + obj.toString());
         User user = userRepository.findByUsername(username);
         Long currentBusinessId = user.getUserBusinesses().getId();
-        Long currentFreelancerId = user.getUserBusinesses().getId();
+        Long currentFreelancerId = user.getUserFreelancers().getId();
         Optional<Proposal> currentProposalOptional = proposalRepository.findById(obj.getProposal_id());
         if (!currentProposalOptional.isPresent()){
             message="This Proposal no longer exists";
