@@ -2,14 +2,17 @@ package com.freelancer.paypal;
 
 import com.freelancer.model.Job;
 import com.freelancer.model.ResponseObject;
+import com.freelancer.model.Transaction;
 import com.freelancer.repository.JobRepository;
+import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.service.JobService;
+import com.freelancer.service.TransactionService;
 import com.paypal.api.payments.Payment;
-import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -21,9 +24,15 @@ import java.util.Optional;
 @RequestMapping("/api/v1/job/payment")
 public class PaypalController {
 	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+
+	private static final String AUTHORIZATION = "Authorization";
+	@Autowired
 	JobRepository jobRepository;
 	@Autowired
 	JobService jobService;
+	@Autowired
+	TransactionService transactionService;
 	@Autowired
 	PaypalService service;
 	private Payment payment = null;
@@ -40,7 +49,7 @@ public class PaypalController {
 			if(finJob.isPresent()){
 				Job rl = finJob.get();
 				try {
-					payment = service.createPayment(rl.getPaymentAmount(), baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
+					payment = service.createPayment(String.valueOf(rl.getId()),rl.getName(),rl.getPaymentAmount(), baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
 				} catch (PayPalRESTException e) {
 					e.printStackTrace();
 				}
@@ -49,14 +58,24 @@ public class PaypalController {
 			}
 		return payment;
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_CLIENT')")
 	@GetMapping(value = "/execute-payment")
-	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID,@RequestParam("id") Long id) {
+	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID, HttpServletRequest request) {
 		try {
+			String token = request.getHeader(AUTHORIZATION);
+			String username = jwtTokenProvider.getUsername(token);
 			payment = service.executePayment(paymentId, PayerID);
 			if (payment.getState().equals("approved")) {
-				System.out.println("id la " + id);
-				jobService.setIsPaymentStatusJob(id);
+				com.paypal.api.payments.Transaction rl = payment.getTransactions().get(0);
+				jobService.setIsPaymentStatusJob(Long.valueOf(rl.getNoteToPayee())); // Chuyển trạng thái thanh toán của Job
+				Transaction history = new Transaction();
+				history.setContent(rl.getDescription()); // Description của Job
+				history.setPrice(Double.valueOf(rl.getAmount().getTotal())); // paymentAmount của Job
+				history.setJob_id(Long.valueOf(rl.getNoteToPayee()));// id cua Job
+				history.setTypeTransaction(1); // kiểu thanh toán
+				history.setOrderID(payment.getId()); // orderId của paypal
+				transactionService.createTransactionJob(history, username); // tạo Transaction
+				System.out.println(payment.toJSON());
 				return payment;
 			}
 		} catch (PayPalRESTException e) {
