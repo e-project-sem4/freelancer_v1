@@ -43,6 +43,8 @@ public class UserFreelancer {
 	private String certifications;
 	private Long updateAt;
 
+	private Integer statusSearchJob; //0. Tắt 1. Bật
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_account_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private User user;
@@ -58,12 +60,13 @@ public class UserFreelancer {
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Proposal> proposals;
 
-	public UserFreelancer(Long id, Long user_account_id, String location, String overview, String certifications, Long updateAt) {
+	public UserFreelancer(Long id, Long user_account_id, String location, String overview, String certifications, Long updateAt,Integer statusSearchJob) {
 		this.id = id;
 		this.user_account_id = user_account_id;
 		this.location = location;
 		this.overview = overview;
 		this.certifications = certifications;
 		this.updateAt = updateAt;
+		this.statusSearchJob = statusSearchJob;
 	}
 }
