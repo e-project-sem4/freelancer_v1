@@ -197,6 +197,8 @@ public class UserService {
 				returnUser.setPhone(user.getPhone());
 			if (user.getPhone() != null && !user.getPhone().isEmpty())
 				returnUser.setFullName(user.getFullName());
+			if (user.getThumbnail() != null && !user.getThumbnail().isEmpty())
+				returnUser.setThumbnail(user.getThumbnail());
 			user.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
 			user.setUpdateAt(System.currentTimeMillis());
 			User result = userRepository.save(returnUser);
