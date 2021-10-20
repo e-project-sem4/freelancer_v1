@@ -231,6 +231,9 @@ public class UserService {
 			userFreelancer.setUser_account_id(user.getId());
 			if(user.getUserFreelancers() != null) {
 				userFreelancer.setId(user.getUserFreelancers().getId());
+				userFreelancer.setStatusSearchJob(user.getUserFreelancers().getStatusSearchJob());
+			}else {
+				userFreelancer.setStatusSearchJob(1);
 			}
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
@@ -325,4 +328,23 @@ public class UserService {
 		String message = "success";
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 	}
+
+	public ResponseObject changeStatusFreelancer(String username) {
+		String message = "not success";
+		User user = userRepository.findByUsername(username);
+		Long currentFreelancerId = user.getUserFreelancers().getId();
+		if (currentFreelancerId!= null){
+			UserFreelancer userFreelancer = userFreelancerRepository.getOne(currentFreelancerId);
+			if (userFreelancer.getStatusSearchJob() ==0){
+				userFreelancer.setStatusSearchJob(1);
+			}else {
+				userFreelancer.setStatusSearchJob(0);
+			}
+			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
+			message = "success";
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+		}
+
 }
