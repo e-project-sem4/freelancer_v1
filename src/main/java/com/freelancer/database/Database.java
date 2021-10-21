@@ -86,9 +86,9 @@ public class Database implements CommandLineRunner {
 	}
 
 	// public Long DateUtil.getTimeLongCurrent() {
-//        Date d = new DateUtil.getTimeLongCurrent();
-//        return d.getTime();
-//    }
+	// Date d = new DateUtil.getTimeLongCurrent();
+	// return d.getTime();
+	// }
 	private void seedComplexity() {
 		complexityRepository.save(new Complexity(1L, "Easy", 1));
 		complexityRepository.save(new Complexity(2L, "Intermediate", 1));
@@ -169,28 +169,38 @@ public class Database implements CommandLineRunner {
 		business.save(new UserBusiness(10L, 11L, "Cong ty Ha Noi", DateUtil.setDateLong(0)));
 	}
 
-	private void seedUserFreelancer() {
-		freelancer.save(new UserFreelancer(1L, 2L, "Hà Nội", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(2L, 3L, "HCM", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ",
-				DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(3L, 4L, "Đà Nẵng", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(4L, 5L, "Quảng Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(5L, 6L, "Quảng Ninh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(6L, 7L, "Hà Nam", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(7L, 8L, "Hòa Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(8L, 9L, "Hà Giang", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(9L, 10L, "Hà Tĩnh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-		freelancer.save(new UserFreelancer(10L, 11L, "Vinh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent()));
-	}
+	// private void seedUserFreelancer() {
+	// freelancer.save(new UserFreelancer(1L, 2L, "Hà Nội", "Tôi Là 1 Freelancer có
+	// nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(2L, 3L, "HCM", "Tôi Là 1 Freelancer có
+	// nhiều năm kinh nghiệm", "Chứng chỉ",
+	// DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(3L, 4L, "Đà Nẵng", "Tôi Là 1 Freelancer có
+	// nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(4L, 5L, "Quảng Bình", "Tôi Là 1 Freelancer
+	// có nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(5L, 6L, "Quảng Ninh", "Tôi Là 1 Freelancer
+	// có nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(6L, 7L, "Hà Nam", "Tôi Là 1 Freelancer có
+	// nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(7L, 8L, "Hòa Bình", "Tôi Là 1 Freelancer
+	// có nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(8L, 9L, "Hà Giang", "Tôi Là 1 Freelancer
+	// có nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(9L, 10L, "Hà Tĩnh", "Tôi Là 1 Freelancer
+	// có nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// freelancer.save(new UserFreelancer(10L, 11L, "Vinh", "Tôi Là 1 Freelancer có
+	// nhiều năm kinh nghiệm",
+	// "Chứng chỉ", DateUtil.getTimeLongCurrent()));
+	// }
 
 	private void seedSkill() {
 		skillRepository.save(new Skill(1L, "JavaScript", 1));
@@ -204,6 +214,29 @@ public class Database implements CommandLineRunner {
 		skillRepository.save(new Skill(9L, "Objective-C", 1));
 		skillRepository.save(new Skill(10L, "SQL", 1));
 
+	}
+
+	private void seedUserFreelancer() {
+		freelancer.save(new UserFreelancer(1L, 2L, "Hà Nội", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1));
+		freelancer.save(new UserFreelancer(2L, 3L, "HCM", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ",
+				DateUtil.getTimeLongCurrent(), 1));
+		freelancer.save(new UserFreelancer(3L, 4L, "Đà Nẵng", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1));
+		freelancer.save(new UserFreelancer(4L, 5L, "Quảng Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1));
+		freelancer.save(new UserFreelancer(5L, 6L, "Quảng Ninh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1));
+		freelancer.save(new UserFreelancer(6L, 7L, "Hà Nam", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1));
+		freelancer.save(new UserFreelancer(7L, 8L, "Hòa Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1));
+		freelancer.save(new UserFreelancer(8L, 9L, "Hà Giang", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 0));
+		freelancer.save(new UserFreelancer(9L, 10L, "Hà Tĩnh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 0));
+		freelancer.save(new UserFreelancer(10L, 11L, "Vinh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
+				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 0));
 	}
 
 	private void seedJob() {

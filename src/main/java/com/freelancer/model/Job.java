@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,6 +51,12 @@ public class Job {
     private Integer status;
     private String orderId;
 
+
+
+
+    
+    @OneToMany(mappedBy = "job",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Collection<Transaction> transactions;
 
     @ManyToOne
     @JoinColumn(name = "user_business_id", referencedColumnName = "id", insertable = false, updatable = false)

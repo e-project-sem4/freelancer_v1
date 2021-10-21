@@ -19,7 +19,8 @@ public class PaypalService {
 	private APIContext apiContext;
 
 	public Payment createPayment(
-			String id,
+			String id_job,
+			String content,
 			Double paymentAmount,
 			String cancelUrl,
 			String successUrl) throws PayPalRESTException{
@@ -28,10 +29,9 @@ public class PaypalService {
 		paymentAmount = new BigDecimal(paymentAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
 		amount.setTotal(String.valueOf(paymentAmount));
 		Transaction transaction = new Transaction();
-		transaction.setDescription("Thanh toán cho https://freelancer-chat.herokuapp.com/");
-		transaction.setReferenceId(id);
+		transaction.setDescription(content);
 		transaction.setAmount(amount);
-
+		transaction.setNoteToPayee(id_job);
 		List<Transaction> transactions = new ArrayList<>();
 		transactions.add(transaction);
 
@@ -56,5 +56,4 @@ public class PaypalService {
 		paymentExecute.setPayerId(payerId);
 		return payment.execute(apiContext, paymentExecute);
 	}
-
 }
