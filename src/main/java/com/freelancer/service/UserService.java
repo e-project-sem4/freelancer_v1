@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
+import com.freelancer.model.ChatKeyUser;
 import com.freelancer.model.Job;
 import com.freelancer.model.Proposal;
 import com.freelancer.model.ResponseObject;
@@ -29,6 +30,7 @@ import com.freelancer.model.Role;
 import com.freelancer.model.User;
 import com.freelancer.model.UserBusiness;
 import com.freelancer.model.UserFreelancer;
+import com.freelancer.repository.ChatKeyUserRepository;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.UserBusinessRepository;
 import com.freelancer.repository.UserFreelancerRepository;
@@ -68,12 +70,19 @@ public class UserService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	@Autowired
+	private ChatKeyUserRepository chatKeyUserRepository;
+
 	public ResponseObject signin(String username, String password) {
 		String message;
 		try {
 			logger.info("login nè");
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 			User user = userRepository.findByUsername(username);
+			UserFreelancer freelancer = userFreelancerRepository.getFreelancerByUserAccountId(user.getId());
+			UserBusiness business = userBusinessRepository.getBusinessByUserAccountId(user.getId());
+			List<ChatKeyUser> chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(), business.getId());
+			user.setChatKeyUsers(chatKeyUsers);
 			user.setPassword(null);
 			String token = jwtTokenProvider.createToken(username, user.getRoles());
 			message = token;
@@ -150,7 +159,8 @@ public class UserService {
 			for (Proposal p : freelancer.getProposals()) {
 				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
 			}
-			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
+			List<ChatKeyUser> chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(), business.getId());
+			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, chatKeyUsers);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
 	}
@@ -182,7 +192,7 @@ public class UserService {
 			for (Proposal p : freelancer.getProposals()) {
 				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
 			}
-			profileUserDto = new ResponseProfileUserDto(user, business, freelancer);
+			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, null);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
 	}
@@ -215,7 +225,7 @@ public class UserService {
 			userBusiness.setUpdateAt(System.currentTimeMillis());
 			User user = userRepository.findByUsername(userCreate);
 			userBusiness.setUser_account_id(user.getId());
-			if(user.getUserBusinesses() != null) {
+			if (user.getUserBusinesses() != null) {
 				userBusiness.setId(user.getUserBusinesses().getId());
 			}
 			UserBusiness result = userBusinessRepository.save(userBusiness);
@@ -231,7 +241,7 @@ public class UserService {
 			userFreelancer.setUpdateAt(System.currentTimeMillis());
 			User user = userRepository.findByUsername(userCreate);
 			userFreelancer.setUser_account_id(user.getId());
-			if(user.getUserFreelancers() != null) {
+			if (user.getUserFreelancers() != null) {
 				userFreelancer.setId(user.getUserFreelancers().getId());
 				userFreelancer.setStatusSearchJob(user.getUserFreelancers().getStatusSearchJob());
 			}else {
@@ -313,7 +323,8 @@ public class UserService {
 					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").descending()))
 					.getContent();
 		} else if (page > 0 && size > 0 && sort == 2) {
-			list = userFreelancerRepository.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
+			list = userFreelancerRepository
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
 					.getContent();
 		} else if (page == 0 && size == 0 && sort == 0) {
 			list = userFreelancerRepository.findAll(specification);

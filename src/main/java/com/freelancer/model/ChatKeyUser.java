@@ -20,8 +20,10 @@ public class ChatKeyUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long user_freelancer_id;
-	private Long user_business_id;
-	private Long job_id;
+	private Long senderId;
+	private Long receiverId;
+	private Long jobId;
 	private String chatRoomKey;
+	private String jobName;
+
 }
