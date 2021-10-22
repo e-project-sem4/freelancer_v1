@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -66,6 +65,9 @@ public class User {
 	@JsonBackReference(value = "business")
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserBusiness userBusinesses;
+	
+	@Transient
+	List<ChatKeyUser> chatKeyUsers;
 
 	public User(Long id, String username, String email, String password, String phone, String fullName, List<Role> roles, Double balance, Long createAt, Long updateAt, Integer status) {
 		this.id = id;
