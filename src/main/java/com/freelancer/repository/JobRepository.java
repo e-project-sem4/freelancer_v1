@@ -29,4 +29,5 @@ public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificatio
     @Query("SELECT j FROM Job j WHERE j.user_business_id=:id")
     List<Job> findAllByUser_business_id(Long id);
 
+
 }
