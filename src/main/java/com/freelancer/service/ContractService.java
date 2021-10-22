@@ -1,6 +1,7 @@
 package com.freelancer.service;
 
 import com.freelancer.model.*;
+import com.freelancer.repository.ChatKeyUserRepository;
 import com.freelancer.repository.ContractRepository;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.ProposalRepository;
@@ -8,17 +9,20 @@ import com.freelancer.repository.UserRepository;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.freelancer.utils.DateUtil;
+import com.freelancer.utils.UtilService;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ContractService {
 
-    Logger logger = ConfigLog.getLogger(ExpectedDurationService.class);
+	Logger logger = ConfigLog.getLogger(ExpectedDurationService.class);
 
     Gson gson = new Gson();
     @Autowired
@@ -29,6 +33,8 @@ public class ContractService {
     private JobRepository jobRepository;
     @Autowired
     private ProposalRepository proposalRepository;
+	@Autowired
+	private ChatKeyUserRepository chatKeyUserRepository;
     // add
     public ResponseObject save(Contract obj, String username) {
         String message = "not success";
@@ -58,27 +64,40 @@ public class ContractService {
             Proposal proposalUpdate = proposalRepository.getOne(obj.getProposal_id());
             proposalUpdate.setProposal_status_catalog_id(2L);
             proposalRepository.save(proposalUpdate);
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+			// tạo chatbox cho freelancer - business
+			List<ChatKeyUser> listToSave = new ArrayList<>();
+			ChatKeyUser chatKeyUser = new ChatKeyUser(null, currentBusinessJobId, currentFreelancerId,
+					currentJobOptional.get().getId(), UtilService.convertRoomKey(currentFreelancerId,
+							currentBusinessJobId, currentJobOptional.get().getId()),
+					currentJobOptional.get().getName());
+			ChatKeyUser chatKeyUser2 = new ChatKeyUser(null, currentBusinessJobId, currentFreelancerId,
+					currentJobOptional.get().getId(), UtilService.convertRoomKey(currentBusinessJobId,
+							currentFreelancerId, currentJobOptional.get().getId()),
+					currentJobOptional.get().getName());
+			listToSave.add(chatKeyUser2);
+			listToSave.add(chatKeyUser);
+			chatKeyUserRepository.saveAll(listToSave);
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 
-        }
-        message="You are not the post owner";
-        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, null);
-    }
+		}
+		message = "You are not the post owner";
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, null);
+	}
 
-    // get by id
-    public ResponseObject getById(Long id) {
-        logger.info("call to get obj by id: " + id);
-        Optional<Contract> obj = contractRepository.findById(id);
-        String message = "can not find obj";
-        if (obj.isPresent()) {
-            if (obj.get().getStatus()!=0){
-                message = "success";
-                logger.info("get obj success");
-                return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, obj.get());
-            }
-            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+	// get by id
+	public ResponseObject getById(Long id) {
+		logger.info("call to get obj by id: " + id);
+		Optional<Contract> obj = contractRepository.findById(id);
+		String message = "can not find obj";
+		if (obj.isPresent()) {
+			if (obj.get().getStatus() != 0) {
+				message = "success";
+				logger.info("get obj success");
+				return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, obj.get());
+			}
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 
-        }
-        return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-    }
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+	}
 }
