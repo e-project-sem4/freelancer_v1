@@ -1,10 +1,14 @@
 package com.freelancer.service;
 
-import com.freelancer.model.ExpectedDuration;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.freelancer.model.Proposal;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.User;
-import com.freelancer.repository.ExpectedDurationRepository;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.ProposalRepository;
 import com.freelancer.repository.UserRepository;
@@ -12,15 +16,6 @@ import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.freelancer.utils.DateUtil;
 import com.google.gson.Gson;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProposalService {

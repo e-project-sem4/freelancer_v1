@@ -1,16 +1,20 @@
 package com.freelancer.search;
 
-import com.freelancer.model.Complexity;
-import com.freelancer.model.Proposal;
-import org.springframework.data.jpa.domain.Specification;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.data.jpa.domain.Specification;
+
+import com.freelancer.model.Proposal;
+
 public class ProposalSpecification implements Specification<Proposal>{
-    private SearchCriteria searchCriteria;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private SearchCriteria searchCriteria;
 
 
     public ProposalSpecification(SearchCriteria searchCriteria) {

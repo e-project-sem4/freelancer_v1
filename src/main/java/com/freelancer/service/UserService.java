@@ -259,7 +259,7 @@ public class UserService {
 				userFreelancer.setHasSkills(null);
 			}
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
-			
+
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit freelancer", null);

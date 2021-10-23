@@ -1,15 +1,13 @@
 package com.freelancer.repository;
 
-import com.freelancer.model.Job;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import java.util.List;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import com.freelancer.model.Job;
 
 
 @Repository
@@ -28,5 +26,6 @@ public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificatio
 //    List<Job> searchNoPage(Specification<Job> specification);
     @Query("SELECT j FROM Job j WHERE j.user_business_id=:id")
     List<Job> findAllByUser_business_id(Long id);
+
 
 }
