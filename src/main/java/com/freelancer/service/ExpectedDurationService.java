@@ -2,11 +2,8 @@ package com.freelancer.service;
 
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-import com.freelancer.model.Complexity;
-import com.freelancer.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +16,7 @@ import com.freelancer.model.ResponseObject;
 import com.freelancer.repository.ExpectedDurationRepository;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
+import com.freelancer.utils.DateUtil;
 import com.google.gson.Gson;
 
 @Service
@@ -91,7 +89,6 @@ public class ExpectedDurationService {
         logger.info("call to get obj by id: " + id);
         Optional<ExpectedDuration> obj = expectedDurationRepository.findById(id);
         String message = "can not find obj";
-        ExpectedDuration obj1 = null;
         if (obj.isPresent()) {
             if (obj.get().getStatus()!=0){
                 message = "success";
