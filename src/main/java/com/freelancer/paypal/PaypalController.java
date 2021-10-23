@@ -62,7 +62,6 @@ public class PaypalController {
 			}
 		return payment;
 	}
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_CLIENT')")
 	@GetMapping(value = "/execute-payment")
 	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID, HttpServletRequest request) {
 		try {
