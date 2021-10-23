@@ -13,18 +13,22 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.model.HasSkill;
 import com.freelancer.model.Job;
 import com.freelancer.model.OtherSkill;
 import com.freelancer.model.Proposal;
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.User;
+import com.freelancer.model.UserFreelancer;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.OtherSkillRepository;
 import com.freelancer.repository.UserFreelancerRepository;
 import com.freelancer.repository.UserRepository;
+import com.freelancer.search.FreelancerSpecification;
 import com.freelancer.search.JobSpecification;
 import com.freelancer.search.SearchCriteria;
+import com.freelancer.sendmail.SendMailModel;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.freelancer.utils.DateUtil;
@@ -75,6 +79,7 @@ public class JobService {
 	// add
 	@Transactional
 	public ResponseObject save(Job obj, String username) {
+		boolean isSendmail = false;
 		User user = userRepository.findByUsername(username);
 		String message = "not success";
 		logger.info("call to Create Job" + jobRepository.toString());
@@ -92,11 +97,37 @@ public class JobService {
 			Double balanceNew = user.getBalance() - obj.getPaymentAmount();
 			user.setBalance(balanceNew);
 			userRepository.save(user);
+			isSendmail=true;
 		}
 
 		obj.setUser_business_id(user.getUserBusinesses().getId());
 		obj.setStatus(1);
 		Job result = jobRepository.save(obj);
+		if (isSendmail){
+			SendMailModel sendMailModel = new SendMailModel();
+			sendMailModel.setJobId(result.getId().toString());
+			List<OtherSkill> skillJob = result.getOtherSkills().stream().collect(Collectors.toList());
+			ArrayList<Long> idSkillJob = new ArrayList<>();
+			for (OtherSkill o: skillJob
+				 ) {
+				idSkillJob.add(o.getSkill_id());
+			}
+
+			Specification<UserFreelancer> specification = Specification.where(null);
+			for (Long id : idSkillJob
+			) {
+				specification = specification.and(new FreelancerSpecification(new SearchCriteria("skill_id", "==skill", id)));
+			}
+
+			List<UserFreelancer> userFreelancers= userFreelancerRepository.findAll(specification);
+			for (UserFreelancer u: userFreelancers
+				 ) {
+				JwtAuthServiceApp.listSendMail.add(new SendMailModel(u.getUser().getEmail(), result.getId().toString()));
+			}
+
+
+
+		}
 		for (OtherSkill o : obj.getOtherSkills()) {
 			o.setJob_id(result.getId());
 			otherSkillRepository.save(o);
@@ -216,6 +247,9 @@ public class JobService {
 						p.setUserAccountId(userRepository.findById(
 								userFreelancerRepository.findById(p.getUser_freelancer_id()).get().getUser_account_id())
 								.get().getId());
+						p.setFreeLancerName(userRepository.findById(
+								userFreelancerRepository.findById(p.getUser_freelancer_id()).get().getUser_account_id())
+								.get().getFullName());
 					}
 				}
 				return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, optionalJob.get());

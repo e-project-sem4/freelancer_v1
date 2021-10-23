@@ -12,4 +12,5 @@ import com.freelancer.model.UserFreelancer;
 public interface UserFreelancerRepository extends JpaRepository<UserFreelancer, Long>, JpaSpecificationExecutor<UserFreelancer> {
 	@Query("SELECT a FROM UserFreelancer a WHERE user_account_id = :id")
 	UserFreelancer getFreelancerByUserAccountId(@Param("id") Long id);
+	
 }

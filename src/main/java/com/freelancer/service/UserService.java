@@ -31,6 +31,7 @@ import com.freelancer.model.User;
 import com.freelancer.model.UserBusiness;
 import com.freelancer.model.UserFreelancer;
 import com.freelancer.repository.ChatKeyUserRepository;
+import com.freelancer.repository.HasSkillRepository;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.UserBusinessRepository;
 import com.freelancer.repository.UserFreelancerRepository;
@@ -72,6 +73,9 @@ public class UserService {
 
 	@Autowired
 	private ChatKeyUserRepository chatKeyUserRepository;
+
+	@Autowired
+	private HasSkillRepository hasSkillRepository;
 
 	public ResponseObject signin(String username, String password) {
 		String message;
@@ -235,6 +239,7 @@ public class UserService {
 		}
 	}
 
+	@Transactional
 	public ResponseObject editFreelancer(String userCreate, UserFreelancer userFreelancer) {
 		try {
 			logger.info("call to edit user freelancer" + userFreelancer.toString());
@@ -244,10 +249,17 @@ public class UserService {
 			if (user.getUserFreelancers() != null) {
 				userFreelancer.setId(user.getUserFreelancers().getId());
 				userFreelancer.setStatusSearchJob(user.getUserFreelancers().getStatusSearchJob());
-			}else {
+				hasSkillRepository.deleteSkills(user.getUserFreelancers().getId());
+			} else {
 				userFreelancer.setStatusSearchJob(1);
 			}
+			if (userFreelancer.getHasSkills().size() > 0) {
+				userFreelancer.getHasSkills().forEach(t -> t.setUser_freelancer_id(user.getUserFreelancers().getId()));
+				hasSkillRepository.saveAll(userFreelancer.getHasSkills());
+				userFreelancer.setHasSkills(null);
+			}
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
+
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
 			return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Fail to edit freelancer", null);
@@ -346,11 +358,11 @@ public class UserService {
 		String message = "not success";
 		User user = userRepository.findByUsername(username);
 		Long currentFreelancerId = user.getUserFreelancers().getId();
-		if (currentFreelancerId!= null){
+		if (currentFreelancerId != null) {
 			UserFreelancer userFreelancer = userFreelancerRepository.getOne(currentFreelancerId);
-			if (userFreelancer.getStatusSearchJob() ==0){
+			if (userFreelancer.getStatusSearchJob() == 0) {
 				userFreelancer.setStatusSearchJob(1);
-			}else {
+			} else {
 				userFreelancer.setStatusSearchJob(0);
 			}
 			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
@@ -358,6 +370,6 @@ public class UserService {
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-		}
+	}
 
 }

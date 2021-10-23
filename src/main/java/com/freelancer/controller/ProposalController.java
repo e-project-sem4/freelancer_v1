@@ -1,19 +1,23 @@
 package com.freelancer.controller;
 
-import com.freelancer.model.Complexity;
-import com.freelancer.model.Job;
-import com.freelancer.model.Proposal;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.security.JwtTokenProvider;
-import com.freelancer.service.ProposalService;
-import com.freelancer.service.ProposalStatusService;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import com.freelancer.model.Proposal;
+import com.freelancer.model.ResponseObject;
+import com.freelancer.security.JwtTokenProvider;
+import com.freelancer.service.ProposalService;
 
 @RestController
 @CrossOrigin
