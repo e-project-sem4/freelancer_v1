@@ -2,7 +2,13 @@ package com.freelancer.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.freelancer.model.*;
+import com.freelancer.search.JobSpecification;
+import com.freelancer.search.SearchCriteria;
+import com.freelancer.search.TransactionSpecification;
+import com.freelancer.search.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,13 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.User;
-import com.freelancer.model.UserBusiness;
-import com.freelancer.model.UserFreelancer;
 import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.service.UserService;
 import com.freelancer.utils.JWTService;
+
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -38,6 +42,50 @@ public class UserController {
 	JWTService jwtService;
 
 	private static final String AUTHORIZATION = "Authorization";
+
+
+	//get All/SEARCH
+	@RequestMapping(value = "/searchList", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ResponseObject> searchList(
+												 @RequestParam(value = "keySearch", required = false) Optional<String> keySearch
+			, @RequestParam(value = "status", required = false) Optional<Integer> status
+			, @RequestParam(value = "startAt", required = false) Optional<Long> startAt
+			, @RequestParam(value = "endAt", required = false) Optional<Long> endAt
+			, @RequestParam(value = "page", required = false) Optional<Integer> page
+			, @RequestParam(value = "size", required = false) Optional<Integer> size
+			, @RequestParam(value = "sort", required = false) Optional<Integer> sort) {
+		Specification<User> specification = Specification.where(null);
+		if (keySearch.isPresent() && !keySearch.get().isEmpty()) {
+			specification = specification.and(new UserSpecification(new SearchCriteria("username", "like", keySearch.get())));
+		}
+		if (startAt.isPresent() && startAt.get() > 0) {
+			specification = specification.and(new UserSpecification(new SearchCriteria("createAt", ">=", startAt.get())));
+		}
+		if (endAt.isPresent() && endAt.get() > 0) {
+			specification = specification.and(new UserSpecification(new SearchCriteria("createAt", "<=", endAt.get())));
+		}
+		if (status.isPresent()&& status.get()>=0) {
+			specification = specification.and(new UserSpecification(new SearchCriteria("status", "==", status.get())));
+		}
+
+
+
+
+		ResponseObject result = null;
+		if (page.isPresent() && size.isPresent() && sort.isPresent()) {
+			result = userService.searchList(specification, page.get(), size.get(), sort.get());
+		}
+
+		if (!page.isPresent() || !size.isPresent() || !sort.isPresent()) {
+			result = userService.searchList(specification, 0, 0, 0);
+		}
+
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+
+
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<ResponseObject> login(@RequestParam String username, @RequestParam String password) {
