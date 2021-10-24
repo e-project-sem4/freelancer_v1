@@ -76,7 +76,7 @@ public class PaypalController {
 				history.setContent(rl.getDescription()); // Description của Job
 				history.setPrice(Double.valueOf(rl.getAmount().getTotal())); // paymentAmount của Job
 				history.setJob_id(Long.valueOf(rl.getNoteToPayee()));// id cua Job
-				history.setTypeTransaction(1); // kiểu thanh toán
+				history.setType(Transaction.TransactionType.PAYMENT); // kiểu thanh toán
 				history.setOrderID(payment.getId()); // orderId của paypal
 				transactionService.createTransactionJob(history, username); // tạo Transaction
 				System.out.println(payment.toJSON());
