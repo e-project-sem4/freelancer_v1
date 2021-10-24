@@ -41,7 +41,7 @@ public class ExpectedDurationController {
             , @RequestParam(value = "sort", required = false) Optional<Integer> sort
     ) {
         Specification<ExpectedDuration> specification = Specification.where(null);
-        if (keySearch.isPresent()) {
+        if (keySearch.isPresent() && !keySearch.get().isEmpty()) {
             specification = specification.and(new DurationSpecification(new SearchCriteria("durationText"  , "like", keySearch.get()))
             );
         }

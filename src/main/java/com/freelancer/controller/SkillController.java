@@ -42,7 +42,7 @@ public class SkillController {
             , @RequestParam(value = "sort", required = false) Optional<Integer> sort
     ) {
         Specification<Skill> specification = Specification.where(null);
-        if (keySearch.isPresent()) {
+        if (keySearch.isPresent() && !keySearch.get().isEmpty()) {
             specification = specification.and(new SkillSpecification(new SearchCriteria("skillName"  , "like", keySearch.get()))
             );
         }
