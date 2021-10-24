@@ -29,10 +29,12 @@ public class Transaction {
     private Long createAt;
     private String content;
     private String orderID;
-    private Integer typeTransaction;
+    private TransactionType type;
     private Long job_id;  // khóa ngoại
     private Long user_account_id; // khóa ngoại
-
+    public enum TransactionType{//  ,nạp tiền vào tài khoản, rút tiền, chuyển khoản(nạp tiền tạo job) , thanh toán (nhận tiê,
+        RECHARGE, WITHDRAW, PAYMENT, WAGE
+    }
     @JsonBackReference(value = "job")
     @ManyToOne
     @JoinColumn(name = "job_id",referencedColumnName = "id", insertable=false, updatable=false)
@@ -43,4 +45,20 @@ public class Transaction {
     @JoinColumn(name = "user_account_id ",referencedColumnName = "id", insertable=false, updatable=false)
     private User user;
 
+    public Transaction(Long id, Double price, Long createAt, TransactionType type, Long user_account_id) {
+        this.id = id;
+        this.price = price;
+        this.createAt = createAt;
+        this.type = type;
+        this.user_account_id = user_account_id;
+    }
+
+    public Transaction(Long id, Double price, Long createAt, TransactionType type, Long job_id, Long user_account_id) {
+        this.id = id;
+        this.price = price;
+        this.createAt = createAt;
+        this.type = type;
+        this.job_id = job_id;
+        this.user_account_id = user_account_id;
+    }
 }

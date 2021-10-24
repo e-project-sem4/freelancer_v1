@@ -49,7 +49,7 @@ public class UserFreelancerController {
             , @RequestParam(value = "sort", required = false) Optional<Integer> sort) {
         ResponseObject result = null;
         Specification<UserFreelancer> specification = Specification.where(null);
-        if (keySearch.isPresent()) {
+        if (keySearch.isPresent() && !keySearch.get().isEmpty()) {
             specification = specification.and(new FreelancerSpecification(new SearchCriteria("certifications", "like", keySearch.get())).
                     or(new FreelancerSpecification(new SearchCriteria("location", "like", keySearch.get()))
                     ));

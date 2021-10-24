@@ -61,4 +61,18 @@ public class ProposalController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/cancelByFl/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    public ResponseEntity<ResponseObject> cancelByFl(@PathVariable Long id) {
+        ResponseObject result = proposalService.cancelByFl(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cancelByBsn/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    public ResponseEntity<ResponseObject> cancelByBsn(@PathVariable Long id) {
+        ResponseObject result = proposalService.cancelByBsn(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+
 }
