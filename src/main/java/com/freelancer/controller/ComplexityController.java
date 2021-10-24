@@ -40,7 +40,7 @@ public class ComplexityController {
             , @RequestParam(value = "sort", required = false) Optional<Integer> sort
     ) {
         Specification<Complexity> specification = Specification.where(null);
-        if (keySearch.isPresent()) {
+        if (keySearch.isPresent() && !keySearch.get().isEmpty()) {
             specification = specification.and(new ComplexitySpecification(new SearchCriteria("complexityText"  , "like", keySearch.get()))
                     );
         }

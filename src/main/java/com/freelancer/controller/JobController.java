@@ -50,7 +50,7 @@ public class JobController {
             , @RequestParam(value = "size", required = false) Optional<Integer> size
             , @RequestParam(value = "sort", required = false) Optional<Integer> sort) {
         Specification<Job> specification = Specification.where(null);
-        if (keySearch.isPresent()) {
+        if (keySearch.isPresent() && !keySearch.get().isEmpty()) {
             specification = specification.and(new JobSpecification(new SearchCriteria("name", "like", keySearch.get())).
                     or(new JobSpecification(new SearchCriteria("description", "like", keySearch.get()))
                     ));

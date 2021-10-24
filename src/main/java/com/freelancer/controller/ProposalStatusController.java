@@ -39,7 +39,7 @@ public class ProposalStatusController {
             , @RequestParam(value = "sort", required = false) Optional<Integer> sort
     ) {
         Specification<ProposalStatusCatalog> specification = Specification.where(null);
-        if (keySearch.isPresent()) {
+        if (keySearch.isPresent() && !keySearch.get().isEmpty()) {
             specification = specification.and(new ProposalCatalogSpecification(new SearchCriteria("statusName"  , "like", keySearch.get()))
             );
         }

@@ -92,8 +92,10 @@ public class JobService {
 
 		if (user.getBalance() < obj.getPaymentAmount()) {
 			obj.setIsPaymentStatus(0);
+			obj.setStatus(0);
 		} else {
 			obj.setIsPaymentStatus(1);
+			obj.setStatus(1);
 			Double balanceNew = user.getBalance() - obj.getPaymentAmount();
 			user.setBalance(balanceNew);
 			userRepository.save(user);
@@ -101,11 +103,9 @@ public class JobService {
 		}
 
 		obj.setUser_business_id(user.getUserBusinesses().getId());
-		obj.setStatus(1);
+
 		Job result = jobRepository.save(obj);
 		if (isSendmail){
-			SendMailModel sendMailModel = new SendMailModel();
-			sendMailModel.setJobId(result.getId().toString());
 			List<OtherSkill> skillJob = result.getOtherSkills().stream().collect(Collectors.toList());
 			ArrayList<Long> idSkillJob = new ArrayList<>();
 			for (OtherSkill o: skillJob
@@ -122,7 +122,7 @@ public class JobService {
 			List<UserFreelancer> userFreelancers= userFreelancerRepository.findAll(specification);
 			for (UserFreelancer u: userFreelancers
 				 ) {
-				JwtAuthServiceApp.listSendMail.add(new SendMailModel(u.getUser().getEmail(), result.getId().toString()));
+				JwtAuthServiceApp.listSendMailSuggest.add(new SendMailModel(u.getUser().getEmail(), result.getId().toString()));
 			}
 
 
@@ -268,6 +268,28 @@ public class JobService {
 			Job rl = optionalJob.get();
 			rl.setIsPaymentStatus(1);
 			rl.setUpdateAt(DateUtil.getTimeLongCurrent());
+				List<OtherSkill> skillJob = rl.getOtherSkills().stream().collect(Collectors.toList());
+				ArrayList<Long> idSkillJob = new ArrayList<>();
+				for (OtherSkill o: skillJob
+				) {
+					idSkillJob.add(o.getSkill_id());
+				}
+
+				Specification<UserFreelancer> specification = Specification.where(null);
+				for (Long i : idSkillJob
+				) {
+					specification = specification.and(new FreelancerSpecification(new SearchCriteria("skill_id", "==skill", i)));
+				}
+
+				List<UserFreelancer> userFreelancers= userFreelancerRepository.findAll(specification);
+				for (UserFreelancer u: userFreelancers
+				) {
+					JwtAuthServiceApp.listSendMailSuggest.add(new SendMailModel(u.getUser().getEmail(), rl.getId().toString()));
+				}
+
+
+
+
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "Thanh toan thanh cong", jobRepository.save(rl));
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, "Khong tim thay Job can thanh toan", null);
