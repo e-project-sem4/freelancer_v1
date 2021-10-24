@@ -1,16 +1,17 @@
 package com.freelancer.search;
 
-import com.freelancer.model.Complexity;
-import com.freelancer.model.ExpectedDuration;
-import org.springframework.data.jpa.domain.Specification;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.data.jpa.domain.Specification;
+
+import com.freelancer.model.ExpectedDuration;
+
 public class DurationSpecification implements Specification<ExpectedDuration>{
-    private SearchCriteria searchCriteria;
+	private static final long serialVersionUID = 1L;
+	private SearchCriteria searchCriteria;
 
 
     public DurationSpecification(SearchCriteria searchCriteria) {

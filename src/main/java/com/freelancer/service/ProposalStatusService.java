@@ -1,11 +1,8 @@
 package com.freelancer.service;
 
-import com.freelancer.model.*;
-import com.freelancer.repository.ProposalStatusCatalogRepository;
-import com.freelancer.utils.ConfigLog;
-import com.freelancer.utils.Constant;
-import com.freelancer.utils.DateUtil;
-import com.google.gson.Gson;
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -13,8 +10,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.freelancer.model.ProposalStatusCatalog;
+import com.freelancer.model.ResponseObject;
+import com.freelancer.repository.ProposalStatusCatalogRepository;
+import com.freelancer.utils.ConfigLog;
+import com.freelancer.utils.Constant;
+import com.freelancer.utils.DateUtil;
+import com.google.gson.Gson;
 
 @Service
 public class ProposalStatusService {
@@ -85,7 +87,6 @@ public class ProposalStatusService {
 		logger.info("call to get obj by id: " + id);
 		Optional<ProposalStatusCatalog> obj = proposalStatusCatalogRepository.findById(id);
 		String message = "can not find obj";
-		ProposalStatusCatalog obj1 = null;
 		if (obj.isPresent()) {
 			if (obj.get().getStatus()!=0){
 				message = "success";

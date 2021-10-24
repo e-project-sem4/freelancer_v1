@@ -1,14 +1,13 @@
 package com.freelancer.sendmail;
 
-import com.freelancer.JwtAuthServiceApp;
-import lombok.SneakyThrows;
+import java.io.IOException;
+
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.BlockingQueue;
+import com.freelancer.JwtAuthServiceApp;
 
 @Component
 public class ThreadSendMail extends Thread {

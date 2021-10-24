@@ -5,11 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.freelancer.JwtAuthServiceApp;
-import com.freelancer.model.*;
-import com.freelancer.search.FreelancerSpecification;
-import com.freelancer.sendmail.FormSendMail;
-import com.freelancer.sendmail.SendMailModel;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -18,12 +13,22 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.freelancer.JwtAuthServiceApp;
+import com.freelancer.model.HasSkill;
+import com.freelancer.model.Job;
+import com.freelancer.model.OtherSkill;
+import com.freelancer.model.Proposal;
+import com.freelancer.model.ResponseObject;
+import com.freelancer.model.User;
+import com.freelancer.model.UserFreelancer;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.OtherSkillRepository;
 import com.freelancer.repository.UserFreelancerRepository;
 import com.freelancer.repository.UserRepository;
+import com.freelancer.search.FreelancerSpecification;
 import com.freelancer.search.JobSpecification;
 import com.freelancer.search.SearchCriteria;
+import com.freelancer.sendmail.SendMailModel;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.freelancer.utils.DateUtil;
@@ -92,17 +97,12 @@ public class JobService {
 			Double balanceNew = user.getBalance() - obj.getPaymentAmount();
 			user.setBalance(balanceNew);
 			userRepository.save(user);
-
-
 			isSendmail=true;
 		}
 
 		obj.setUser_business_id(user.getUserBusinesses().getId());
 		obj.setStatus(1);
 		Job result = jobRepository.save(obj);
-
-
-
 		if (isSendmail){
 			SendMailModel sendMailModel = new SendMailModel();
 			sendMailModel.setJobId(result.getId().toString());
@@ -128,13 +128,11 @@ public class JobService {
 
 
 		}
-
 		for (OtherSkill o : obj.getOtherSkills()) {
 			o.setJob_id(result.getId());
 			otherSkillRepository.save(o);
 		}
 		if (result != null) {
-
 			message = "success";
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		}

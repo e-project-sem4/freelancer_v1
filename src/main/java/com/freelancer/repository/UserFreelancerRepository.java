@@ -1,7 +1,5 @@
 package com.freelancer.repository;
 
-import com.freelancer.service.JobService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +12,5 @@ import com.freelancer.model.UserFreelancer;
 public interface UserFreelancerRepository extends JpaRepository<UserFreelancer, Long>, JpaSpecificationExecutor<UserFreelancer> {
 	@Query("SELECT a FROM UserFreelancer a WHERE user_account_id = :id")
 	UserFreelancer getFreelancerByUserAccountId(@Param("id") Long id);
+	
 }
