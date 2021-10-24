@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.freelancer.model.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -22,14 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
-import com.freelancer.model.ChatKeyUser;
-import com.freelancer.model.Job;
-import com.freelancer.model.Proposal;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.Role;
-import com.freelancer.model.User;
-import com.freelancer.model.UserBusiness;
-import com.freelancer.model.UserFreelancer;
 import com.freelancer.repository.ChatKeyUserRepository;
 import com.freelancer.repository.HasSkillRepository;
 import com.freelancer.repository.JobRepository;
@@ -372,4 +365,31 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 	}
 
+	public ResponseObject searchList(Specification<User> specification, int page, int size, int sort) {
+		List<User> list = null;
+		if (page > 0 && size > 0 && (sort > 4 || sort < 1 )) {
+			list = userRepository.findAll(specification, PageRequest.of(page - 1, size)).getContent();
+		} else if (page > 0 && size > 0 && sort == 1) {
+			list = userRepository
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").descending()))
+					.getContent();
+		} else if (page > 0 && size > 0 && sort == 2) {
+			list = userRepository.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
+					.getContent();
+		} else if (page > 0 && size > 0 && sort == 3) {
+			list = userRepository
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("balance").descending()))
+					.getContent();
+		} else if (page > 0 && size > 0 && sort == 4) {
+			list = userRepository
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("balance").ascending()))
+					.getContent();
+		} else if (page == 0 && size == 0 && sort == 0) {
+			list = userRepository.findAll(specification);
+		}
+
+		Long total = Long.valueOf(userRepository.findAll(specification).size());
+		String message = "success";
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
+	}
 }

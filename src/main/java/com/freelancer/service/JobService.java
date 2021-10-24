@@ -103,7 +103,6 @@ public class JobService {
 		}
 
 		obj.setUser_business_id(user.getUserBusinesses().getId());
-
 		Job result = jobRepository.save(obj);
 		if (isSendmail){
 			List<OtherSkill> skillJob = result.getOtherSkills().stream().collect(Collectors.toList());
