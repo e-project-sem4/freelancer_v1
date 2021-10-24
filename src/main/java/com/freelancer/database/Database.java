@@ -211,50 +211,50 @@ public class Database implements CommandLineRunner {
 				600.0, 0, DateUtil.setDateLong(-30), DateUtil.setDateLong(-30), 0)));
 		jobRepository.save((new Job(6L, 4L, 2L, 3L, "Start of React ",
 				"We have some devs available on our side and want to find a partner to work on ReactJS. If you want to share, please contact us. Thank you for reading",
-				300.0, 1, DateUtil.setDateLong(-25), DateUtil.setDateLong(-25), 1)));
+				300.0, 1, DateUtil.setDateLong(-25), DateUtil.setDateLong(-25), 2)));
 		jobRepository.save((new Job(7L, 4L, 3L, 3L,
 				"Looking for ReactJS, Vuejs, ReactNative devs for commercial app projects",
 				"There is a project on the application system for commerce Sales, and chat to the shop If you have experience with ReactJS, VueJS, ReatNative, please message me to discuss and cooperate. Exchange",
-				100.0, 1, DateUtil.setDateLong(-22), DateUtil.setDateLong(-22), 1)));
+				100.0, 1, DateUtil.setDateLong(-22), DateUtil.setDateLong(-22), 2)));
 		jobRepository.save((new Job(8L, 5L, 3L, 3L, "Create ads for Jwplayer ",
 				"Hi. I need to find a friend who knows about Jwplayer to program advertising and security features for the player. Advertising Features: I need 1 skippable video ad before playing main video, and 1",
-				200.0, 1, DateUtil.setDateLong(-21), DateUtil.setDateLong(-21), 1)));
+				200.0, 1, DateUtil.setDateLong(-21), DateUtil.setDateLong(-21), 2)));
 		jobRepository.save((new Job(9L, 5L, 2L, 3L, "Find someone to clone a PHP or Lavarel source website",
 				"As the title says, I need to find someone to clone the website required: Hako.re Only use a few functions on the target site, not exactly the same",
-				400.0, 1, DateUtil.setDateLong(-21), DateUtil.setDateLong(-21), 1)));
+				400.0, 1, DateUtil.setDateLong(-21), DateUtil.setDateLong(-21), 2)));
 		jobRepository.save((new Job(10L, 6L, 1L, 1L,
 				"Setup report for Woocommerce, statistics of advertising effectiveness from Google, FB, revenue",
 				"I want to find a friend/team, Setup data from eshop - running on woocommerce. To be able to track events from Google Ads, Facebook Ads, revenue.. to generate total reports on Google",
-				600.0, 1, DateUtil.setDateLong(-15), DateUtil.setDateLong(-15), 1)));
+				600.0, 1, DateUtil.setDateLong(-15), DateUtil.setDateLong(-15), 2)));
 		jobRepository.save((new Job(11L, 6L, 2L, 2L, "Key LAMP developer",
 				"core position of the DEV team in PHP, Python. The tasks list is in order of importance: - lead foreign teams in following requirements by BA/Testers of VN team. - highlight major issues and",
-				800.0, 1, DateUtil.setDateLong(-15), DateUtil.setDateLong(-15), 1)));
+				800.0, 1, DateUtil.setDateLong(-15), DateUtil.setDateLong(-15), 2)));
 		jobRepository.save((new Job(12L, 7L, 3L, 3L, "Calculate the main time Noon, Soc time, weather",
 				"1. Calculate the main time Noon based on the coordinates that the user chooses to do as the web below: http://www.choichiemtinh.net/dichvu/laplaso/sunrise.php 2. Calculate the intersection time between the weather, date",
-				700.0, 1, DateUtil.setDateLong(-12), DateUtil.setDateLong(-12), 1)));
+				700.0, 1, DateUtil.setDateLong(-12), DateUtil.setDateLong(-12), 2)));
 		jobRepository.save((new Job(13L, 7L, 2L, 4L,
 				"Programming the form interface to input data into Google Sheets (Spreadsheet)",
 				"Need a programmer to make an interface form to enter/edit data on Google Sheets (with Javascript): Order input/view/edit form, customer input form",
-				600.0, 1, DateUtil.setDateLong(-10), DateUtil.setDateLong(-10), 1)));
+				600.0, 1, DateUtil.setDateLong(-10), DateUtil.setDateLong(-10), 2)));
 		jobRepository.save((new Job(14L, 8L, 1L, 5L, "Write UI for web server about 8 screens",
 				"Web server to manage the app's information - Writing UI is the main thing. - Get the database to display on the web ",
-				600.0, 1, DateUtil.setDateLong(-10), DateUtil.setDateLong(-10), 1)));
+				600.0, 1, DateUtil.setDateLong(-10), DateUtil.setDateLong(-10), 2)));
 		jobRepository.save((new Job(15L, 9L, 2L, 6L, "Need to recruit React Js Developer",
 				" Need to recruit 2 react js programmers - Job: Get tasks and develop features as required", 500.0, 1,
 				DateUtil.setDateLong(-8), DateUtil.setDateLong(-8), 1)));
 		jobRepository.save((new Job(16L, 9L, 3L, 1L, "Looking for a friend to program an extension for chrome",
 				"I need to find an experienced chrome extension programmer If you can do it, please contact me to receive project information Thank you very much",
-				400.0, 1, DateUtil.setDateLong(-7), DateUtil.setDateLong(-7), 1)));
+				400.0, 1, DateUtil.setDateLong(-7), DateUtil.setDateLong(-7), 2)));
 		jobRepository.save((new Job(17L, 10L, 1L, 4L,
 				"Hire a coder or teacher to get the signkey to ajax the login page",
 				"I need to find a teacher or hire a coder to get the sign key of the Lazada floor, to ajax my seller's order list page, to save browsing data. (If reputable, I will introduce many customers",
-				400.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 1)));
+				400.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 2)));
 		jobRepository.save((new Job(18L, 10L, 2L, 3L, "Edit template for php source",
 				"Hello, I am looking for a main partner to edit the template for the source code of php, wordpress. Reasonable price and working cooperation will be long term cooperation for upcoming projects",
-				300.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 1)));
+				300.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 2)));
 		jobRepository.save((new Job(19L, 10L, 3L, 3L, "Laravel Developer",
 				"Hi, I have a lot of problems related to using Laravel because I want to know more details about this application. ",
-				200.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 1)));
+				200.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 2)));
 
 	}
 
