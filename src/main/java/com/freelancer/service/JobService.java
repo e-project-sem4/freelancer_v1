@@ -92,7 +92,7 @@ public class JobService {
 
 		if (user.getBalance() < obj.getPaymentAmount()) {
 			obj.setIsPaymentStatus(0);
-			obj.setStatus(0);
+			obj.setStatus(-1);
 		} else {
 			obj.setIsPaymentStatus(1);
 			obj.setStatus(1);

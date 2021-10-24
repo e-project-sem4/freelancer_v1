@@ -196,19 +196,19 @@ public class Database implements CommandLineRunner {
 	private void seedJob() {
 		jobRepository.save((new Job(1L, 1L, 1L, 1L, "Wix/Wordpress Website landing page",
 				"Job description: - Stage of work: Basic design and construction design - Deploy design documents in each phase and according to the Company's regulations and standards. - Additional structure details and.",
-				100.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-45), 0)));
+				100.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-45), -1)));
 		jobRepository.save((new Job(2L, 1L, 2L, 2L, "Build a web app to exchange old books",
 				"Description: A website for students to exchange books with each other, the upper class gives way to the lower class, the scope is in a university Requirements: - Build a website from back - end to front",
-				200.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-40), 0)));
+				200.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-40), -1)));
 		jobRepository.save((new Job(3L, 2L, 3L, 3L, "Sales Wordpress",
 				"create a web-based payment sales website (one pay), create automatic sms, create a simple, easy-to-see interface, can use a ready-made theme. Purchase via voucher",
-				800.0, 0, DateUtil.setDateLong(-38), DateUtil.setDateLong(-38), 0)));
+				800.0, 1, DateUtil.setDateLong(-38), DateUtil.setDateLong(-38), 2)));
 		jobRepository.save((new Job(4L, 3L, 1L, 1L, "Optimizing WordPress website interface",
 				"I urgently need to recruit 1 friend who is proficient in wordpress interface code to optimize the newly created company website",
-				700.0, 0, DateUtil.setDateLong(-35), DateUtil.setDateLong(-35), 0)));
+				700.0, 1, DateUtil.setDateLong(-35), DateUtil.setDateLong(-35), 2)));
 		jobRepository.save((new Job(5L, 3L, 2L, 3L, "WIX developer",
 				"Hello're currently know about fundamental WIX experienced at least two years project work lau dai Thanks",
-				600.0, 0, DateUtil.setDateLong(-30), DateUtil.setDateLong(-30), 0)));
+				600.0, 1, DateUtil.setDateLong(-30), DateUtil.setDateLong(-30), 2)));
 		jobRepository.save((new Job(6L, 4L, 2L, 3L, "Start of React ",
 				"We have some devs available on our side and want to find a partner to work on ReactJS. If you want to share, please contact us. Thank you for reading",
 				300.0, 1, DateUtil.setDateLong(-25), DateUtil.setDateLong(-25), 2)));
@@ -241,20 +241,20 @@ public class Database implements CommandLineRunner {
 				600.0, 1, DateUtil.setDateLong(-10), DateUtil.setDateLong(-10), 2)));
 		jobRepository.save((new Job(15L, 9L, 2L, 6L, "Need to recruit React Js Developer",
 				" Need to recruit 2 react js programmers - Job: Get tasks and develop features as required", 500.0, 1,
-				DateUtil.setDateLong(-8), DateUtil.setDateLong(-8), 1)));
+				DateUtil.setDateLong(-8), DateUtil.setDateLong(-8), 3)));
 		jobRepository.save((new Job(16L, 9L, 3L, 1L, "Looking for a friend to program an extension for chrome",
 				"I need to find an experienced chrome extension programmer If you can do it, please contact me to receive project information Thank you very much",
-				400.0, 1, DateUtil.setDateLong(-7), DateUtil.setDateLong(-7), 2)));
+				400.0, 1, DateUtil.setDateLong(-7), DateUtil.setDateLong(-7), 3)));
 		jobRepository.save((new Job(17L, 10L, 1L, 4L,
 				"Hire a coder or teacher to get the signkey to ajax the login page",
 				"I need to find a teacher or hire a coder to get the sign key of the Lazada floor, to ajax my seller's order list page, to save browsing data. (If reputable, I will introduce many customers",
-				400.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 2)));
+				400.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 3)));
 		jobRepository.save((new Job(18L, 10L, 2L, 3L, "Edit template for php source",
 				"Hello, I am looking for a main partner to edit the template for the source code of php, wordpress. Reasonable price and working cooperation will be long term cooperation for upcoming projects",
-				300.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 2)));
+				300.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 3)));
 		jobRepository.save((new Job(19L, 10L, 3L, 3L, "Laravel Developer",
 				"Hi, I have a lot of problems related to using Laravel because I want to know more details about this application. ",
-				200.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 2)));
+				200.0, 1, DateUtil.setDateLong(0), DateUtil.setDateLong(0), 3)));
 
 	}
 
@@ -340,196 +340,92 @@ public class Database implements CommandLineRunner {
 	}
 
 	private void seedProposal() {
-		proposal.save(new Proposal(1L, DateUtil.getTimeLongCurrent(), 100.0, "1 look forward to working with you", 2L,
-				1L, 1L, null, null, null, null));
-		proposal.save(new Proposal(2L, DateUtil.getTimeLongCurrent(), 105.0, "I look forward to working", 3L, 1L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(3L, DateUtil.getTimeLongCurrent(), 110.0, "Please choose me", 4L, 1L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(4L, DateUtil.getTimeLongCurrent(), 100.1,
-				"I have a lot of experience that suits you", 5L, 1L, 4L, null, null, null, null));
-		proposal.save(new Proposal(5L, DateUtil.getTimeLongCurrent(), 105.1, "Let's work together", 6L, 1L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(6L, DateUtil.getTimeLongCurrent(), 110.1, "1 look forward to working with you", 7L,
-				2L, 1L, null, null, null, null));
-		proposal.save(new Proposal(7L, DateUtil.getTimeLongCurrent(), 100.2, "I look forward to working", 8L, 2L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(8L, DateUtil.getTimeLongCurrent(), 105.2, "Please choose me", 9L, 2L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(9L, DateUtil.getTimeLongCurrent(), 110.2,
-				"I have a lot of experience that suits you", 10L, 2L, 4L, null, null, null, null));
-		proposal.save(new Proposal(10L, DateUtil.getTimeLongCurrent(), 100.3, "Let's work together", 2L, 2L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(11L, DateUtil.getTimeLongCurrent(), 105.3, "1 look forward to working with you", 1L,
-				3L, 1L, null, null, null, null));
-		proposal.save(new Proposal(12L, DateUtil.getTimeLongCurrent(), 110.3, "I look forward to working", 3L, 3L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(13L, DateUtil.getTimeLongCurrent(), 100.4, "Please choose me", 4L, 3L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(14L, DateUtil.getTimeLongCurrent(), 105.4,
-				"I have a lot of experience that suits you", 5L, 3L, 4L, null, null, null, null));
-		proposal.save(new Proposal(15L, DateUtil.getTimeLongCurrent(), 110.4, "Let's work together", 6L, 3L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(16L, DateUtil.getTimeLongCurrent(), 100.1, "1 look forward to working with you", 7L,
-				4L, 1L, null, null, null, null));
-		proposal.save(new Proposal(17L, DateUtil.getTimeLongCurrent(), 105.1, "I look forward to working", 8L, 4L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(18L, DateUtil.getTimeLongCurrent(), 110.1, "Please choose me", 9L, 4L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(19L, DateUtil.getTimeLongCurrent(), 100.2,
-				"I have a lot of experience that suits you", 10L, 4L, 4L, null, null, null, null));
-		proposal.save(new Proposal(20L, DateUtil.getTimeLongCurrent(), 105.2, "Let's work together", 1L, 4L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(21L, DateUtil.getTimeLongCurrent(), 110.2, "1 look forward to working with you", 2L,
-				5L, 1L, null, null, null, null));
-		proposal.save(new Proposal(22L, DateUtil.getTimeLongCurrent(), 100.3, "I look forward to working", 4L, 5L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(23L, DateUtil.getTimeLongCurrent(), 105.3, "Please choose me", 5L, 5L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(24L, DateUtil.getTimeLongCurrent(), 110.3,
-				"I have a lot of experience that suits you", 6L, 5L, 4L, null, null, null, null));
-		proposal.save(new Proposal(25L, DateUtil.getTimeLongCurrent(), 100.4, "Let's work together", 7L, 5L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(26L, DateUtil.getTimeLongCurrent(), 105.4, "1 look forward to working with you", 9L,
-				6L, 1L, null, null, null, null));
-		proposal.save(new Proposal(27L, DateUtil.getTimeLongCurrent(), 110.4, "I look forward to working", 10L, 6L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(28L, DateUtil.getTimeLongCurrent(), 100.5, "Please choose me", 1L, 6L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(29L, DateUtil.getTimeLongCurrent(), 105.5,
-				"I have a lot of experience that suits you", 2L, 6L, 4L, null, null, null, null));
-		proposal.save(new Proposal(30L, DateUtil.getTimeLongCurrent(), 110.5, "Let's work together", 3L, 6L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(31L, DateUtil.getTimeLongCurrent(), 100.2, "1 look forward to working with you", 6L,
-				7L, 1L, null, null, null, null));
-		proposal.save(new Proposal(32L, DateUtil.getTimeLongCurrent(), 105.2, "I look forward to working", 7L, 7L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(33L, DateUtil.getTimeLongCurrent(), 110.2, "Please choose me", 8L, 7L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(34L, DateUtil.getTimeLongCurrent(), 100.3,
-				"I have a lot of experience that suits you", 9L, 7L, 4L, null, null, null, null));
-		proposal.save(new Proposal(35L, DateUtil.getTimeLongCurrent(), 105.3, "Let's work together", 10L, 7L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(36L, DateUtil.getTimeLongCurrent(), 110.3, "1 look forward to working with you", 1L,
-				8L, 1L, null, null, null, null));
-		proposal.save(new Proposal(37L, DateUtil.getTimeLongCurrent(), 100.4, "I look forward to working", 2L, 8L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(38L, DateUtil.getTimeLongCurrent(), 105.4, "Please choose me", 3L, 8L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(39L, DateUtil.getTimeLongCurrent(), 110.4,
-				"I have a lot of experience that suits you", 4L, 8L, 4L, null, null, null, null));
-		proposal.save(new Proposal(40L, DateUtil.getTimeLongCurrent(), 100.5, "Let's work together", 6L, 8L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(41L, DateUtil.getTimeLongCurrent(), 105.5, "1 look forward to working with you", 7L,
-				9L, 1L, null, null, null, null));
-		proposal.save(new Proposal(42L, DateUtil.getTimeLongCurrent(), 110.5, "I look forward to working", 8L, 9L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(43L, DateUtil.getTimeLongCurrent(), 100.6, "Please choose me", 9L, 9L, 3L, 5, "Good",
-				5, "Good"));
-		proposal.save(new Proposal(44L, DateUtil.getTimeLongCurrent(), 105.6,
-				"I have a lot of experience that suits you", 10L, 9L, 4L, null, null, null, null));
-		proposal.save(new Proposal(45L, DateUtil.getTimeLongCurrent(), 110.6, "Let's work together", 1L, 9L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(46L, DateUtil.getTimeLongCurrent(), 100.3, "1 look forward to working with you", 2L,
-				10L, 1L, null, null, null, null));
-		proposal.save(new Proposal(47L, DateUtil.getTimeLongCurrent(), 105.3, "I look forward to working", 3L, 10L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(48L, DateUtil.getTimeLongCurrent(), 110.3, "Please choose me", 4L, 10L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(49L, DateUtil.getTimeLongCurrent(), 100.4,
-				"I have a lot of experience that suits you", 5L, 10L, 4L, null, null, null, null));
-		proposal.save(new Proposal(50L, DateUtil.getTimeLongCurrent(), 105.4, "Let's work together", 7L, 10L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(51L, DateUtil.getTimeLongCurrent(), 110.4, "1 look forward to working with you", 8L,
-				11L, 1L, null, null, null, null));
-		proposal.save(new Proposal(52L, DateUtil.getTimeLongCurrent(), 100.5, "I look forward to working", 9L, 11L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(53L, DateUtil.getTimeLongCurrent(), 105.5, "Please choose me", 10L, 11L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(54L, DateUtil.getTimeLongCurrent(), 110.5,
-				"I have a lot of experience that suits you", 1L, 11L, 4L, null, null, null, null));
-		proposal.save(new Proposal(55L, DateUtil.getTimeLongCurrent(), 100.6, "Let's work together", 2L, 11L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(56L, DateUtil.getTimeLongCurrent(), 105.6, "1 look forward to working with you", 3L,
-				12L, 1L, null, null, null, null));
-		proposal.save(new Proposal(57L, DateUtil.getTimeLongCurrent(), 110.6, "I look forward to working", 4L, 12L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(58L, DateUtil.getTimeLongCurrent(), 100.7, "Please choose me", 5L, 12L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(59L, DateUtil.getTimeLongCurrent(), 105.7,
-				"I have a lot of experience that suits you", 6L, 12L, 4L, null, null, null, null));
-		proposal.save(new Proposal(60L, DateUtil.getTimeLongCurrent(), 110.7, "Let's work together", 8L, 12L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(61L, DateUtil.getTimeLongCurrent(), 100.4, "1 look forward to working with you", 9L,
-				13L, 1L, null, null, null, null));
-		proposal.save(new Proposal(62L, DateUtil.getTimeLongCurrent(), 105.4, "I look forward to working", 10L, 13L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(63L, DateUtil.getTimeLongCurrent(), 110.4, "Please choose me", 1L, 13L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(64L, DateUtil.getTimeLongCurrent(), 100.5,
-				"I have a lot of experience that suits you", 2L, 13L, 4L, null, null, null, null));
-		proposal.save(new Proposal(65L, DateUtil.getTimeLongCurrent(), 105.5, "Let's work together", 3L, 13L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(66L, DateUtil.getTimeLongCurrent(), 110.5, "1 look forward to working with you", 4L,
-				14L, 1L, null, null, null, null));
-		proposal.save(new Proposal(67L, DateUtil.getTimeLongCurrent(), 100.6, "I look forward to working", 5L, 14L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(68L, DateUtil.getTimeLongCurrent(), 105.6, "Please choose me", 6L, 14L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(69L, DateUtil.getTimeLongCurrent(), 110.6,
-				"I have a lot of experience that suits you", 7L, 14L, 4L, null, null, null, null));
-		proposal.save(new Proposal(70L, DateUtil.getTimeLongCurrent(), 100.7, "Let's work together", 9L, 14L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(71L, DateUtil.getTimeLongCurrent(), 105.7, "1 look forward to working with you", 10L,
-				15L, 1L, null, null, null, null));
-		proposal.save(new Proposal(72L, DateUtil.getTimeLongCurrent(), 110.7, "I look forward to working", 1L, 15L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(73L, DateUtil.getTimeLongCurrent(), 100.8, "Please choose me", 2L, 15L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(74L, DateUtil.getTimeLongCurrent(), 105.8,
-				"I have a lot of experience that suits you", 3L, 15L, 4L, null, null, null, null));
-		proposal.save(new Proposal(75L, DateUtil.getTimeLongCurrent(), 110.8, "Let's work together", 4L, 15L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(76L, DateUtil.getTimeLongCurrent(), 100.5, "1 look forward to working with you", 5L,
-				16L, 1L, null, null, null, null));
-		proposal.save(new Proposal(77L, DateUtil.getTimeLongCurrent(), 105.5, "I look forward to working", 6L, 16L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(78L, DateUtil.getTimeLongCurrent(), 110.5, "Please choose me", 7L, 16L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(79L, DateUtil.getTimeLongCurrent(), 100.6,
-				"I have a lot of experience that suits you", 8L, 16L, 4L, null, null, null, null));
-		proposal.save(new Proposal(80L, DateUtil.getTimeLongCurrent(), 105.6, "Let's work together", 1L, 16L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(81L, DateUtil.getTimeLongCurrent(), 110.6, "1 look forward to working with you", 2L,
-				17L, 1L, null, null, null, null));
-		proposal.save(new Proposal(82L, DateUtil.getTimeLongCurrent(), 100.7, "I look forward to working", 3L, 17L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(83L, DateUtil.getTimeLongCurrent(), 105.7, "Please choose me", 4L, 17L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(84L, DateUtil.getTimeLongCurrent(), 110.7,
-				"I have a lot of experience that suits you", 5L, 17L, 4L, null, null, null, null));
-		proposal.save(new Proposal(85L, DateUtil.getTimeLongCurrent(), 100.8, "Let's work together", 6L, 17L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(86L, DateUtil.getTimeLongCurrent(), 105.8, "1 look forward to working with you", 7L,
-				18L, 1L, null, null, null, null));
-		proposal.save(new Proposal(87L, DateUtil.getTimeLongCurrent(), 110.8, "I look forward to working", 8L, 18L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(88L, DateUtil.getTimeLongCurrent(), 100.9, "Please choose me", 9L, 18L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(89L, DateUtil.getTimeLongCurrent(), 105.9,
-				"I have a lot of experience that suits you", 1L, 18L, 4L, null, null, null, null));
-		proposal.save(new Proposal(90L, DateUtil.getTimeLongCurrent(), 110.9, "Let's work together", 2L, 18L, 5L, null,
-				null, null, null));
-		proposal.save(new Proposal(91L, DateUtil.getTimeLongCurrent(), 100.6, "1 look forward to working with you", 3L,
-				19L, 1L, null, null, null, null));
-		proposal.save(new Proposal(92L, DateUtil.getTimeLongCurrent(), 105.6, "I look forward to working", 4L, 19L, 2L,
-				null, null, null, null));
-		proposal.save(new Proposal(93L, DateUtil.getTimeLongCurrent(), 110.6, "Please choose me", 5L, 19L, 3L, 5,
-				"Good", 5, "Good"));
-		proposal.save(new Proposal(94L, DateUtil.getTimeLongCurrent(), 100.7,
-				"I have a lot of experience that suits you", 6L, 19L, 4L, null, null, null, null));
-		proposal.save(new Proposal(95L, DateUtil.getTimeLongCurrent(), 105.7, "Let's work together", 7L, 19L, 5L, null,
-				null, null, null));
+		proposal.save(new Proposal(1L ,DateUtil.getTimeLongCurrent(),105.3,"1 look forward to working with you",1L ,3L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(2L ,DateUtil.getTimeLongCurrent(),110.3,"I look forward to working",3L ,3L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(3L ,DateUtil.getTimeLongCurrent(),100.4,"Please choose me",4L ,3L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(4L ,DateUtil.getTimeLongCurrent(),105.4,"I have a lot of experience that suits you",5L ,3L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(5L ,DateUtil.getTimeLongCurrent(),110.4,"Let's work together",6L ,3L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(6L ,DateUtil.getTimeLongCurrent(),100.1,"1 look forward to working with you",7L ,4L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(7L ,DateUtil.getTimeLongCurrent(),105.1,"I look forward to working",8L ,4L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(8L ,DateUtil.getTimeLongCurrent(),110.1,"Please choose me",9L ,4L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(9L ,DateUtil.getTimeLongCurrent(),100.2,"I have a lot of experience that suits you",10L ,4L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(10L ,DateUtil.getTimeLongCurrent(),105.2,"Let's work together",1L ,4L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(11L ,DateUtil.getTimeLongCurrent(),110.2,"1 look forward to working with you",2L ,5L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(12L ,DateUtil.getTimeLongCurrent(),100.3,"I look forward to working",4L ,5L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(13L ,DateUtil.getTimeLongCurrent(),105.3,"Please choose me",5L ,5L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(14L ,DateUtil.getTimeLongCurrent(),110.3,"I have a lot of experience that suits you",6L ,5L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(15L ,DateUtil.getTimeLongCurrent(),100.4,"Let's work together",7L ,5L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(16L ,DateUtil.getTimeLongCurrent(),105.4,"1 look forward to working with you",9L ,6L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(17L ,DateUtil.getTimeLongCurrent(),110.4,"I look forward to working",10L ,6L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(18L ,DateUtil.getTimeLongCurrent(),100.5,"Please choose me",1L ,6L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(19L ,DateUtil.getTimeLongCurrent(),105.5,"I have a lot of experience that suits you",2L ,6L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(20L ,DateUtil.getTimeLongCurrent(),110.5,"Let's work together",3L ,6L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(21L ,DateUtil.getTimeLongCurrent(),100.2,"1 look forward to working with you",6L ,7L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(22L ,DateUtil.getTimeLongCurrent(),105.2,"I look forward to working",7L ,7L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(23L ,DateUtil.getTimeLongCurrent(),110.2,"Please choose me",8L ,7L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(24L ,DateUtil.getTimeLongCurrent(),100.3,"I have a lot of experience that suits you",9L ,7L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(25L ,DateUtil.getTimeLongCurrent(),105.3,"Let's work together",10L ,7L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(26L ,DateUtil.getTimeLongCurrent(),110.3,"1 look forward to working with you",1L ,8L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(27L ,DateUtil.getTimeLongCurrent(),100.4,"I look forward to working",2L ,8L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(28L ,DateUtil.getTimeLongCurrent(),105.4,"Please choose me",3L ,8L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(29L ,DateUtil.getTimeLongCurrent(),110.4,"I have a lot of experience that suits you",4L ,8L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(30L ,DateUtil.getTimeLongCurrent(),100.5,"Let's work together",6L ,8L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(31L ,DateUtil.getTimeLongCurrent(),105.5,"1 look forward to working with you",7L ,9L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(32L ,DateUtil.getTimeLongCurrent(),110.5,"I look forward to working",8L ,9L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(33L ,DateUtil.getTimeLongCurrent(),100.6,"Please choose me",9L ,9L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(34L ,DateUtil.getTimeLongCurrent(),105.6,"I have a lot of experience that suits you",10L ,9L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(35L ,DateUtil.getTimeLongCurrent(),110.6,"Let's work together",1L ,9L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(36L ,DateUtil.getTimeLongCurrent(),100.3,"1 look forward to working with you",2L ,10L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(37L ,DateUtil.getTimeLongCurrent(),105.3,"I look forward to working",3L ,10L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(38L ,DateUtil.getTimeLongCurrent(),110.3,"Please choose me",4L ,10L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(39L ,DateUtil.getTimeLongCurrent(),100.4,"I have a lot of experience that suits you",5L ,10L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(40L ,DateUtil.getTimeLongCurrent(),105.4,"Let's work together",7L ,10L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(41L ,DateUtil.getTimeLongCurrent(),110.4,"1 look forward to working with you",8L ,11L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(42L ,DateUtil.getTimeLongCurrent(),100.5,"I look forward to working",9L ,11L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(43L ,DateUtil.getTimeLongCurrent(),105.5,"Please choose me",10L ,11L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(44L ,DateUtil.getTimeLongCurrent(),110.5,"I have a lot of experience that suits you",1L ,11L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(45L ,DateUtil.getTimeLongCurrent(),100.6,"Let's work together",2L ,11L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(46L ,DateUtil.getTimeLongCurrent(),105.6,"1 look forward to working with you",3L ,12L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(47L ,DateUtil.getTimeLongCurrent(),110.6,"I look forward to working",4L ,12L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(48L ,DateUtil.getTimeLongCurrent(),100.7,"Please choose me",5L ,12L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(49L ,DateUtil.getTimeLongCurrent(),105.7,"I have a lot of experience that suits you",6L ,12L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(50L ,DateUtil.getTimeLongCurrent(),110.7,"Let's work together",8L ,12L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(51L ,DateUtil.getTimeLongCurrent(),100.4,"1 look forward to working with you",9L ,13L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(52L ,DateUtil.getTimeLongCurrent(),105.4,"I look forward to working",10L ,13L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(53L ,DateUtil.getTimeLongCurrent(),110.4,"Please choose me",1L ,13L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(54L ,DateUtil.getTimeLongCurrent(),100.5,"I have a lot of experience that suits you",2L ,13L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(55L ,DateUtil.getTimeLongCurrent(),105.5,"Let's work together",3L ,13L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(56L ,DateUtil.getTimeLongCurrent(),110.5,"1 look forward to working with you",4L ,14L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(57L ,DateUtil.getTimeLongCurrent(),100.6,"I look forward to working",5L ,14L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(58L ,DateUtil.getTimeLongCurrent(),105.6,"Please choose me",6L ,14L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(59L ,DateUtil.getTimeLongCurrent(),110.6,"I have a lot of experience that suits you",7L ,14L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(60L ,DateUtil.getTimeLongCurrent(),100.7,"Let's work together",9L ,14L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(61L ,DateUtil.getTimeLongCurrent(),105.7,"1 look forward to working with you",10L ,15L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(62L ,DateUtil.getTimeLongCurrent(),110.7,"I look forward to working",1L ,15L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(63L ,DateUtil.getTimeLongCurrent(),100.8,"Please choose me",2L ,15L ,3L ,5,"Good",5,"Good"));
+		proposal.save(new Proposal(64L ,DateUtil.getTimeLongCurrent(),105.8,"I have a lot of experience that suits you",3L ,15L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(65L ,DateUtil.getTimeLongCurrent(),110.8,"Let's work together",4L ,15L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(66L ,DateUtil.getTimeLongCurrent(),100.5,"1 look forward to working with you",5L ,16L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(67L ,DateUtil.getTimeLongCurrent(),105.5,"I look forward to working",6L ,16L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(68L ,DateUtil.getTimeLongCurrent(),110.5,"Please choose me",7L ,16L ,3L ,5,"Good",5,"Good"));
+		proposal.save(new Proposal(69L ,DateUtil.getTimeLongCurrent(),100.6,"I have a lot of experience that suits you",8L ,16L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(70L ,DateUtil.getTimeLongCurrent(),105.6,"Let's work together",1L ,16L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(71L ,DateUtil.getTimeLongCurrent(),110.6,"1 look forward to working with you",2L ,17L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(72L ,DateUtil.getTimeLongCurrent(),100.7,"I look forward to working",3L ,17L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(73L ,DateUtil.getTimeLongCurrent(),105.7,"Please choose me",4L ,17L ,3L ,5,"Good",5,"Good"));
+		proposal.save(new Proposal(74L ,DateUtil.getTimeLongCurrent(),110.7,"I have a lot of experience that suits you",5L ,17L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(75L ,DateUtil.getTimeLongCurrent(),100.8,"Let's work together",6L ,17L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(76L ,DateUtil.getTimeLongCurrent(),105.8,"1 look forward to working with you",7L ,18L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(77L ,DateUtil.getTimeLongCurrent(),110.8,"I look forward to working",8L ,18L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(78L ,DateUtil.getTimeLongCurrent(),100.9,"Please choose me",9L ,18L ,3L ,5,"Good",5,"Good"));
+		proposal.save(new Proposal(79L ,DateUtil.getTimeLongCurrent(),105.9,"I have a lot of experience that suits you",1L ,18L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(80L ,DateUtil.getTimeLongCurrent(),110.9,"Let's work together",2L ,18L ,5L ,null,null,null,null));
+		proposal.save(new Proposal(81L ,DateUtil.getTimeLongCurrent(),100.6,"1 look forward to working with you",3L ,19L ,1L ,null,null,null,null));
+		proposal.save(new Proposal(82L ,DateUtil.getTimeLongCurrent(),105.6,"I look forward to working",4L ,19L ,2L ,null,null,null,null));
+		proposal.save(new Proposal(83L ,DateUtil.getTimeLongCurrent(),110.6,"Please choose me",5L ,19L ,3L ,5,"Good",5,"Good"));
+		proposal.save(new Proposal(84L ,DateUtil.getTimeLongCurrent(),100.7,"I have a lot of experience that suits you",6L ,19L ,4L ,null,null,null,null));
+		proposal.save(new Proposal(85L ,DateUtil.getTimeLongCurrent(),105.7,"Let's work together",7L ,19L ,5L ,null,null,null,null));
+
 	}
 
 	private void seedChatUserKey() {
