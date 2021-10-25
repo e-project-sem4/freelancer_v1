@@ -426,7 +426,6 @@ public class Database implements CommandLineRunner {
 		proposal.save(new Proposal(85L ,DateUtil.getTimeLongCurrent(),105.7,"Let's work together",7L ,19L ,5L ,null,null,null,null));
 
 	}
-
 //	private void seedChatUserKey() {
 //		chatKeyUserRepository
 //				.save(new ChatKeyUser(1L, 1L, 2L, 2L, "1-2-2", "Build a web app to exchange old books", null));
