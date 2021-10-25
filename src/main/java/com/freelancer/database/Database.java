@@ -195,19 +195,19 @@ public class Database implements CommandLineRunner {
 	private void seedJob() {
 		jobRepository.save((new Job(1L, 1L, 1L, 1L, "Wix/Wordpress Website landing page",
 				"Job description: - Stage of work: Basic design and construction design - Deploy design documents in each phase and according to the Company's regulations and standards. - Additional structure details and.",
-				100.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-45), 1)));
+				100.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-45), 0)));
 		jobRepository.save((new Job(2L, 1L, 2L, 2L, "Build a web app to exchange old books",
 				"Description: A website for students to exchange books with each other, the upper class gives way to the lower class, the scope is in a university Requirements: - Build a website from back - end to front",
-				200.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-40), 1)));
+				200.0, 0, DateUtil.setDateLong(-40), DateUtil.setDateLong(-40), 0)));
 		jobRepository.save((new Job(3L, 2L, 3L, 3L, "Sales Wordpress",
 				"create a web-based payment sales website (one pay), create automatic sms, create a simple, easy-to-see interface, can use a ready-made theme. Purchase via voucher",
-				800.0, 0, DateUtil.setDateLong(-38), DateUtil.setDateLong(-38), 1)));
+				800.0, 0, DateUtil.setDateLong(-38), DateUtil.setDateLong(-38), 0)));
 		jobRepository.save((new Job(4L, 3L, 1L, 1L, "Optimizing WordPress website interface",
 				"I urgently need to recruit 1 friend who is proficient in wordpress interface code to optimize the newly created company website",
-				700.0, 0, DateUtil.setDateLong(-35), DateUtil.setDateLong(-35), 1)));
+				700.0, 0, DateUtil.setDateLong(-35), DateUtil.setDateLong(-35), 0)));
 		jobRepository.save((new Job(5L, 3L, 2L, 3L, "WIX developer",
 				"Hello're currently know about fundamental WIX experienced at least two years project work lau dai Thanks",
-				600.0, 0, DateUtil.setDateLong(-30), DateUtil.setDateLong(-30), 1)));
+				600.0, 0, DateUtil.setDateLong(-30), DateUtil.setDateLong(-30), 0)));
 		jobRepository.save((new Job(6L, 4L, 2L, 3L, "Start of React ",
 				"We have some devs available on our side and want to find a partner to work on ReactJS. If you want to share, please contact us. Thank you for reading",
 				300.0, 1, DateUtil.setDateLong(-25), DateUtil.setDateLong(-25), 1)));
