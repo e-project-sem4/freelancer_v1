@@ -48,7 +48,7 @@ public class User {
 	private Double balance;
 	private Long createAt;
 	private Long updateAt;
-	private Integer status;
+	private Integer status;  //0.xóa 1.active 2.Deactivated
 
 	private String thumbnail;
 

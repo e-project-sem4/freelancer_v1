@@ -24,55 +24,56 @@ public class ContractService {
 
 	Logger logger = ConfigLog.getLogger(ExpectedDurationService.class);
 
-    Gson gson = new Gson();
-    @Autowired
-    private ContractRepository contractRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private JobRepository jobRepository;
-    @Autowired
-    private ProposalRepository proposalRepository;
+	Gson gson = new Gson();
+	@Autowired
+	private ContractRepository contractRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private JobRepository jobRepository;
+	@Autowired
+	private ProposalRepository proposalRepository;
 	@Autowired
 	private ChatKeyUserRepository chatKeyUserRepository;
-    // add
-    public ResponseObject save(Contract obj, String username) {
-        String message = "not success";
-        logger.info("call to Create obj" + obj.toString());
-        User user = userRepository.findByUsername(username);
-        Long currentBusinessId = user.getUserBusinesses().getId();
-        Long currentFreelancerId = user.getUserFreelancers().getId();
-        Optional<Proposal> currentProposalOptional = proposalRepository.findById(obj.getProposal_id());
-        if (!currentProposalOptional.isPresent()){
-            message="This Proposal no longer exists";
-            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-        }
-        Proposal currentProposal = currentProposalOptional.get();
-        Long proposalFreelancerId =currentProposal.getUser_freelancer_id();
-        Optional<Job> currentJobOptional = jobRepository.findById(currentProposal.getJob_id());
-        if (!currentJobOptional.isPresent()){
-            message="This Job no longer exists";
-            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-        }
-        Long currentBusinessJobId = currentJobOptional.get().getUser_business_id();
-        if (currentBusinessId == currentBusinessJobId && currentFreelancerId!=proposalFreelancerId){
-            obj.setStartTime(DateUtil.getTimeLongCurrent());
-            obj.setStatus(1);
-            obj.setUser_business_id(currentBusinessId);
-            Contract result = contractRepository.save(obj);
-            message = "success";
-            Proposal proposalUpdate = proposalRepository.getOne(obj.getProposal_id());
-            proposalUpdate.setProposal_status_catalog_id(2L);
-            proposalRepository.save(proposalUpdate);
+
+	// add
+	public ResponseObject save(Contract obj, String username) {
+		String message = "not success";
+		logger.info("call to Create obj" + obj.toString());
+		User user = userRepository.findByUsername(username);
+		Long currentBusinessId = user.getUserBusinesses().getId();
+		Long currentFreelancerId = user.getUserFreelancers().getId();
+		Optional<Proposal> currentProposalOptional = proposalRepository.findById(obj.getProposal_id());
+		if (!currentProposalOptional.isPresent()) {
+			message = "This Proposal no longer exists";
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+		}
+		Proposal currentProposal = currentProposalOptional.get();
+		Long proposalFreelancerId = currentProposal.getUser_freelancer_id();
+		Optional<Job> currentJobOptional = jobRepository.findById(currentProposal.getJob_id());
+		if (!currentJobOptional.isPresent()) {
+			message = "This Job no longer exists";
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+		}
+		Long currentBusinessJobId = currentJobOptional.get().getUser_business_id();
+		if (currentBusinessId == currentBusinessJobId && currentFreelancerId != proposalFreelancerId) {
+			obj.setStartTime(DateUtil.getTimeLongCurrent());
+			obj.setStatus(1);
+			obj.setUser_business_id(currentBusinessId);
+			Contract result = contractRepository.save(obj);
+			message = "success";
+			Proposal proposalUpdate = proposalRepository.getOne(obj.getProposal_id());
+			proposalUpdate.setProposal_status_catalog_id(2L);
+			proposalRepository.save(proposalUpdate);
 			// tạo chatbox cho freelancer - business
 			List<ChatKeyUser> listToSave = new ArrayList<>();
-			ChatKeyUser chatKeyUser = new ChatKeyUser(null, currentBusinessJobId, currentFreelancerId,
-					currentJobOptional.get().getId(), UtilService.convertRoomKey(currentFreelancerId,
-							currentBusinessJobId, currentJobOptional.get().getId()),
-					currentJobOptional.get().getName());
-			ChatKeyUser chatKeyUser2 = new ChatKeyUser(null, currentBusinessJobId, currentFreelancerId,
+			ChatKeyUser chatKeyUser = new ChatKeyUser(null, currentBusinessJobId, proposalFreelancerId,
 					currentJobOptional.get().getId(), UtilService.convertRoomKey(currentBusinessJobId,
-							currentFreelancerId, currentJobOptional.get().getId()),
+							proposalFreelancerId, currentJobOptional.get().getId()),
+					currentJobOptional.get().getName());
+			ChatKeyUser chatKeyUser2 = new ChatKeyUser(null, proposalFreelancerId, currentBusinessJobId,
+					currentJobOptional.get().getId(), UtilService.convertRoomKey(proposalFreelancerId,
+							currentBusinessJobId, currentJobOptional.get().getId()),
 					currentJobOptional.get().getName());
 			listToSave.add(chatKeyUser2);
 			listToSave.add(chatKeyUser);

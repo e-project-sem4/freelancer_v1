@@ -65,7 +65,7 @@ public class ProposalService {
         String message = "can not find obj";
         Proposal result = null;
         if (obj.getId()!=null) {
-            obj.setProposal_status_catalog_id(4L);
+            obj.setProposal_status_catalog_id(99L);
             result = proposalRepository.save(obj);
             message = "delete success";
             logger.info("delete obj success");
@@ -92,7 +92,20 @@ public class ProposalService {
             if (obj.getJob_id()!=null && obj.getJob_id()>0){
                 obj1.setJob_id(obj.getJob_id());
             }
-            if (obj.getProposal_status_catalog_id()!=null &&obj.getProposal_status_catalog_id()>0&&obj.getProposal_status_catalog_id()<5){
+            if (obj.getClientGrade()!=null && obj.getClientGrade()>0){
+                obj1.setClientGrade(obj.getClientGrade());
+            }
+            if (obj.getClientComment()!=null && !obj.getClientComment().isEmpty()){
+                obj1.setClientComment(obj.getClientComment());
+            }
+            if (obj.getFreelancerGrade()!=null && obj.getFreelancerGrade()>0){
+                obj1.setFreelancerGrade(obj.getFreelancerGrade());
+            }
+            if (obj.getFreelancerComment()!=null && !obj.getFreelancerComment().isEmpty()){
+                obj1.setFreelancerComment(obj.getFreelancerComment());
+            }
+            if (obj.getProposal_status_catalog_id()!=null &&((obj.getProposal_status_catalog_id()>0&&obj.getProposal_status_catalog_id()<6)
+                    ||obj.getProposal_status_catalog_id()==99)){
                 obj1.setProposal_status_catalog_id(obj.getProposal_status_catalog_id());
             }
 
@@ -100,6 +113,41 @@ public class ProposalService {
             result = proposalRepository.save(obj1);
             message = "update success";
             logger.info("update obj success");
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+        } else {
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+        }
+
+    }
+
+    public ResponseObject cancelByFl(Long id) {
+        logger.info("call to get obj to delete by id: " + id);
+        Proposal obj = proposalRepository.getOne(id);
+        String message = "can not find obj";
+        Proposal result = null;
+        if (obj.getId()!=null) {
+            obj.setProposal_status_catalog_id(5L);
+            result = proposalRepository.save(obj);
+            message = "delete success";
+            logger.info("delete obj success");
+            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+        } else {
+            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+        }
+
+    }
+
+
+    public ResponseObject cancelByBsn(Long id) {
+        logger.info("call to get obj to delete by id: " + id);
+        Proposal obj = proposalRepository.getOne(id);
+        String message = "can not find obj";
+        Proposal result = null;
+        if (obj.getId()!=null) {
+            obj.setProposal_status_catalog_id(4L);
+            result = proposalRepository.save(obj);
+            message = "delete success";
+            logger.info("delete obj success");
             return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
         } else {
             return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
