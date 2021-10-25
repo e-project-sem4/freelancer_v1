@@ -92,6 +92,12 @@ public class ContractService {
 			Proposal proposalUpdate = proposalRepository.getOne(obj.getProposal_id());
 			proposalUpdate.setProposal_status_catalog_id(2L);
 			proposalRepository.save(proposalUpdate);
+
+			//Update status job =2 (Doing)
+			Job job = jobRepository.getOne(proposalUpdate.getJob_id());
+			job.setStatus(2);
+			jobRepository.save(job);
+
 			// tạo chatbox cho freelancer - business
 			List<ChatKeyUser> listToSave = new ArrayList<>();
 			ChatKeyUser chatKeyUser = new ChatKeyUser(null, currentBusinessJobId, proposalFreelancerId,

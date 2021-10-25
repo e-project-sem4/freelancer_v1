@@ -2,6 +2,7 @@ package com.freelancer.service;
 
 import java.util.List;
 
+import com.freelancer.model.Job;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,6 +108,20 @@ public class ProposalService {
             if (obj.getProposal_status_catalog_id()!=null &&((obj.getProposal_status_catalog_id()>0&&obj.getProposal_status_catalog_id()<6)
                     ||obj.getProposal_status_catalog_id()==99)){
                 obj1.setProposal_status_catalog_id(obj.getProposal_status_catalog_id());
+                if (obj.getProposal_status_catalog_id() == 5){
+                    Job job = jobRepository.getOne(obj1.getJob_id());
+                    job.setStatus(1);
+                    jobRepository.save(job);
+                }else if (obj.getProposal_status_catalog_id() == 4){
+                    Job job = jobRepository.getOne(obj1.getJob_id());
+                    job.setStatus(1);
+                    jobRepository.save(job);
+                }
+                else if (obj.getProposal_status_catalog_id() == 3){
+                    Job job = jobRepository.getOne(obj1.getJob_id());
+                    job.setStatus(3);
+                    jobRepository.save(job);
+                }
             }
 
             obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
@@ -120,38 +135,44 @@ public class ProposalService {
 
     }
 
-    public ResponseObject cancelByFl(Long id) {
-        logger.info("call to get obj to delete by id: " + id);
-        Proposal obj = proposalRepository.getOne(id);
-        String message = "can not find obj";
-        Proposal result = null;
-        if (obj.getId()!=null) {
-            obj.setProposal_status_catalog_id(5L);
-            result = proposalRepository.save(obj);
-            message = "delete success";
-            logger.info("delete obj success");
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
-        } else {
-            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-        }
-
-    }
-
-
-    public ResponseObject cancelByBsn(Long id) {
-        logger.info("call to get obj to delete by id: " + id);
-        Proposal obj = proposalRepository.getOne(id);
-        String message = "can not find obj";
-        Proposal result = null;
-        if (obj.getId()!=null) {
-            obj.setProposal_status_catalog_id(4L);
-            result = proposalRepository.save(obj);
-            message = "delete success";
-            logger.info("delete obj success");
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
-        } else {
-            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-        }
+//    public ResponseObject cancelByFl(Long id) {
+//        logger.info("call to get obj to delete by id: " + id);
+//        Proposal obj = proposalRepository.getOne(id);
+//        String message = "can not find obj";
+//        Proposal result = null;
+//        if (obj.getId()!=null) {
+//            obj.setProposal_status_catalog_id(5L);
+//            result = proposalRepository.save(obj);
+//            Job job = jobRepository.getOne(obj.getJob_id());
+//            job.setStatus(1);
+//            jobRepository.save(job);
+//            message = "delete success";
+//            logger.info("delete obj success");
+//            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+//        } else {
+//            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+//        }
+//
+//    }
+//
+//
+//    public ResponseObject cancelByBsn(Long id) {
+//        logger.info("call to get obj to delete by id: " + id);
+//        Proposal obj = proposalRepository.getOne(id);
+//        String message = "can not find obj";
+//        Proposal result = null;
+//        if (obj.getId()!=null) {
+//            obj.setProposal_status_catalog_id(4L);
+//            result = proposalRepository.save(obj);
+//            Job job = jobRepository.getOne(obj.getJob_id());
+//            job.setStatus(1);
+//            jobRepository.save(job);
+//            message = "delete success";
+//            logger.info("delete obj success");
+//            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+//        } else {
+//            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+//        }
 
     }
 //
@@ -192,4 +213,4 @@ public class ProposalService {
 //        String message = "success";
 //        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 //    }
-}
+//}
