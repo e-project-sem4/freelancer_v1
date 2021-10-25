@@ -96,7 +96,7 @@ public class ContractService {
 			List<ChatKeyUser> listToSave = new ArrayList<>();
 			ChatKeyUser chatKeyUser = new ChatKeyUser(null, currentBusinessJobId, proposalFreelancerId,
 					currentJobOptional.get().getId(),
-					UtilService.convertRoomKey(currentBusinessJobId, proposalFreelancerId,
+					UtilService.convertRoomKey(proposalFreelancerId, currentBusinessJobId,
 							currentJobOptional.get().getId()),
 					currentJobOptional.get().getName(), proposalUpdate.getId());
 			ChatKeyUser chatKeyUser2 = new ChatKeyUser(null, proposalFreelancerId, currentBusinessJobId,
