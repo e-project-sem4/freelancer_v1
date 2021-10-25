@@ -57,6 +57,33 @@ public class ContractService {
 		}
 		Long currentBusinessJobId = currentJobOptional.get().getUser_business_id();
 		if (currentBusinessId == currentBusinessJobId && currentFreelancerId != proposalFreelancerId) {
+			//check giá job và giá proposal
+			Double difference = currentJobOptional.get().getPaymentAmount() - obj.getPaymentAmount();
+			if (difference >= 0) {// nếu số tiền đã thanh toán lớn hơn hoặc bằng sô tiền muốn update
+				// cập nhật số tiền của Job bằng số tiền truyền vào
+				currentJobOptional.get().setPaymentAmount(obj.getPaymentAmount());
+				currentJobOptional.get().setUpdateAt(DateUtil.getTimeLongCurrent());
+				// cộng thêm tiền chênh lệch cho User
+				user.setBalance(user.getBalance() + difference);
+				userRepository.save(user);
+				jobRepository.save(currentJobOptional.get());
+			} else { // nếu số tiền đã thanh toán bé hơn số tiền muốn update
+				// check số dư
+				// nếu số dư lớn bé hơn tiền chênh lệch (nhân -1 để lấy số dương) thì
+				// không cập nhật thông tin nữa
+				if (user.getBalance() < difference * (-1)) {
+					return new ResponseObject(Constant.STATUS_ACTION_FAIL,
+							"Không thẻ nhận đề xuất này. Số dư không đủ, vui lòng kiểm tra và nạp thêm tiền", null);
+				}
+				// trường hợp còn lại, số dư lớn hơn tiền chênh lệch (nhân -1 để lấy số dương)
+				// cập nhật số tiền muốn update
+				currentJobOptional.get().setPaymentAmount(obj.getPaymentAmount());
+				// trừ tiền trong tài khoản Usẻ
+				user.setBalance(user.getBalance() - difference * (-1));
+				userRepository.save(user);
+				jobRepository.save(currentJobOptional.get());
+			}
+
 			obj.setStartTime(DateUtil.getTimeLongCurrent());
 			obj.setStatus(1);
 			obj.setUser_business_id(currentBusinessId);
