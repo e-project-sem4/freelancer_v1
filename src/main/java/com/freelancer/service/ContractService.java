@@ -107,6 +107,7 @@ public class ContractService {
 			listToSave.add(chatKeyUser2);
 			listToSave.add(chatKeyUser);
 			chatKeyUserRepository.saveAll(listToSave);
+			result.setChatKeyUser(chatKeyUser);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 
 		}

@@ -29,6 +29,9 @@ public class Contract {
     private Long proposal_id;
 
     private Integer status;
+    
+    @Transient
+    private ChatKeyUser chatKeyUser;
 
 
 
