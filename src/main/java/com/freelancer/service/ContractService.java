@@ -71,12 +71,12 @@ public class ContractService {
 					currentJobOptional.get().getId(),
 					UtilService.convertRoomKey(currentBusinessJobId, proposalFreelancerId,
 							currentJobOptional.get().getId()),
-					currentJobOptional.get().getName(), obj.getProposal_id());
+					currentJobOptional.get().getName(), proposalUpdate.getId());
 			ChatKeyUser chatKeyUser2 = new ChatKeyUser(null, proposalFreelancerId, currentBusinessJobId,
 					currentJobOptional.get().getId(),
 					UtilService.convertRoomKey(proposalFreelancerId, currentBusinessJobId,
 							currentJobOptional.get().getId()),
-					currentJobOptional.get().getName(), obj.getProposal_id());
+					currentJobOptional.get().getName(), proposalUpdate.getId());
 			listToSave.add(chatKeyUser2);
 			listToSave.add(chatKeyUser);
 			chatKeyUserRepository.saveAll(listToSave);
