@@ -25,5 +25,6 @@ public class ChatKeyUser {
 	private Long jobId;
 	private String chatRoomKey;
 	private String jobName;
+	private Long proposalId;
 
 }

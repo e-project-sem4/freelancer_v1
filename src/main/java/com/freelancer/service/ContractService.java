@@ -68,13 +68,15 @@ public class ContractService {
 			// tạo chatbox cho freelancer - business
 			List<ChatKeyUser> listToSave = new ArrayList<>();
 			ChatKeyUser chatKeyUser = new ChatKeyUser(null, currentBusinessJobId, proposalFreelancerId,
-					currentJobOptional.get().getId(), UtilService.convertRoomKey(currentBusinessJobId,
-							proposalFreelancerId, currentJobOptional.get().getId()),
-					currentJobOptional.get().getName());
+					currentJobOptional.get().getId(),
+					UtilService.convertRoomKey(currentBusinessJobId, proposalFreelancerId,
+							currentJobOptional.get().getId()),
+					currentJobOptional.get().getName(), obj.getProposal_id());
 			ChatKeyUser chatKeyUser2 = new ChatKeyUser(null, proposalFreelancerId, currentBusinessJobId,
-					currentJobOptional.get().getId(), UtilService.convertRoomKey(proposalFreelancerId,
-							currentBusinessJobId, currentJobOptional.get().getId()),
-					currentJobOptional.get().getName());
+					currentJobOptional.get().getId(),
+					UtilService.convertRoomKey(proposalFreelancerId, currentBusinessJobId,
+							currentJobOptional.get().getId()),
+					currentJobOptional.get().getName(), obj.getProposal_id());
 			listToSave.add(chatKeyUser2);
 			listToSave.add(chatKeyUser);
 			chatKeyUserRepository.saveAll(listToSave);
