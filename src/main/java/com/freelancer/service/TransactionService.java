@@ -39,11 +39,11 @@ public class TransactionService {
                     .getContent();
         } else if (page > 0 && size > 0 && sort == 3) {
             list = transactionRepository
-                    .findAll(specification, PageRequest.of(page - 1, size, Sort.by("paymentAmount").descending()))
+                    .findAll(specification, PageRequest.of(page - 1, size, Sort.by("price").descending()))
                     .getContent();
         } else if (page > 0 && size > 0 && sort == 4) {
             list = transactionRepository
-                    .findAll(specification, PageRequest.of(page - 1, size, Sort.by("paymentAmount").ascending()))
+                    .findAll(specification, PageRequest.of(page - 1, size, Sort.by("price").ascending()))
                     .getContent();
         } else if (page == 0 && size == 0 && sort == 0) {
             list = transactionRepository.findAll(specification);
