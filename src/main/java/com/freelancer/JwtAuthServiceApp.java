@@ -17,7 +17,7 @@ import com.freelancer.service.UserService;
 @SpringBootApplication
 public class JwtAuthServiceApp {
 
-	public static BlockingQueue<SendMailModel> listSendMailSuggest = new ArrayBlockingQueue<>(5000);
+	public static BlockingQueue<SendMailModel> listSendMail = new ArrayBlockingQueue<>(5000);
 	@Autowired
 	UserService userService;
 

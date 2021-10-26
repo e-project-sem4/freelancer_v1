@@ -36,6 +36,8 @@ public class UserBusiness {
     @Transient
     private List<Job> listJob;
 
+    private Integer averageGrade; //điểm trung bình
+
 
 
     @OneToOne(cascade = CascadeType.ALL)
