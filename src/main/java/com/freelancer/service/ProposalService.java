@@ -133,7 +133,7 @@ public class ProposalService {
                     jobRepository.save(job);
                     UserFreelancer userfreelancer = userFreelancerRepository.getOne(obj1.getUser_freelancer_id());
                     User user = userRepository.getOne(userfreelancer.getUser_account_id());
-                    user.setBalance(user.getBalance()+obj1.getPaymentAmount());
+                    user.setBalance(user.getBalance()+obj1.getPaymentAmount()*0.8);
                     userRepository.save(user);
                     Transaction transaction = new Transaction();
                     transaction.setPrice(obj1.getPaymentAmount()*0.8);
