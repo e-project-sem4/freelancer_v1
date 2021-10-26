@@ -98,10 +98,18 @@ public class ContractService {
 			job.setStatus(2);
 			jobRepository.save(job);
 
-			//SendMail
+			//SendMail Người được nhận
 
 			User userAccountFreelancer = userRepository.getOne(userFreelancerRepository.getOne(currentProposal.getUser_freelancer_id()).getUser_account_id());
 			JwtAuthServiceApp.listSendMail.add(new SendMailModel(userAccountFreelancer.getEmail(),"Congratulations on getting approved for a job!", currentProposal.getJob_id().toString()));
+
+			//SendMail những thằng k đc nhận
+			for (Proposal p: job.getProposals()
+				 ) {
+
+				JwtAuthServiceApp.listSendMail.add(new SendMailModel(p.getUserFreelancer().getUser().getEmail(),"The job you've bid on has already been accepted by someone else :(. Good luck next time!", currentProposal.getJob_id().toString()));
+
+			}
 
 			// tạo chatbox cho freelancer - business
 			List<ChatKeyUser> listToSave = new ArrayList<>();
