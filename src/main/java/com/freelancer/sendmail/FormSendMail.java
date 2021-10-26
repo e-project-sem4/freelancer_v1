@@ -34,7 +34,7 @@ public class FormSendMail{
         javaMailSender.send(msg);
     }
 
-    public  void sendMailSuggest(String to,String jobId) throws MessagingException, IOException {
+    public  void sendMail(String to,String content,String jobId) throws MessagingException, IOException {
         String from = "jobfreelancer@gmail.com";
         String linkJob = "https://job-hunting-vn.herokuapp.com/job-details?id="+jobId;
         MimeMessage msg = javaMailSender.createMimeMessage();
@@ -42,11 +42,11 @@ public class FormSendMail{
         helper.setFrom(new InternetAddress(from, "Rocket Company"));
         helper.setTo(to);
         helper.setSubject("Suggest Apply To Job");
-        String content = "<b>Hey guy</b>,<br><i> We come from the Website Jobfreelancer</i><br><span> We found a job that's perfect for you.</span>" +
+        String text = "<b>Hey guy</b>,<br><i> We come from the Website Jobfreelancer</i><br><span> "+content+".</span>" +
                 "<br><a href='"+linkJob+"'>Click here<a>"+"<span> for more details.</span>"+
                 "<div style='text-align:left;'><a href='https://job-hunting-vn.herokuapp.com/home'><img src='https://res.cloudinary.com/hoadaica/image/upload/v1634898297/freelancer4-e1531398303434_vu5puk.jpg'" +
                 " alt='Rocket Team' title='Rocket Team' style='width:700px;height:400px;'></img></a></div>";
-        helper.setText(content,true);
+        helper.setText(text,true);
 
 
         javaMailSender.send(msg);

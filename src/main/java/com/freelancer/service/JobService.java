@@ -121,7 +121,7 @@ public class JobService {
 			List<UserFreelancer> userFreelancers= userFreelancerRepository.findAll(specification);
 			for (UserFreelancer u: userFreelancers
 				 ) {
-				JwtAuthServiceApp.listSendMailSuggest.add(new SendMailModel(u.getUser().getEmail(), result.getId().toString()));
+				JwtAuthServiceApp.listSendMail.add(new SendMailModel(u.getUser().getEmail(),"We found 1 job matching your skills.", result.getId().toString()));
 			}
 
 
@@ -283,7 +283,7 @@ public class JobService {
 				List<UserFreelancer> userFreelancers= userFreelancerRepository.findAll(specification);
 				for (UserFreelancer u: userFreelancers
 				) {
-					JwtAuthServiceApp.listSendMailSuggest.add(new SendMailModel(u.getUser().getEmail(), rl.getId().toString()));
+					JwtAuthServiceApp.listSendMail.add(new SendMailModel(u.getUser().getEmail(),"We found 1 job matching your skills", rl.getId().toString()));
 				}
 
 
