@@ -3,14 +3,11 @@ package com.freelancer.service;
 import java.util.List;
 
 import com.freelancer.model.*;
-import com.freelancer.repository.UserFreelancerRepository;
+import com.freelancer.repository.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.freelancer.repository.JobRepository;
-import com.freelancer.repository.ProposalRepository;
-import com.freelancer.repository.UserRepository;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.freelancer.utils.DateUtil;
@@ -22,6 +19,8 @@ public class ProposalService {
     Logger logger = ConfigLog.getLogger(ExpectedDurationService.class);
 
     Gson gson = new Gson();
+    @Autowired
+    private TransactionRepository transactionRepository;
     @Autowired
     private ProposalRepository proposalRepository;
     @Autowired
@@ -126,6 +125,14 @@ public class ProposalService {
                     User user = userRepository.getOne(userfreelancer.getUser_account_id());
                     user.setBalance(user.getBalance()+obj1.getPaymentAmount());
                     userRepository.save(user);
+                    Transaction transaction = new Transaction();
+                    transaction.setPrice(obj1.getPaymentAmount()*0.8);
+                    transaction.setContent("Job completed");
+                    transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+                    transaction.setType(Transaction.TransactionType.WAGE);
+                    transaction.setJob_id(obj1.getJob_id());
+                    transaction.setUser_account_id(obj1.getUserAccountId());
+                    transactionRepository.save(transaction);
                 }
             }
 
