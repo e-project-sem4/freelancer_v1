@@ -2,14 +2,12 @@ package com.freelancer.service;
 
 import java.util.List;
 
-import com.freelancer.model.Job;
+import com.freelancer.model.*;
+import com.freelancer.repository.UserFreelancerRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.freelancer.model.Proposal;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.User;
 import com.freelancer.repository.JobRepository;
 import com.freelancer.repository.ProposalRepository;
 import com.freelancer.repository.UserRepository;
@@ -30,6 +28,9 @@ public class ProposalService {
     private UserRepository userRepository;
     @Autowired
     private JobRepository jobRepository;
+
+    @Autowired
+    private UserFreelancerRepository userFreelancerRepository;
 
 
     // add
@@ -121,6 +122,10 @@ public class ProposalService {
                     Job job = jobRepository.getOne(obj1.getJob_id());
                     job.setStatus(3);
                     jobRepository.save(job);
+                    UserFreelancer userfreelancer = userFreelancerRepository.getOne(obj1.getUser_freelancer_id());
+                    User user = userRepository.getOne(userfreelancer.getUser_account_id());
+                    user.setBalance(user.getBalance()+obj1.getPaymentAmount());
+                    userRepository.save(user);
                 }
             }
 
