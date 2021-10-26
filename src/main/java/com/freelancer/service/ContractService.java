@@ -1,11 +1,9 @@
 package com.freelancer.service;
 
+import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.model.*;
-import com.freelancer.repository.ChatKeyUserRepository;
-import com.freelancer.repository.ContractRepository;
-import com.freelancer.repository.JobRepository;
-import com.freelancer.repository.ProposalRepository;
-import com.freelancer.repository.UserRepository;
+import com.freelancer.repository.*;
+import com.freelancer.sendmail.SendMailModel;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.freelancer.utils.DateUtil;
@@ -29,6 +27,8 @@ public class ContractService {
 	private ContractRepository contractRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserFreelancerRepository userFreelancerRepository;
 	@Autowired
 	private JobRepository jobRepository;
 	@Autowired
@@ -97,6 +97,11 @@ public class ContractService {
 			Job job = jobRepository.getOne(proposalUpdate.getJob_id());
 			job.setStatus(2);
 			jobRepository.save(job);
+
+			//SendMail
+
+			User userAccountFreelancer = userRepository.getOne(userFreelancerRepository.getOne(currentProposal.getUser_freelancer_id()).getUser_account_id());
+			JwtAuthServiceApp.listSendMail.add(new SendMailModel(userAccountFreelancer.getEmail(),"Congratulations on getting approved for a job!", currentProposal.getJob_id().toString()));
 
 			// tạo chatbox cho freelancer - business
 			List<ChatKeyUser> listToSave = new ArrayList<>();

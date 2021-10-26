@@ -22,12 +22,12 @@ public class ThreadSendMail extends Thread {
 
         while (true) {
 
-            if (JwtAuthServiceApp.listSendMailSuggest.size() > 0) {
+            if (JwtAuthServiceApp.listSendMail.size() > 0) {
                 for (int i = 0; i < 10; i++) {
-                    SendMailModel sendMailModel = JwtAuthServiceApp.listSendMailSuggest.poll();
+                    SendMailModel sendMailModel = JwtAuthServiceApp.listSendMail.poll();
                     if (sendMailModel != null) {
                         try {
-                            formSendMail.sendMailSuggest(sendMailModel.getTo(), sendMailModel.getJobId());
+                            formSendMail.sendMail(sendMailModel.getTo(),sendMailModel.getContent(), sendMailModel.getJobId());
                         } catch (MessagingException e) {
                             e.printStackTrace();
                         } catch (IOException e) {

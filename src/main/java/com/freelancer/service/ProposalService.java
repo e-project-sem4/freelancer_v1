@@ -2,8 +2,10 @@ package com.freelancer.service;
 
 import java.util.List;
 
+import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.model.*;
 import com.freelancer.repository.*;
+import com.freelancer.sendmail.SendMailModel;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,10 +114,18 @@ public class ProposalService {
                     Job job = jobRepository.getOne(obj1.getJob_id());
                     job.setStatus(1);
                     jobRepository.save(job);
+                    //send mail
+                    User userBusiness = userRepository.getOne(jobRepository.getOne(obj1.getJob_id()).getUserBusiness().getUser_account_id());
+                    JwtAuthServiceApp.listSendMail.add(new SendMailModel(userBusiness.getEmail(),"Your partner canceled the current job!", obj1.getJob_id().toString()));
+
                 }else if (obj.getProposal_status_catalog_id() == 4){
                     Job job = jobRepository.getOne(obj1.getJob_id());
                     job.setStatus(1);
                     jobRepository.save(job);
+
+                    //send mail
+                    String email = obj1.getUserFreelancer().getUser().getEmail();
+                    JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Your partner canceled the current job!", obj1.getJob_id().toString()));
                 }
                 else if (obj.getProposal_status_catalog_id() == 3){
                     Job job = jobRepository.getOne(obj1.getJob_id());
@@ -133,6 +143,10 @@ public class ProposalService {
                     transaction.setJob_id(obj1.getJob_id());
                     transaction.setUser_account_id(obj1.getUserAccountId());
                     transactionRepository.save(transaction);
+
+                    //send mail
+                    String email = obj1.getUserFreelancer().getUser().getEmail();
+                    JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Your partner has received the results of your work. Amount has been added to the balance. Thank you for using the service!", obj1.getJob_id().toString()));
                 }
             }
 
