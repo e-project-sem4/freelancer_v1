@@ -11,5 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SendMailModel {
 private String to;
+private String content;
 private String jobId;
 }

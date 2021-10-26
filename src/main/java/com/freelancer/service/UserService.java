@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,28 @@ public class UserService {
 
 	@Autowired
 	private HasSkillRepository hasSkillRepository;
+
+
+	public ResponseObject signinAdmin(String username, String password) {
+		String message = "Login fail";
+		try {
+			logger.info("login nè");
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+			User user = userRepository.findByUsername(username);
+			String token = jwtTokenProvider.createToken(username, user.getRoles());
+			Authentication authentication= jwtTokenProvider.getAuthentication(token);
+			if (!authentication.getAuthorities().iterator().next().toString().equals("ROLE_ADMIN")){
+				return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+			}
+			message = token;
+			user.setPassword(null);
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, user);
+		} catch (AuthenticationException e) {
+			message = "username or password wrong";
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+		}
+	}
+
 
 	public ResponseObject signin(String username, String password) {
 		String message;
