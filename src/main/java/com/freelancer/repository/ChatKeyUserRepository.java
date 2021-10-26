@@ -16,4 +16,6 @@ public interface ChatKeyUserRepository extends JpaRepository<ChatKeyUser, Long> 
 			+ "OR a.senderId IS NULL OR a.senderId = :id2")
 	List<ChatKeyUser> findChatKey(@Param("id") Long id, @Param("id2") Long id2);
 
+	List<ChatKeyUser> findAllBySenderId(Long senderId);
+
 }
