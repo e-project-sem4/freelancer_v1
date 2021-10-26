@@ -41,6 +41,8 @@ public class UserFreelancer {
 	private String overview;
 	@Size(max = 1000, message = "Max location length: 1000 characters")
 	private String certifications;
+
+	private Integer averageGrade;//điểm trung bình
 	private Long updateAt;
 
 	private Integer statusSearchJob; //0. Tắt 1. Bật

@@ -86,6 +86,12 @@ public class UserController {
 
 
 
+	@RequestMapping(value = "/admin/login", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	public ResponseEntity<ResponseObject> loginAdmin(@RequestParam String username, @RequestParam(value = "password") String password) {
+		ResponseObject result = userService.signinAdmin(username, password);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<ResponseObject> login(@RequestParam String username, @RequestParam String password) {
