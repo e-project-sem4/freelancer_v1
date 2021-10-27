@@ -81,6 +81,7 @@ public class UserService {
 			String token = jwtTokenProvider.createToken(username, user.getRoles());
 			Authentication authentication= jwtTokenProvider.getAuthentication(token);
 			if (!authentication.getAuthorities().iterator().next().toString().equals("ROLE_ADMIN")){
+				message = "username or password wrong";
 				return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 			}
 			message = token;
