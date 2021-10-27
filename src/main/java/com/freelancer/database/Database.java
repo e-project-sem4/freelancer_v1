@@ -423,11 +423,6 @@ public class Database implements CommandLineRunner {
 		proposal.save(new Proposal(83L ,DateUtil.getTimeLongCurrent(),110.6,"Please choose me",5L ,19L ,3L ,5,"Good",5,"Good"));
 		proposal.save(new Proposal(84L ,DateUtil.getTimeLongCurrent(),100.7,"I have a lot of experience that suits you",6L ,19L ,4L ,null,null,null,null));
 		proposal.save(new Proposal(85L ,DateUtil.getTimeLongCurrent(),105.7,"Let's work together",7L ,19L ,5L ,null,null,null,null));
-<<<<<<< HEAD
-
-	}
-=======
->>>>>>> c8b841c008b8570c78bd5c113e29817f88ee7493
 
 	}
 //	private void seedChatUserKey() {
