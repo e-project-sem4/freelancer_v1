@@ -1,12 +1,9 @@
 package com.freelancer.controller;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
-import com.freelancer.model.*;
-import com.freelancer.search.JobSpecification;
-import com.freelancer.search.SearchCriteria;
-import com.freelancer.search.TransactionSpecification;
-import com.freelancer.search.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -21,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.freelancer.model.ResponseObject;
+import com.freelancer.model.User;
+import com.freelancer.model.UserBusiness;
+import com.freelancer.model.UserFreelancer;
+import com.freelancer.search.SearchCriteria;
+import com.freelancer.search.UserSpecification;
 import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.service.UserService;
 import com.freelancer.utils.JWTService;
-
-import java.util.Optional;
 
 @CrossOrigin
 @RestController

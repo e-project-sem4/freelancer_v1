@@ -20,8 +20,6 @@ public class DashboardService {
 
     @Autowired
     private JobRepository jobRepository;
-    @Autowired
-    private OtherSkillRepository otherSkillRepository;
 
     public HashMap<Integer, Long> getCountDashboard() {
         HashMap<Integer, Long> count = new HashMap<Integer, Long>();
