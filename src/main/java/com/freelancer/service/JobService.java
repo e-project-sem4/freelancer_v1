@@ -121,7 +121,7 @@ public class JobService {
 			List<UserFreelancer> userFreelancers= userFreelancerRepository.findAll(specification);
 			for (UserFreelancer u: userFreelancers
 				 ) {
-				JwtAuthServiceApp.listSendMailSuggest.add(new SendMailModel(u.getUser().getEmail(), result.getId().toString()));
+				JwtAuthServiceApp.listSendMail.add(new SendMailModel(u.getUser().getEmail(),"We found 1 job matching your skills.", result.getId().toString()));
 			}
 
 
@@ -283,7 +283,7 @@ public class JobService {
 				List<UserFreelancer> userFreelancers= userFreelancerRepository.findAll(specification);
 				for (UserFreelancer u: userFreelancers
 				) {
-					JwtAuthServiceApp.listSendMailSuggest.add(new SendMailModel(u.getUser().getEmail(), rl.getId().toString()));
+					JwtAuthServiceApp.listSendMail.add(new SendMailModel(u.getUser().getEmail(),"We found 1 job matching your skills", rl.getId().toString()));
 				}
 
 
@@ -298,13 +298,15 @@ public class JobService {
 		User user = userRepository.findByUsername(username);
 		List<Long> listSkill = new ArrayList<>();
 		Specification<Job> specification = Specification.where(null);
+		Specification<Job> specification1 = Specification.where(null);
 		for (HasSkill hasSkill : user.getUserFreelancers().getHasSkills().stream().collect(Collectors.toList())) {
-			System.out.println(hasSkill.getSkill_id());
 			listSkill.add(hasSkill.getSkill_id());
 		}
+
 		for (Long skillId : listSkill) {
-			specification = specification.or(new JobSpecification(new SearchCriteria("skill_id", "==skill", skillId)));
+			specification1 = specification.or(new JobSpecification(new SearchCriteria("skill_id", "==skill", skillId)));
 		}
+		specification = specification.and(specification1);
 		List<Job> list = jobRepository.findAll(specification, PageRequest.of(0, 3)).getContent();
 //		if (listSkill.size() > 0) {
 //			

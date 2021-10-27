@@ -15,36 +15,38 @@ import org.springframework.stereotype.Service;
 public class FormSendMail{
     @Autowired
     private JavaMailSender javaMailSender;
-    public  void sendMailInvite(String to,String jobId) throws MessagingException, IOException {
+//    public  void sendMailInvite(String to,String jobId) throws MessagingException, IOException {
+//        String from = "jobfreelancer@gmail.com";
+//        String linkJob = "https://job-hunting-vn.herokuapp.com/job-details?id="+jobId;
+//        MimeMessage msg = javaMailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(msg);
+//        helper.setFrom(new InternetAddress(from, "Rocket Company"));
+//
+//        helper.setTo(to);
+//        helper.setSubject("Invite Apply To Job");
+//        String content = "<b>Hey guy</b>,<br><i> We come from the Website Jobfreelancer</i><br><span> You have received an invitation to apply for a job from a User Business.</span>" +
+//                "<br><a href='"+linkJob+"'>Click here<a>"+"<span> for more details.</span>"+
+//                "<div style='text-align:left;'><a href='https://job-hunting-vn.herokuapp.com/home'><img src='https://res.cloudinary.com/hoadaica/image/upload/v1634898297/freelancer4-e1531398303434_vu5puk.jpg'" +
+//                " alt='Rocket Team' title='Rocket Team' style='width:700px;height:400px;'></img></a></div>";
+//        helper.setText(content,true);
+//
+//
+//        javaMailSender.send(msg);
+//    }
+
+    public  void sendMail(String to,String content,String jobId) throws MessagingException, IOException {
         String from = "jobfreelancer@gmail.com";
+        String linkJob = "https://job-hunting-vn.herokuapp.com/job-details?id="+jobId;
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg);
-        helper.setFrom(new InternetAddress(from, "Rocket Company"));
-
-        helper.setTo(to);
-        helper.setSubject("Invite Apply To Job");
-        String content = "<b>Hey guy</b>,<br><i> We come from the Website Jobfreelancer</i><br><span> You have received an invitation to apply for a job from a User Business.</span>" +
-                "<br><a href='google.com'>Click here<a>"+"<span> for more details.</span>"+
-                "<div style='text-align:left;'><a href='facebook.com'><img src='https://res.cloudinary.com/hoadaica/image/upload/v1634898297/freelancer4-e1531398303434_vu5puk.jpg'" +
-                " alt='Rocket Team' title='Rocket Team' style='width:700px;height:400px;'></img></a></div>";
-        helper.setText(content,true);
-
-
-        javaMailSender.send(msg);
-    }
-
-    public  void sendMailSuggest(String to,String jobId) throws MessagingException, IOException {
-        String from = "jobfreelancer@gmail.com";
-        MimeMessage msg = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(msg);
-        helper.setFrom(new InternetAddress(from, "Rocket Company"));
+        helper.setFrom(new InternetAddress(from, "TopWorkRocker Company"));
         helper.setTo(to);
         helper.setSubject("Suggest Apply To Job");
-        String content = "<b>Hey guy</b>,<br><i> We come from the Website Jobfreelancer</i><br><span> We found a job that's perfect for you.</span>" +
-                "<br><a href='google.com'>Click here<a>"+"<span> for more details.</span>"+
-                "<div style='text-align:left;'><a href='facebook.com'><img src='https://res.cloudinary.com/hoadaica/image/upload/v1634898297/freelancer4-e1531398303434_vu5puk.jpg'" +
+        String text = "<b>Hey guy</b>,<br><i> We come from the Website <a href='https://job-hunting-vn.herokuapp.com/home'>TopWorkRocker</a></i><br><span> "+content+".</span>" +
+                "<br><a href='"+linkJob+"'>Click here<a>"+"<span> for more details.</span>"+
+                "<div style='text-align:left;'><a href='https://job-hunting-vn.herokuapp.com/home'><img src='https://res.cloudinary.com/hoadaica/image/upload/v1634898297/freelancer4-e1531398303434_vu5puk.jpg'" +
                 " alt='Rocket Team' title='Rocket Team' style='width:700px;height:400px;'></img></a></div>";
-        helper.setText(content,true);
+        helper.setText(text,true);
 
 
         javaMailSender.send(msg);

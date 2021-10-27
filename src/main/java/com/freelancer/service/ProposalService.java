@@ -2,16 +2,14 @@ package com.freelancer.service;
 
 import java.util.List;
 
+import com.freelancer.JwtAuthServiceApp;
+import com.freelancer.model.*;
+import com.freelancer.repository.*;
+import com.freelancer.sendmail.SendMailModel;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.freelancer.model.Proposal;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.User;
-import com.freelancer.repository.JobRepository;
-import com.freelancer.repository.ProposalRepository;
-import com.freelancer.repository.UserRepository;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.freelancer.utils.DateUtil;
@@ -24,11 +22,16 @@ public class ProposalService {
 
     Gson gson = new Gson();
     @Autowired
+    private TransactionRepository transactionRepository;
+    @Autowired
     private ProposalRepository proposalRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private JobRepository jobRepository;
+
+    @Autowired
+    private UserFreelancerRepository userFreelancerRepository;
 
 
     // add
@@ -107,6 +110,44 @@ public class ProposalService {
             if (obj.getProposal_status_catalog_id()!=null &&((obj.getProposal_status_catalog_id()>0&&obj.getProposal_status_catalog_id()<6)
                     ||obj.getProposal_status_catalog_id()==99)){
                 obj1.setProposal_status_catalog_id(obj.getProposal_status_catalog_id());
+                if (obj.getProposal_status_catalog_id() == 5){
+                    Job job = jobRepository.getOne(obj1.getJob_id());
+                    job.setStatus(1);
+                    jobRepository.save(job);
+                    //send mail
+                    User userBusiness = userRepository.getOne(jobRepository.getOne(obj1.getJob_id()).getUserBusiness().getUser_account_id());
+                    JwtAuthServiceApp.listSendMail.add(new SendMailModel(userBusiness.getEmail(),"Your partner canceled the current job!", obj1.getJob_id().toString()));
+
+                }else if (obj.getProposal_status_catalog_id() == 4){
+                    Job job = jobRepository.getOne(obj1.getJob_id());
+                    job.setStatus(1);
+                    jobRepository.save(job);
+
+                    //send mail
+                    String email = obj1.getUserFreelancer().getUser().getEmail();
+                    JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Your partner canceled the current job!", obj1.getJob_id().toString()));
+                }
+                else if (obj.getProposal_status_catalog_id() == 3){
+                    Job job = jobRepository.getOne(obj1.getJob_id());
+                    job.setStatus(3);
+                    jobRepository.save(job);
+                    UserFreelancer userfreelancer = userFreelancerRepository.getOne(obj1.getUser_freelancer_id());
+                    User user = userRepository.getOne(userfreelancer.getUser_account_id());
+                    user.setBalance(user.getBalance()+obj1.getPaymentAmount()*0.8);
+                    userRepository.save(user);
+                    Transaction transaction = new Transaction();
+                    transaction.setPrice(obj1.getPaymentAmount()*0.8);
+                    transaction.setContent("Job completed");
+                    transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+                    transaction.setType(Transaction.TransactionType.WAGE);
+                    transaction.setJob_id(obj1.getJob_id());
+                    transaction.setUser_account_id(obj1.getUserAccountId());
+                    transactionRepository.save(transaction);
+
+                    //send mail
+                    String email = obj1.getUserFreelancer().getUser().getEmail();
+                    JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Your partner has received the results of your work. Amount has been added to the balance. Thank you for using the service!", obj1.getJob_id().toString()));
+                }
             }
 
             obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
@@ -120,38 +161,44 @@ public class ProposalService {
 
     }
 
-    public ResponseObject cancelByFl(Long id) {
-        logger.info("call to get obj to delete by id: " + id);
-        Proposal obj = proposalRepository.getOne(id);
-        String message = "can not find obj";
-        Proposal result = null;
-        if (obj.getId()!=null) {
-            obj.setProposal_status_catalog_id(5L);
-            result = proposalRepository.save(obj);
-            message = "delete success";
-            logger.info("delete obj success");
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
-        } else {
-            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-        }
-
-    }
-
-
-    public ResponseObject cancelByBsn(Long id) {
-        logger.info("call to get obj to delete by id: " + id);
-        Proposal obj = proposalRepository.getOne(id);
-        String message = "can not find obj";
-        Proposal result = null;
-        if (obj.getId()!=null) {
-            obj.setProposal_status_catalog_id(4L);
-            result = proposalRepository.save(obj);
-            message = "delete success";
-            logger.info("delete obj success");
-            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
-        } else {
-            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
-        }
+//    public ResponseObject cancelByFl(Long id) {
+//        logger.info("call to get obj to delete by id: " + id);
+//        Proposal obj = proposalRepository.getOne(id);
+//        String message = "can not find obj";
+//        Proposal result = null;
+//        if (obj.getId()!=null) {
+//            obj.setProposal_status_catalog_id(5L);
+//            result = proposalRepository.save(obj);
+//            Job job = jobRepository.getOne(obj.getJob_id());
+//            job.setStatus(1);
+//            jobRepository.save(job);
+//            message = "delete success";
+//            logger.info("delete obj success");
+//            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+//        } else {
+//            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+//        }
+//
+//    }
+//
+//
+//    public ResponseObject cancelByBsn(Long id) {
+//        logger.info("call to get obj to delete by id: " + id);
+//        Proposal obj = proposalRepository.getOne(id);
+//        String message = "can not find obj";
+//        Proposal result = null;
+//        if (obj.getId()!=null) {
+//            obj.setProposal_status_catalog_id(4L);
+//            result = proposalRepository.save(obj);
+//            Job job = jobRepository.getOne(obj.getJob_id());
+//            job.setStatus(1);
+//            jobRepository.save(job);
+//            message = "delete success";
+//            logger.info("delete obj success");
+//            return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+//        } else {
+//            return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+//        }
 
     }
 //
@@ -192,4 +239,4 @@ public class ProposalService {
 //        String message = "success";
 //        return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 //    }
-}
+//}

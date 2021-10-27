@@ -1,11 +1,9 @@
 package com.freelancer.service;
 
+import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.model.*;
-import com.freelancer.repository.ChatKeyUserRepository;
-import com.freelancer.repository.ContractRepository;
-import com.freelancer.repository.JobRepository;
-import com.freelancer.repository.ProposalRepository;
-import com.freelancer.repository.UserRepository;
+import com.freelancer.repository.*;
+import com.freelancer.sendmail.SendMailModel;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
 import com.freelancer.utils.DateUtil;
@@ -29,6 +27,8 @@ public class ContractService {
 	private ContractRepository contractRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserFreelancerRepository userFreelancerRepository;
 	@Autowired
 	private JobRepository jobRepository;
 	@Autowired
@@ -92,6 +92,25 @@ public class ContractService {
 			Proposal proposalUpdate = proposalRepository.getOne(obj.getProposal_id());
 			proposalUpdate.setProposal_status_catalog_id(2L);
 			proposalRepository.save(proposalUpdate);
+
+			//Update status job =2 (Doing)
+			Job job = jobRepository.getOne(proposalUpdate.getJob_id());
+			job.setStatus(2);
+			jobRepository.save(job);
+
+			//SendMail Người được nhận
+
+			User userAccountFreelancer = userRepository.getOne(userFreelancerRepository.getOne(currentProposal.getUser_freelancer_id()).getUser_account_id());
+			JwtAuthServiceApp.listSendMail.add(new SendMailModel(userAccountFreelancer.getEmail(),"Congratulations on getting approved for a job!", currentProposal.getJob_id().toString()));
+
+			//SendMail những thằng k đc nhận
+			for (Proposal p: job.getProposals()
+				 ) {
+
+				JwtAuthServiceApp.listSendMail.add(new SendMailModel(p.getUserFreelancer().getUser().getEmail(),"The job you've bid on has already been accepted by someone else :(. Good luck next time!", currentProposal.getJob_id().toString()));
+
+			}
+
 			// tạo chatbox cho freelancer - business
 			List<ChatKeyUser> listToSave = new ArrayList<>();
 			ChatKeyUser chatKeyUser = new ChatKeyUser(null, currentBusinessJobId, proposalFreelancerId,
