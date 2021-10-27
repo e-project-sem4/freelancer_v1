@@ -11,6 +11,9 @@ public class DateUtil {
     public static String getDateFromLong(long date){
        return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(date));
     }
+    public static String getDayFromLong(long date){
+        return new SimpleDateFormat("dd/MM/yyyy").format(new Date(date));
+    }
     public static long setDateLong(int day){
         Calendar c1 = Calendar.getInstance();
         c1.add(Calendar.DATE, day);

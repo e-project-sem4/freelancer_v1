@@ -1,13 +1,13 @@
 package com.freelancer.search;
 
-import com.freelancer.model.Complexity;
-import com.freelancer.model.User;
-import org.springframework.data.jpa.domain.Specification;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.springframework.data.jpa.domain.Specification;
+
+import com.freelancer.model.User;
 
 public class UserSpecification implements Specification<User> {
 	private static final long serialVersionUID = 1L;

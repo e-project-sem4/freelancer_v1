@@ -1,21 +1,23 @@
 package com.freelancer.controller;
 
-import com.freelancer.model.Job;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.Transaction;
-import com.freelancer.search.JobSpecification;
-import com.freelancer.search.SearchCriteria;
-import com.freelancer.search.TransactionSpecification;
-import com.freelancer.service.ComplexityService;
-import com.freelancer.service.TransactionService;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import com.freelancer.model.ResponseObject;
+import com.freelancer.model.Transaction;
+import com.freelancer.search.SearchCriteria;
+import com.freelancer.search.TransactionSpecification;
+import com.freelancer.service.TransactionService;
 
 @RestController
 @CrossOrigin
