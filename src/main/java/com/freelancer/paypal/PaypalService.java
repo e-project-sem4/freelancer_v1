@@ -39,7 +39,6 @@ public class PaypalService {
 		transaction.setNoteToPayee(id_job);
 		List<Transaction> transactions = new ArrayList<>();
 		transactions.add(transaction);
-
 		Payer payer = new Payer();
 		payer.setPaymentMethod("paypal");
 
