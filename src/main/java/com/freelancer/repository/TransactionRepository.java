@@ -11,7 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long>, JpaSpecificationExecutor<Transaction> {
-    @Query(value = "SELECT count(ac) as count,sum(ac.price) as total, ac.createAt as date FROM Transaction ac " +
-            "WHERE ac.createAt BETWEEN :startDate AND :endDate GROUP BY ac.type")
-    public List<Map<Long,Transaction>> findRegisteredCustomersHistory(@Param("startDate") Long startDate, @Param("endDate") Long endDate);
+    @Query(value = "SELECT sum(round(price)) sum, MONTH(date(FROM_UNIXTIME(createAt/1000))) month " +
+            "FROM transactions where type = 3 GROUP BY month"
+            ,nativeQuery=true)
+    public List<Object[]> finMonth();
+    @Query(value = "SELECT sum(round(price)) sum, date(FROM_UNIXTIME(createAt/1000)) day " +
+            "from transactions where month(date(FROM_UNIXTIME(createAt/1000))) AND type = 3 GROUP BY day"
+            ,nativeQuery=true)
+    public List<Object[]> finDay();
 }

@@ -1,10 +1,8 @@
 package com.freelancer.controller.admin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.freelancer.dto.TransactionDTO;
 import com.freelancer.model.Transaction;
 import com.freelancer.repository.TransactionRepository;
 import com.freelancer.utils.DateUtil;
@@ -61,9 +59,34 @@ public class DashboardController {
         }
         return new ResponseEntity<>(mappedData, HttpStatus.OK);
     }
-    @RequestMapping(value ="/hello",method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> demo(@RequestParam Long start, @RequestParam Long end){
-        List<Map<Long,Transaction>> list = transactionRepository.findRegisteredCustomersHistory(start,end);
+    @RequestMapping(value ="/month",method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> month(){
+        List<Object[]> objectsList = transactionRepository.finMonth();
+        List<TransactionDTO> list = new ArrayList<>();
+        for (Object[] obj : objectsList){
+            TransactionDTO transactionDTO = new TransactionDTO();
+            Double price = (Double) obj[0];
+            Integer month = (Integer) obj[1];
+
+            transactionDTO.setPrice(price);
+            transactionDTO.setMonth(month);
+           list.add(transactionDTO);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    @RequestMapping(value ="/day",method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> day(){
+        List<Object[]> objects = transactionRepository.finDay();
+        List<TransactionDTO> list = new ArrayList<>();
+        for (Object[] obj : objects){
+            TransactionDTO transactionDTO = new TransactionDTO();
+            Double price = (Double) obj[0];
+            Date day = (Date) obj[1];
+
+            transactionDTO.setPrice((20*price)/80);
+            transactionDTO.setDay(day);
+            list.add(transactionDTO);
+        }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }
