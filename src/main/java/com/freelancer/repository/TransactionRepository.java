@@ -28,7 +28,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
             ,nativeQuery=true)
     public List<Object[]> finMonth();
     @Query(value = "SELECT sum(round(price)) as sum, date(to_timestamp(create_at/1000)) as day " +
-            "from transactions where type = 3 GROUP BY day"
+            "from transactions where type = 3 GROUP BY day ORDER BY day"
             ,nativeQuery=true)
     public List<Object[]> finDay();
 }
