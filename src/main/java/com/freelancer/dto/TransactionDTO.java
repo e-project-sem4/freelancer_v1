@@ -12,5 +12,5 @@ import java.util.Date;
 public class TransactionDTO {
     private Double price;
     private Integer month;
-    private Date day;
+    private Integer day;
 }
