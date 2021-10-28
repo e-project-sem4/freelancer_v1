@@ -16,9 +16,9 @@ import java.util.Map;
 //            ,nativeQuery=true)
 //    public List<Object[]> finMonth();
 //    @Query(value = "SELECT sum(round(price)) sum, date(FROM_UNIXTIME(createAt/1000)) day " +
-//            "from transactions where month(date(FROM_UNIXTIME(createAt/1000))) AND type = 3 GROUP BY day"
+//            "from transactions where createAt BETWEEN :start AND :end AND type = 3 GROUP BY day"
 //            ,nativeQuery=true)
-//    public List<Object[]> finDay();
+//    public List<Object[]> finDay(@Param("start") Long start, @Param("end")Long end);
 //}
 
 // postgresql
@@ -28,7 +28,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
             ,nativeQuery=true)
     public List<Object[]> finMonth();
     @Query(value = "SELECT sum(round(price)) as sum, date(to_timestamp(create_at/1000)) as day " +
-            "from transactions where type = 3 GROUP BY day ORDER BY day"
+            "from transactions where create_at BETWEEN :start AND :end  type = 3 GROUP BY day ORDER BY day"
             ,nativeQuery=true)
     public List<Object[]> finDay();
 }

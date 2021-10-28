@@ -79,17 +79,28 @@ public class DashboardController {
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
     @RequestMapping(value ="/day",method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> day(){
-        List<Object[]> objects = transactionRepository.finDay();
+    public ResponseEntity<?> day(@RequestParam(value = "start", required = false) String start, @RequestParam(value = "end", required = false) String end){
+       Long startLong,endLong;
+
+        if ((start == null || start.isEmpty()) || (end == null  || end.isEmpty())){
+            startLong = DateUtil.getLongStartOfMonth();
+            endLong = DateUtil.getTimeLongCurrent();
+        }else {
+             startLong = DateUtil.setStartDayLong(start + " 00:00:00");
+             endLong = DateUtil.setStartDayLong(end + " 23:59:59");
+        }
+        List<Object[]> objects = transactionRepository.finDay(startLong,endLong);
         List<TransactionDTO> list = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
         for (Object[] obj : objects){
             TransactionDTO transactionDTO = new TransactionDTO();
             Double price = (Double) obj[0];
             Date day = (Date) obj[1];
-
+            calendar.setTime(day);
             transactionDTO.setPrice((20*price)/80);
-            transactionDTO.setDay(day);
+            transactionDTO.setDay(calendar.get(Calendar.DAY_OF_MONTH));
             list.add(transactionDTO);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
