@@ -307,7 +307,7 @@ public class JobService {
 			specification1 = specification.or(new JobSpecification(new SearchCriteria("skill_id", "==skill", skillId)));
 		}
 		specification = specification.and(specification1);
-		List<Job> list = jobRepository.findAll(specification, PageRequest.of(0, 3)).getContent();
+		List<Job> list = jobRepository.findAll(specification, PageRequest.of(0, 3,Sort.by("createAt").descending())).getContent();
 //		if (listSkill.size() > 0) {
 //			
 //		}
