@@ -59,7 +59,7 @@ public class Job {
     @JoinColumn(name = "user_business_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserBusiness userBusiness;
 
-    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "job", cascade = {CascadeType.DETACH,CascadeType.REMOVE,CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private Collection<OtherSkill> otherSkills;
 
     @ManyToOne
