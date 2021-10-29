@@ -45,6 +45,18 @@ public class UserController {
 	private static final String AUTHORIZATION = "Authorization";
 
 
+	//Withdraw Cash
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+	@RequestMapping(value = "/cash", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ResponseObject> withdrawCash(@RequestParam Double amount, HttpServletRequest request){
+
+		String token = request.getHeader(AUTHORIZATION);
+		String username = jwtTokenProvider.getUsername(token);
+		ResponseObject result = userService.withdrawCash(username,amount);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+
+	}
+
 	//get All/SEARCH
 	@RequestMapping(value = "/searchList", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<ResponseObject> searchList(
