@@ -7,7 +7,11 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.model.*;
+import com.freelancer.repository.*;
+import com.freelancer.sendmail.SendMailModel;
+import com.freelancer.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -24,12 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
-import com.freelancer.repository.ChatKeyUserRepository;
-import com.freelancer.repository.HasSkillRepository;
-import com.freelancer.repository.JobRepository;
-import com.freelancer.repository.UserBusinessRepository;
-import com.freelancer.repository.UserFreelancerRepository;
-import com.freelancer.repository.UserRepository;
 import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
@@ -44,6 +42,8 @@ public class UserService {
 
 	Gson gson = new Gson();
 
+	@Autowired
+	private TransactionRepository transactionRepository;
 	@Autowired
 	private JobRepository jobRepository;
 
@@ -415,5 +415,34 @@ public class UserService {
 		Long total = Long.valueOf(userRepository.findAll(specification).size());
 		String message = "success";
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
+	}
+
+
+	//Rut tien
+	public ResponseObject withdrawCash(String username, Double amount) {
+		String message = "Insufficient account balance";
+		User user = userRepository.findByUsername(username);
+		if (user.getBalance()>=amount){
+			user.setBalance(user.getBalance()-amount);
+			message ="Success";
+			User result = userRepository.save(user);
+
+			//Transaction
+			Transaction transaction = new Transaction();
+			transaction.setUser_account_id(user.getId());
+			transaction.setPrice(amount);
+			transaction.setContent("Withdraw Cash");
+			transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+			transaction.setType(Transaction.TransactionType.WITHDRAW);
+			transactionRepository.save(transaction);
+
+			//Send mail
+
+			String email = user.getEmail();
+			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Congratulations, you have successfully withdrawn "+amount+"$.Thank you for using our service!", "2"));
+
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 	}
 }
