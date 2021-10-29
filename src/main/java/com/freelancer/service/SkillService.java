@@ -31,7 +31,6 @@ public class SkillService {
 		String message = "not success";
 		logger.info("call to Create obj" + obj.toString());
 		obj.setCreateAt(DateUtil.getTimeLongCurrent());
-		obj.setStatus(1);
 		Skill result = skillRepository.save(obj);
 		if (result != null) {
 			message = "success";

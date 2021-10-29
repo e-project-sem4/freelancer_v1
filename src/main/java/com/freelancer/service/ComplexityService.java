@@ -29,7 +29,6 @@ public class ComplexityService {
 		String message = "not success";
 		logger.info("call to Create obj" + obj.toString());
 		obj.setCreateAt(DateUtil.getTimeLongCurrent());
-		obj.setStatus(1);
 		Complexity result = complexityRepository.save(obj);
 		if (result != null) {
 			message = "success";
