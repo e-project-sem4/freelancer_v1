@@ -27,74 +27,67 @@ import com.paypal.base.rest.PayPalRESTException;
 @CrossOrigin
 @RequestMapping("/api/v1/job/payment")
 public class PaypalController {
-	@Autowired
-	private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
-	private static final String AUTHORIZATION = "Authorization";
-	@Autowired
-	JobRepository jobRepository;
-	@Autowired
-	JobService jobService;
-	@Autowired
-	TransactionService transactionService;
-	@Autowired
-	PaypalService service;
-	private Payment payment = null;
-	public static final String SUCCESS_URL = "pay/success";
-	public static final String CANCEL_URL = "pay/cancel";
+    private static final String AUTHORIZATION = "Authorization";
+    @Autowired
+    JobRepository jobRepository;
+    @Autowired
+    JobService jobService;
+    @Autowired
+    TransactionService transactionService;
+    @Autowired
+    PaypalService service;
+    private Payment payment = null;
+    public static final String SUCCESS_URL = "pay/success";
+    public static final String CANCEL_URL = "pay/cancel";
 
-	@RequestMapping(value = "/create-payment",method = RequestMethod.POST)
-	public Payment payment(@RequestParam Long id, HttpServletRequest request){
-			String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-					.replacePath("/api/v1/job/payment/")
-					.build()
-					.toUriString();
-			Optional<Job> finJob = jobRepository.findById(id);
-			if(finJob.isPresent()){
-				Job rl = finJob.get();
-				try {
-					payment = service.createPayment(String.valueOf(rl.getId()),rl.getName(),rl.getPaymentAmount(), baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
-				} catch (PayPalRESTException e) {
-					e.printStackTrace();
-				}
-				System.out.println(payment.toJSON());
-				return payment;
-			}
-		return payment;
-	}
-	@GetMapping(value = "/execute-payment")
-	public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID, HttpServletRequest request) {
-		try {
-			String token = request.getHeader(AUTHORIZATION);
-			String username = jwtTokenProvider.getUsername(token);
-			payment = service.executePayment(paymentId, PayerID);
-			if (payment.getState().equals("approved")) {
-				com.paypal.api.payments.Transaction rl = payment.getTransactions().get(0);
-				jobService.setIsPaymentStatusJob(Long.valueOf(rl.getNoteToPayee())); // Chuyển trạng thái thanh toán của Job
-				Transaction history = new Transaction();
-				history.setContent(rl.getDescription()); // Description của Job
-				history.setPrice(Double.valueOf(rl.getAmount().getTotal())); // paymentAmount của Job
-				history.setJob_id(Long.valueOf(rl.getNoteToPayee()));// id cua Job
-				history.setType(Transaction.TransactionType.PAYMENT); // kiểu thanh toán
-				history.setOrderID(payment.getId()); // orderId của paypal
-				transactionService.createTransactionJob(history, username); // tạo Transaction
-				System.out.println(payment.toJSON());
-				return payment;
-			}
-		} catch (PayPalRESTException e) {
-			e.printStackTrace();
-		}
-		return payment;
-	}
+    @RequestMapping(value = "/create-payment", method = RequestMethod.POST)
+    public Payment payment(@RequestParam Long id, HttpServletRequest request) {
+        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                .replacePath("/api/v1/job/payment/")
+                .build()
+                .toUriString();
+        Optional<Job> finJob = jobRepository.findById(id);
+        if (finJob.isPresent()) {
+            Job rl = finJob.get();
+            try {
+                payment = service.createPayment(String.valueOf(rl.getId()), rl.getName(), rl.getPaymentAmount(), baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
+            } catch (PayPalRESTException e) {
+                e.printStackTrace();
+            }
+            System.out.println(payment.toJSON());
+            return payment;
+        }
+        return payment;
+    }
 
-	 	@GetMapping(value = CANCEL_URL)
-	    public String cancelPay() {
-	        return "Thất bại";
-	    }
+    @GetMapping(value = "/execute-payment")
+    public Payment execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID, HttpServletRequest request) {
+            String token = request.getHeader(AUTHORIZATION);
+            String username = jwtTokenProvider.getUsername(token);
+            com.paypal.api.payments.Transaction rl = payment.getTransactions().get(0);
+            jobService.setIsPaymentStatusJob(Long.valueOf(rl.getNoteToPayee())); // Chuyển trạng thái thanh toán của Job
+            Transaction history = new Transaction();
+            history.setContent(rl.getDescription()); // Description của Job
+            history.setPrice(Double.valueOf(rl.getAmount().getTotal())); // paymentAmount của Job
+            history.setJob_id(Long.valueOf(rl.getNoteToPayee()));// id cua Job
+            history.setType(Transaction.TransactionType.PAYMENT); // kiểu thanh toán
+            history.setOrderID(payment.getId()); // orderId của paypal
+            transactionService.createTransactionJob(history, username); // tạo Transaction
+            System.out.println(payment.toJSON());
+            return payment;
+        }
 
-	    @GetMapping(value = SUCCESS_URL)
-	    public String successPay() {
-			return "Thành công";
-	    }
+        @GetMapping(value = CANCEL_URL)
+        public String cancelPay () {
+            return "Thất bại";
+        }
 
-}
+        @GetMapping(value = SUCCESS_URL)
+        public String successPay () {
+            return "Thành công";
+        }
+
+    }
