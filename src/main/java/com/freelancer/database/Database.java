@@ -90,49 +90,49 @@ public class Database implements CommandLineRunner {
 
 	private void seedUserAccount() {
 
-		userService.signup(new User(1L, "admin", "admin@gmail.com", "admin", "0987654321", "admin",
+		userService.signup(new User(1L, "admin", "topworkrocker@gmail.com", "admin", "0987654321", "admin",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_ADMIN)), 2344.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(2L, "client", "client@gmail.com", "client", "0987654322", "client",
+		userService.signup(new User(2L, "client", "topworkrocker@gmail.com", "client", "0987654322", "client",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 2344.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(3L, "client3", "client3@gmail.com", "client", "0987654323", "client3",
+		userService.signup(new User(3L, "client3", "topworkrocker@gmail.com", "client", "0987654323", "client3",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 34.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(4L, "client4", "client4@gmail.com", "client", "0987654324", "client4",
+		userService.signup(new User(4L, "client4", "topworkrocker@gmail.com", "client", "0987654324", "client4",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 13.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(5L, "client5", "client5@gmail.com", "client", "0987654325", "client5",
+		userService.signup(new User(5L, "client5", "topworkrocker@gmail.com", "client", "0987654325", "client5",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 200.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(6L, "client6", "client6@gmail.com", "client", "0987654326", "client6",
+		userService.signup(new User(6L, "client6", "topworkrocker@gmail.com", "client", "0987654326", "client6",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 12.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(7L, "client7", "client7@gmail.com", "client", "0987654327", "client7",
+		userService.signup(new User(7L, "client7", "topworkrocker@gmail.com", "client", "0987654327", "client7",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 44.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(8L, "client8", "client8@gmail.com", "client", "0987654328", "client8",
+		userService.signup(new User(8L, "client8", "topworkrocker@gmail.com", "client", "0987654328", "client8",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 44.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(9L, "client9", "client9@gmail.com", "client", "0987654322", "client9",
+		userService.signup(new User(9L, "client9", "topworkrocker@gmail.com", "client", "0987654322", "client9",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(10L, "client10", "client10@gmail.com", "client", "0987654322", "client10",
+		userService.signup(new User(10L, "client10", "topworkrocker@gmail.com", "client", "0987654322", "client10",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(11L, "client11", "client11@gmail.com", "client", "0987654322", "client11",
+		userService.signup(new User(11L, "client11", "topworkrocker@gmail.com", "client", "0987654322", "client11",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(12L, "client12", "client12@gmail.com", "client", "0987654322", "client12",
+		userService.signup(new User(12L, "client12", "topworkrocker@gmail.com", "client", "0987654322", "client12",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(13L, "client13", "client13@gmail.com", "client", "0987654322", "client13",
+		userService.signup(new User(13L, "client13", "topworkrocker@gmail.com", "client", "0987654322", "client13",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(14L, "client14", "client14@gmail.com", "client", "0987654322", "client14",
+		userService.signup(new User(14L, "client14", "topworkrocker@gmail.com", "client", "0987654322", "client14",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		userService.signup(new User(15L, "client15", "client15@gmail.com", "client", "0987654322", "client15",
+		userService.signup(new User(15L, "client15", "topworkrocker@gmail.com", "client", "0987654322", "client15",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
 

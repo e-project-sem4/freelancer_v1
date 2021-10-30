@@ -445,4 +445,31 @@ public class UserService {
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 	}
+
+	//Nạp tien
+	public ResponseObject recharge(String username, Double amount, String oderId) {
+		String message = "Insufficient account balance";
+		User user = userRepository.findByUsername(username);
+		if (user != null){
+			user.setBalance(user.getBalance()+amount);
+			message ="Success";
+			User result = userRepository.save(user);
+
+			//Transaction
+			Transaction transaction = new Transaction();
+			transaction.setUser_account_id(user.getId());
+			transaction.setPrice(amount);
+			transaction.setOrderID(oderId);
+			transaction.setContent("Recharge Cash");
+			transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+			transaction.setType(Transaction.TransactionType.RECHARGE);
+			transactionRepository.save(transaction);
+			//Send mail
+			String email = user.getEmail();
+			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Congratulations, you have successfully recharge "+amount+"$.Thank you for using our service!", "2"));
+
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+	}
 }

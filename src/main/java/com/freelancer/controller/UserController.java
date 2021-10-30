@@ -4,6 +4,10 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.freelancer.model.*;
+import com.freelancer.paypal.PaypalService;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -18,15 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.User;
-import com.freelancer.model.UserBusiness;
-import com.freelancer.model.UserFreelancer;
 import com.freelancer.search.SearchCriteria;
 import com.freelancer.search.UserSpecification;
 import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.service.UserService;
 import com.freelancer.utils.JWTService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @CrossOrigin
 @RestController
@@ -43,7 +44,11 @@ public class UserController {
 	JWTService jwtService;
 
 	private static final String AUTHORIZATION = "Authorization";
-
+	@Autowired
+	PaypalService service;
+	private Payment payment = null;
+	public static final String SUCCESS_URL = "pay/success";
+	public static final String CANCEL_URL = "pay/cancel";
 
 	//Withdraw Cash
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
@@ -190,4 +195,41 @@ public class UserController {
 		return userService.refresh(req.getRemoteUser());
 	}
 
+
+	@RequestMapping(value = "/create-payment", method = RequestMethod.POST)
+	public Payment payment(@RequestParam Double amount, HttpServletRequest request) {
+		String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+				.replacePath("/api/v1/users/")
+				.build()
+				.toUriString();
+			try {
+				payment = service.createPaymentAmount(amount, baseUrl + CANCEL_URL, baseUrl + SUCCESS_URL);
+			} catch (PayPalRESTException e) {
+				e.printStackTrace();
+			}
+			System.out.println(payment.toJSON());
+			return payment;
+	}
+
+	@GetMapping(value = "/execute-payment")
+	public ResponseEntity<ResponseObject> execute(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String PayerID, HttpServletRequest request) {
+		String tokens = request.getHeader(AUTHORIZATION);
+		String username = jwtTokenProvider.getUsername(tokens);
+		com.paypal.api.payments.Transaction rl = payment.getTransactions().get(0);
+		Double amount = Double.valueOf(rl.getAmount().getTotal()); // amount muốn nạp
+		String oderId = payment.getId(); // orderId của paypal
+		ResponseObject result = userService.recharge(username,amount,oderId); // cộng tiền, set transaction
+		System.out.println(payment.toJSON());
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@GetMapping(value = CANCEL_URL)
+	public String cancelPay () {
+		return "Thất bại";
+	}
+
+	@GetMapping(value = SUCCESS_URL)
+	public String successPay () {
+		return "Thành công";
+	}
 }
