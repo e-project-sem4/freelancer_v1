@@ -283,6 +283,7 @@ public class JobService {
 		if (optionalJob.isPresent()) {
 			Job rl = optionalJob.get();
 			rl.setIsPaymentStatus(1);
+			rl.setStatus(1);
 			rl.setUpdateAt(DateUtil.getTimeLongCurrent());
 				List<OtherSkill> skillJob = rl.getOtherSkills().stream().collect(Collectors.toList());
 				ArrayList<Long> idSkillJob = new ArrayList<>();
