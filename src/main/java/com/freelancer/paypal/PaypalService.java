@@ -60,4 +60,27 @@ public class PaypalService {
 		paymentExecute.setPayerId(payerId);
 		return payment.execute(apiContext, paymentExecute);
 	}
+
+    public Payment createPaymentAmount(Double paymentAmount, String cancelUrl, String successUrl) throws PayPalRESTException{
+		Amount amount1 = new Amount();
+		amount1.setCurrency("USD");
+		paymentAmount = new BigDecimal(paymentAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
+		amount1.setTotal(String.valueOf(paymentAmount));
+		Transaction transaction1 = new Transaction();
+		transaction1.setAmount(amount1);
+		List<Transaction> transactions1 = new ArrayList<>();
+		transactions1.add(transaction1);
+		Payer payer = new Payer();
+		payer.setPaymentMethod("paypal");
+
+		Payment payment = new Payment();
+		payment.setIntent("sale");
+		payment.setPayer(payer);
+		payment.setTransactions(transactions1);
+		RedirectUrls redirectUrls = new RedirectUrls();
+		redirectUrls.setCancelUrl(cancelUrl);
+		redirectUrls.setReturnUrl(successUrl);
+		payment.setRedirectUrls(redirectUrls);
+		return payment.create(apiContext);
+	}
 }
