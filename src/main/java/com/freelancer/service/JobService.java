@@ -213,6 +213,23 @@ public class JobService {
 				jobCurrent.setExpected_duration_id(jobUpdate.getExpected_duration_id());
 			}
 
+			if (jobUpdate.getExpected_duration_id() != null) {
+				jobCurrent.setExpected_duration_id(jobUpdate.getExpected_duration_id());
+			}
+
+			if (jobUpdate.getOtherSkills() != null || !jobUpdate.getOtherSkills().isEmpty()) {
+				for (OtherSkill o: jobCurrent.getOtherSkills()
+					 ) {
+					otherSkillRepository.delete(o);
+				}
+				jobCurrent.setOtherSkills(null);
+				for (OtherSkill o: jobUpdate.getOtherSkills()
+					 ) {
+					o.setJob_id(jobCurrent.getId());
+					otherSkillRepository.save(o);
+				}
+			}
+
 			if (jobUpdate.getStatus() != null) {
 				jobCurrent.setStatus(jobUpdate.getStatus());
 			}
@@ -266,6 +283,7 @@ public class JobService {
 		if (optionalJob.isPresent()) {
 			Job rl = optionalJob.get();
 			rl.setIsPaymentStatus(1);
+			rl.setStatus(1);
 			rl.setUpdateAt(DateUtil.getTimeLongCurrent());
 				List<OtherSkill> skillJob = rl.getOtherSkills().stream().collect(Collectors.toList());
 				ArrayList<Long> idSkillJob = new ArrayList<>();

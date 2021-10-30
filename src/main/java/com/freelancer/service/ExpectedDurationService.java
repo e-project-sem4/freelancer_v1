@@ -33,7 +33,6 @@ public class ExpectedDurationService {
         String message = "not success";
         logger.info("call to Create obj" + obj.toString());
         obj.setCreateAt(DateUtil.getTimeLongCurrent());
-        obj.setStatus(1);
         ExpectedDuration result = expectedDurationRepository.save(obj);
         if (result != null) {
             message = "success";
