@@ -66,20 +66,15 @@ public class DashboardController {
     }
     @RequestMapping(value ="/month",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> month(){
-        System.out.println("vaof month");
         List<Object[]> objectsList = transactionRepository.finMonth();
-        System.out.println("vaof list");
-
         List<TransactionDTO> list = new ArrayList<>();
-
-
         for (Object[] obj : objectsList){
+            System.out.println(obj);
             TransactionDTO transactionDTO = new TransactionDTO();
             Double price = (Double) obj[0];
-            System.out.println(price);
+            System.out.println(obj[1]);
 
             Integer month = (Integer) obj[1];
-            System.out.println(month);
 
             transactionDTO.setPrice(price);
             transactionDTO.setMonth(month);
