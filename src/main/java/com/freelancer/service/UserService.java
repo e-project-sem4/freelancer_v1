@@ -351,15 +351,15 @@ public class UserService {
 
 	public ResponseObject searchFreelancer(Specification<UserFreelancer> specification, int page, int size, int sort) {
 		List<UserFreelancer> list = null;
-		if (page > 0 && size > 0 && (sort > 4 || sort < 1)) {
+		if (page > 0 && size > 0 && (sort > 2 || sort < 1)) {
 			list = userFreelancerRepository.findAll(specification, PageRequest.of(page - 1, size)).getContent();
 		} else if (page > 0 && size > 0 && sort == 1) {
 			list = userFreelancerRepository
-					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").descending()))
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("averageGrade").descending()))
 					.getContent();
 		} else if (page > 0 && size > 0 && sort == 2) {
 			list = userFreelancerRepository
-					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("averageGrade").ascending()))
 					.getContent();
 		} else if (page == 0 && size == 0 && sort == 0) {
 			list = userFreelancerRepository.findAll(specification);
