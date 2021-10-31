@@ -34,6 +34,7 @@ import com.freelancer.utils.Constant;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class UserService {
@@ -248,6 +249,9 @@ public class UserService {
 			userBusiness.setUser_account_id(user.getId());
 			if (user.getUserBusinesses() != null) {
 				userBusiness.setId(user.getUserBusinesses().getId());
+				userBusiness.setAverageGrade(user.getUserBusinesses().getAverageGrade());
+			}else{
+				userBusiness.setAverageGrade(0);
 			}
 			UserBusiness result = userBusinessRepository.save(userBusiness);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
@@ -266,9 +270,11 @@ public class UserService {
 			if (user.getUserFreelancers() != null) {
 				userFreelancer.setId(user.getUserFreelancers().getId());
 				userFreelancer.setStatusSearchJob(user.getUserFreelancers().getStatusSearchJob());
+				userFreelancer.setAverageGrade(user.getUserFreelancers().getAverageGrade());
 				hasSkillRepository.deleteSkills(user.getUserFreelancers().getId());
 			} else {
 				userFreelancer.setStatusSearchJob(1);
+				userFreelancer.setAverageGrade(0);
 			}
 			if (userFreelancer.getHasSkills().size() > 0) {
 				userFreelancer.getHasSkills().forEach(t -> t.setUser_freelancer_id(user.getUserFreelancers().getId()));
@@ -471,5 +477,14 @@ public class UserService {
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+	}
+
+	public ResponseObject inviteEmail(String username, Long userId,Long jobId) {
+		String fullNameOwner = userRepository.findByUsername(username).getFullName();
+		String email = userRepository.findById(userId).get().getEmail();
+
+		//send mail
+		JwtAuthServiceApp.listSendMail.add(new SendMailModel(email, "Congratulations you have received a job offer from "+fullNameOwner+". Good luck!!!", jobId.toString()));
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "Sent!", null);
 	}
 }

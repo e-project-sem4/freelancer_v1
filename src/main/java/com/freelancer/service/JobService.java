@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.freelancer.model.*;
+import com.freelancer.repository.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -14,17 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.freelancer.JwtAuthServiceApp;
-import com.freelancer.model.HasSkill;
-import com.freelancer.model.Job;
-import com.freelancer.model.OtherSkill;
-import com.freelancer.model.Proposal;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.User;
-import com.freelancer.model.UserFreelancer;
-import com.freelancer.repository.JobRepository;
-import com.freelancer.repository.OtherSkillRepository;
-import com.freelancer.repository.UserFreelancerRepository;
-import com.freelancer.repository.UserRepository;
 import com.freelancer.search.FreelancerSpecification;
 import com.freelancer.search.JobSpecification;
 import com.freelancer.search.SearchCriteria;
@@ -36,6 +27,9 @@ import com.freelancer.utils.DateUtil;
 @Service
 public class JobService {
 	Logger logger = ConfigLog.getLogger(JobService.class);
+
+	@Autowired
+	private TransactionRepository transactionRepository;
 	@Autowired
 	private JobRepository jobRepository;
 	@Autowired
@@ -123,6 +117,16 @@ public class JobService {
 				 ) {
 				JwtAuthServiceApp.listSendMail.add(new SendMailModel(u.getUser().getEmail(),"We found 1 job matching your skills.", result.getId().toString()));
 			}
+
+			//Add transaction
+			Transaction transaction = new Transaction();
+			transaction.setPrice(obj.getPaymentAmount());
+			transaction.setContent("Pay for create job!");
+			transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+			transaction.setType(Transaction.TransactionType.PAYMENT);
+			transaction.setJob_id(result.getId());
+			transaction.setUser_account_id(user.getId());
+			transactionRepository.save(transaction);
 
 
 

@@ -24,6 +24,8 @@ public class ContractService {
 
 	Gson gson = new Gson();
 	@Autowired
+	private TransactionRepository transactionRepository;
+	@Autowired
 	private ContractRepository contractRepository;
 	@Autowired
 	private UserRepository userRepository;
@@ -67,6 +69,19 @@ public class ContractService {
 				user.setBalance(user.getBalance() + difference);
 				userRepository.save(user);
 				jobRepository.save(currentJobOptional.get());
+				if (difference>0){
+					//Add transaction
+					Transaction transaction = new Transaction();
+					transaction.setPrice(difference);
+					transaction.setContent("Refund for change price!");
+					transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+					transaction.setType(Transaction.TransactionType.WAGE);
+					transaction.setJob_id(currentJobOptional.get().getId());
+					transaction.setUser_account_id(user.getId());
+					transactionRepository.save(transaction);
+				}
+
+
 			} else { // nếu số tiền đã thanh toán bé hơn số tiền muốn update
 				// check số dư
 				// nếu số dư lớn bé hơn tiền chênh lệch (nhân -1 để lấy số dương) thì
@@ -78,10 +93,21 @@ public class ContractService {
 				// trường hợp còn lại, số dư lớn hơn tiền chênh lệch (nhân -1 để lấy số dương)
 				// cập nhật số tiền muốn update
 				currentJobOptional.get().setPaymentAmount(obj.getPaymentAmount());
-				// trừ tiền trong tài khoản Usẻ
+				// trừ tiền trong tài khoản User
 				user.setBalance(user.getBalance() - difference * (-1));
 				userRepository.save(user);
 				jobRepository.save(currentJobOptional.get());
+
+				//Add transaction
+				Transaction transaction = new Transaction();
+				transaction.setPrice(difference * (-1));
+				transaction.setContent("Pay extra for proposal!");
+				transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+				transaction.setType(Transaction.TransactionType.PAYMENT);
+				transaction.setJob_id(currentJobOptional.get().getId());
+				transaction.setUser_account_id(user.getId());
+				transactionRepository.save(transaction);
+
 			}
 
 			obj.setStartTime(DateUtil.getTimeLongCurrent());
@@ -89,6 +115,8 @@ public class ContractService {
 			obj.setUser_business_id(currentBusinessId);
 			Contract result = contractRepository.save(obj);
 			message = "success";
+
+			//Update status proposal
 			Proposal proposalUpdate = proposalRepository.getOne(obj.getProposal_id());
 			proposalUpdate.setProposal_status_catalog_id(2L);
 			proposalRepository.save(proposalUpdate);

@@ -62,7 +62,7 @@ public class UserFreelancer {
 	@OneToMany(mappedBy = "userFreelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Proposal> proposals;
 
-	public UserFreelancer(Long id, Long user_account_id, String location, String overview, String certifications, Long updateAt,Integer statusSearchJob) {
+	public UserFreelancer(Long id, Long user_account_id, String location, String overview, String certifications, Long updateAt,Integer statusSearchJob, Integer averageGrade) {
 		this.id = id;
 		this.user_account_id = user_account_id;
 		this.location = location;
@@ -70,5 +70,6 @@ public class UserFreelancer {
 		this.certifications = certifications;
 		this.updateAt = updateAt;
 		this.statusSearchJob = statusSearchJob;
+		this.averageGrade = averageGrade;
 	}
 }
