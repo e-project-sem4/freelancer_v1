@@ -32,6 +32,8 @@ public class ProposalService {
 
     @Autowired
     private UserFreelancerRepository userFreelancerRepository;
+    @Autowired
+    private UserBusinessRepository userBusinessRepository;
 
 
     // add
@@ -85,6 +87,9 @@ public class ProposalService {
         Proposal obj1 = proposalRepository.getOne(id);
         String message = "can not find obj";
         Proposal result = null;
+        UserFreelancer userFreelancerUpdate = userFreelancerRepository.getOne(obj1.getUser_freelancer_id());
+        UserBusiness userBusinessUpdate = userBusinessRepository.getOne(jobRepository.findById(obj1.getJob_id()).get().getUser_business_id());
+
         if (obj.getId()!=null) {
             if (obj.getDescription()!=null && !obj.getDescription().isEmpty()){
                 obj1.setDescription(obj.getDescription());
@@ -97,12 +102,44 @@ public class ProposalService {
             }
             if (obj.getClientGrade()!=null && obj.getClientGrade()>0){
                 obj1.setClientGrade(obj.getClientGrade());
+                int sum =0;
+                int size =0;
+                //Average Rate
+                for (Job j:userBusinessUpdate.getJobs()
+                     ) {
+                    for (Proposal p: j.getProposals()
+                         ) {
+                        if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==5){
+                            sum += p.getClientGrade();
+                            size++;
+                        }
+                    }
+                }
+
+                userFreelancerUpdate.setAverageGrade(sum/size);
+                userFreelancerRepository.save(userFreelancerUpdate);
             }
             if (obj.getClientComment()!=null && !obj.getClientComment().isEmpty()){
                 obj1.setClientComment(obj.getClientComment());
             }
             if (obj.getFreelancerGrade()!=null && obj.getFreelancerGrade()>0){
                 obj1.setFreelancerGrade(obj.getFreelancerGrade());
+
+                int sum =0;
+                int size =0;
+                //Average Rate
+
+                    for (Proposal p: userFreelancerUpdate.getProposals()
+                    ) {
+                        if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==4){
+                            sum += p.getFreelancerGrade();
+                            size++;
+                        }
+                    }
+
+
+                userBusinessUpdate.setAverageGrade(sum/size);
+                userBusinessRepository.save(userBusinessUpdate);
             }
             if (obj.getFreelancerComment()!=null && !obj.getFreelancerComment().isEmpty()){
                 obj1.setFreelancerComment(obj.getFreelancerComment());
@@ -135,6 +172,8 @@ public class ProposalService {
                     User user = userRepository.getOne(userfreelancer.getUser_account_id());
                     user.setBalance(user.getBalance()+obj1.getPaymentAmount()*0.8);
                     userRepository.save(user);
+
+
                     Transaction transaction = new Transaction();
                     transaction.setPrice(obj1.getPaymentAmount()*0.8);
                     transaction.setContent("Job completed");
