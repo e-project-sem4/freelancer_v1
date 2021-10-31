@@ -71,14 +71,20 @@ public class DashboardController {
         System.out.println("vaof list");
 
         List<TransactionDTO> list = new ArrayList<>();
+
+
         for (Object[] obj : objectsList){
             TransactionDTO transactionDTO = new TransactionDTO();
             Double price = (Double) obj[0];
+            System.out.println(price);
+
             Integer month = (Integer) obj[1];
+            System.out.println(month);
 
             transactionDTO.setPrice(price);
             transactionDTO.setMonth(month);
            list.add(transactionDTO);
+            System.out.println(month);
         }
         System.out.println(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
