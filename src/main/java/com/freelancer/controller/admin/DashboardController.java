@@ -73,13 +73,15 @@ public class DashboardController {
             TransactionDTO transactionDTO = new TransactionDTO();
             Double price = (Double) obj[0];
             System.out.println(obj[1]);
-
-            Integer month = (Integer) obj[1];
-
-            transactionDTO.setPrice(price);
-            transactionDTO.setMonth(month);
-           list.add(transactionDTO);
-            System.out.println(month);
+            try {
+                Integer month = ((Double) obj[1]).intValue();
+                transactionDTO.setPrice(price);
+                transactionDTO.setMonth(month);
+                list.add(transactionDTO);
+                System.out.println(month);
+            }catch (Exception e){
+                System.out.println(e);
+            }
         }
         System.out.println(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
