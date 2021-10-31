@@ -110,8 +110,11 @@ public class ProposalService {
                     for (Proposal p: j.getProposals()
                          ) {
                         if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==5){
-                            sum += p.getClientGrade();
-                            size++;
+                            if (p.getClientGrade() !=null){
+                                sum += p.getClientGrade();
+                                size++;
+                            }
+
                         }
                     }
                 }
@@ -132,8 +135,10 @@ public class ProposalService {
                     for (Proposal p: userFreelancerUpdate.getProposals()
                     ) {
                         if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==4){
-                            sum += p.getFreelancerGrade();
-                            size++;
+                            if (p.getFreelancerGrade() !=null){
+                                sum += p.getFreelancerGrade();
+                                size++;
+                            }
                         }
                     }
 
