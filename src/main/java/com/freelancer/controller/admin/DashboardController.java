@@ -77,6 +77,7 @@ public class DashboardController {
             transactionDTO.setMonth(month);
            list.add(transactionDTO);
         }
+        System.out.println(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

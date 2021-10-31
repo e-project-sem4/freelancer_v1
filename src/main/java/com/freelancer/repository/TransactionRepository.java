@@ -23,8 +23,8 @@ import java.util.Map;
 
 // postgresql
 public interface TransactionRepository extends JpaRepository<Transaction, Long>, JpaSpecificationExecutor<Transaction> {
-    @Query(value = "SELECT sum(round(price)) as sum, EXTRACT(MONTH FROM date(to_timestamp(create_at/1000))) as month FROM transactions where type = 3 GROUP BY month"
-            ,nativeQuery=true)
+    @Query(value = "SELECT sum(round(price)) as sum, EXTRACT(MONTH FROM date(to_timestamp(create_at/1000))) as month " +
+            "FROM transactions where type = 3 GROUP BY month ORDER BY month",nativeQuery=true)
     public List<Object[]> finMonth();
     @Query(value = "SELECT sum(round(price)) as sum, date(to_timestamp(create_at/1000)) as day " +
             "from transactions where create_at BETWEEN :start AND :end AND type = 3 GROUP BY day ORDER BY day"
