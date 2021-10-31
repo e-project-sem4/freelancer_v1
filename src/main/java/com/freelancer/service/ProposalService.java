@@ -102,25 +102,9 @@ public class ProposalService {
             }
             if (obj.getClientGrade()!=null && obj.getClientGrade()>0){
                 obj1.setClientGrade(obj.getClientGrade());
-                int sum =0;
-                int size =0;
-                //Average Rate
-                for (Job j:userBusinessUpdate.getJobs()
-                     ) {
-                    for (Proposal p: j.getProposals()
-                         ) {
-                        if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==5){
-                            if (p.getClientGrade() !=null){
-                                sum += p.getClientGrade();
-                                size++;
-                            }
 
-                        }
-                    }
-                }
 
-                userFreelancerUpdate.setAverageGrade(sum/size);
-                userFreelancerRepository.save(userFreelancerUpdate);
+
             }
             if (obj.getClientComment()!=null && !obj.getClientComment().isEmpty()){
                 obj1.setClientComment(obj.getClientComment());
@@ -128,23 +112,7 @@ public class ProposalService {
             if (obj.getFreelancerGrade()!=null && obj.getFreelancerGrade()>0){
                 obj1.setFreelancerGrade(obj.getFreelancerGrade());
 
-                int sum =0;
-                int size =0;
-                //Average Rate
 
-                    for (Proposal p: userFreelancerUpdate.getProposals()
-                    ) {
-                        if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==4){
-                            if (p.getFreelancerGrade() !=null){
-                                sum += p.getFreelancerGrade();
-                                size++;
-                            }
-                        }
-                    }
-
-
-                userBusinessUpdate.setAverageGrade(sum/size);
-                userBusinessRepository.save(userBusinessUpdate);
             }
             if (obj.getFreelancerComment()!=null && !obj.getFreelancerComment().isEmpty()){
                 obj1.setFreelancerComment(obj.getFreelancerComment());
@@ -152,7 +120,7 @@ public class ProposalService {
             if (obj.getProposal_status_catalog_id()!=null &&((obj.getProposal_status_catalog_id()>0&&obj.getProposal_status_catalog_id()<6)
                     ||obj.getProposal_status_catalog_id()==99)){
                 obj1.setProposal_status_catalog_id(obj.getProposal_status_catalog_id());
-                if (obj.getProposal_status_catalog_id() == 5){
+                if (obj.getProposal_status_catalog_id() == 4){
                     Job job = jobRepository.getOne(obj1.getJob_id());
                     job.setStatus(1);
                     jobRepository.save(job);
@@ -160,7 +128,7 @@ public class ProposalService {
                     User userBusiness = userRepository.getOne(jobRepository.getOne(obj1.getJob_id()).getUserBusiness().getUser_account_id());
                     JwtAuthServiceApp.listSendMail.add(new SendMailModel(userBusiness.getEmail(),"Your partner canceled the current job!", obj1.getJob_id().toString()));
 
-                }else if (obj.getProposal_status_catalog_id() == 4){
+                }else if (obj.getProposal_status_catalog_id() == 5){
                     Job job = jobRepository.getOne(obj1.getJob_id());
                     job.setStatus(1);
                     jobRepository.save(job);
@@ -176,6 +144,7 @@ public class ProposalService {
                     UserFreelancer userfreelancer = userFreelancerRepository.getOne(obj1.getUser_freelancer_id());
                     User user = userRepository.getOne(userfreelancer.getUser_account_id());
                     user.setBalance(user.getBalance()+obj1.getPaymentAmount()*0.8);
+
                     userRepository.save(user);
 
 
@@ -196,6 +165,53 @@ public class ProposalService {
 
             obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
             result = proposalRepository.save(obj1);
+
+//gradeFreelancer
+            int sumFreelancer =0;
+            int sizeFreelancer =0;
+            //Average Rate
+            for (Job j:userBusinessUpdate.getJobs()
+            ) {
+                for (Proposal p: j.getProposals()
+                ) {
+                    if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==4){
+                        if (p.getClientGrade() !=null){
+                            sumFreelancer += p.getClientGrade();
+                            sizeFreelancer++;
+                        }
+
+                    }
+                }
+            }
+            if (sizeFreelancer>0){
+                userFreelancerUpdate.setAverageGrade(sumFreelancer/sizeFreelancer);
+                userFreelancerRepository.save(userFreelancerUpdate);
+            }
+
+
+            //gradeBusiness
+            int sumBusiness =0;
+            int sizeBusiness =0;
+            //Average Rate
+
+            for (Proposal p: userFreelancerUpdate.getProposals()
+            ) {
+                if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==5){
+                    if (p.getFreelancerGrade() !=null){
+                        sumBusiness += p.getFreelancerGrade();
+                        sizeBusiness++;
+
+                    }
+                }
+            }
+
+            if (sizeBusiness>0){
+                userBusinessUpdate.setAverageGrade(sumBusiness/sizeBusiness);
+                userBusinessRepository.save(userBusinessUpdate);
+            }
+
+
+
             message = "update success";
             logger.info("update obj success");
             return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
