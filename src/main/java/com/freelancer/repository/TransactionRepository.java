@@ -11,8 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 //public interface TransactionRepository extends JpaRepository<Transaction, Long>, JpaSpecificationExecutor<Transaction> {
+<<<<<<< HEAD
 //    @Query(value = "SELECT sum(round(price)) sum, MONTH(date(FROM_UNIXTIME(createAt/1000))) month " +
 //            "FROM transactions where type = 3 GROUP BY month"
+=======
+//    @Query(value = "SELECT sum(round(price)) as sum, EXTRACT(MONTH FROM date(to_timestamp(create_at/1000))) as month FROM transactions where type = 3 GROUP BY month"
+>>>>>>> a44842bf9127cccd7a96ecd860f117216bf5645c
 //            ,nativeQuery=true)
 //    public List<Object[]> finMonth();
 //    @Query(value = "SELECT sum(round(price)) sum, date(FROM_UNIXTIME(createAt/1000)) day " +
