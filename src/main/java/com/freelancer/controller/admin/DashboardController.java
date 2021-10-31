@@ -66,7 +66,10 @@ public class DashboardController {
     }
     @RequestMapping(value ="/month",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> month(){
+        System.out.println("vaof month");
         List<Object[]> objectsList = transactionRepository.finMonth();
+        System.out.println("vaof list");
+
         List<TransactionDTO> list = new ArrayList<>();
         for (Object[] obj : objectsList){
             TransactionDTO transactionDTO = new TransactionDTO();
