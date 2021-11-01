@@ -13,4 +13,5 @@ public class TransactionDTO {
     private Double price;
     private Integer month;
     private Integer day;
+    public Integer type;
 }
