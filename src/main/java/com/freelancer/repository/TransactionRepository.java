@@ -23,8 +23,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
 
 //// postgresql
 //public interface TransactionRepository extends JpaRepository<Transaction, Long>, JpaSpecificationExecutor<Transaction> {
-//    @Query(value = "SELECT sum(round(price)) sum, MONTH(date(to_timestamp(create_at/1000))) month " +
-//            "FROM transactions where type = 3 GROUP BY month"
+//    @Query(value = "SELECT sum(round(price)) as sum, EXTRACT(MONTH FROM date(to_timestamp(create_at/1000))) as month FROM transactions where type = 3 GROUP BY month"
 //            ,nativeQuery=true)
 //    public List<Object[]> finMonth();
 //    @Query(value = "SELECT sum(round(price)) as sum, date(to_timestamp(create_at/1000)) as day " +

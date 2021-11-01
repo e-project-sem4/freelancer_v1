@@ -32,6 +32,8 @@ public class ProposalService {
 
     @Autowired
     private UserFreelancerRepository userFreelancerRepository;
+    @Autowired
+    private UserBusinessRepository userBusinessRepository;
 
 
     // add
@@ -85,6 +87,9 @@ public class ProposalService {
         Proposal obj1 = proposalRepository.getOne(id);
         String message = "can not find obj";
         Proposal result = null;
+        UserFreelancer userFreelancerUpdate = userFreelancerRepository.getOne(obj1.getUser_freelancer_id());
+        UserBusiness userBusinessUpdate = userBusinessRepository.getOne(jobRepository.findById(obj1.getJob_id()).get().getUser_business_id());
+
         if (obj.getId()!=null) {
             if (obj.getDescription()!=null && !obj.getDescription().isEmpty()){
                 obj1.setDescription(obj.getDescription());
@@ -97,12 +102,17 @@ public class ProposalService {
             }
             if (obj.getClientGrade()!=null && obj.getClientGrade()>0){
                 obj1.setClientGrade(obj.getClientGrade());
+
+
+
             }
             if (obj.getClientComment()!=null && !obj.getClientComment().isEmpty()){
                 obj1.setClientComment(obj.getClientComment());
             }
             if (obj.getFreelancerGrade()!=null && obj.getFreelancerGrade()>0){
                 obj1.setFreelancerGrade(obj.getFreelancerGrade());
+
+
             }
             if (obj.getFreelancerComment()!=null && !obj.getFreelancerComment().isEmpty()){
                 obj1.setFreelancerComment(obj.getFreelancerComment());
@@ -110,7 +120,7 @@ public class ProposalService {
             if (obj.getProposal_status_catalog_id()!=null &&((obj.getProposal_status_catalog_id()>0&&obj.getProposal_status_catalog_id()<6)
                     ||obj.getProposal_status_catalog_id()==99)){
                 obj1.setProposal_status_catalog_id(obj.getProposal_status_catalog_id());
-                if (obj.getProposal_status_catalog_id() == 5){
+                if (obj.getProposal_status_catalog_id() == 4){
                     Job job = jobRepository.getOne(obj1.getJob_id());
                     job.setStatus(1);
                     jobRepository.save(job);
@@ -118,7 +128,7 @@ public class ProposalService {
                     User userBusiness = userRepository.getOne(jobRepository.getOne(obj1.getJob_id()).getUserBusiness().getUser_account_id());
                     JwtAuthServiceApp.listSendMail.add(new SendMailModel(userBusiness.getEmail(),"Your partner canceled the current job!", obj1.getJob_id().toString()));
 
-                }else if (obj.getProposal_status_catalog_id() == 4){
+                }else if (obj.getProposal_status_catalog_id() == 5){
                     Job job = jobRepository.getOne(obj1.getJob_id());
                     job.setStatus(1);
                     jobRepository.save(job);
@@ -134,7 +144,10 @@ public class ProposalService {
                     UserFreelancer userfreelancer = userFreelancerRepository.getOne(obj1.getUser_freelancer_id());
                     User user = userRepository.getOne(userfreelancer.getUser_account_id());
                     user.setBalance(user.getBalance()+obj1.getPaymentAmount()*0.8);
+
                     userRepository.save(user);
+
+
                     Transaction transaction = new Transaction();
                     transaction.setPrice(obj1.getPaymentAmount()*0.8);
                     transaction.setContent("Job completed");
@@ -152,6 +165,53 @@ public class ProposalService {
 
             obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
             result = proposalRepository.save(obj1);
+
+//gradeFreelancer
+            int sumFreelancer =0;
+            int sizeFreelancer =0;
+            //Average Rate
+            for (Job j:userBusinessUpdate.getJobs()
+            ) {
+                for (Proposal p: j.getProposals()
+                ) {
+                    if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==4){
+                        if (p.getClientGrade() !=null){
+                            sumFreelancer += p.getClientGrade();
+                            sizeFreelancer++;
+                        }
+
+                    }
+                }
+            }
+            if (sizeFreelancer>0){
+                userFreelancerUpdate.setAverageGrade(sumFreelancer/sizeFreelancer);
+                userFreelancerRepository.save(userFreelancerUpdate);
+            }
+
+
+            //gradeBusiness
+            int sumBusiness =0;
+            int sizeBusiness =0;
+            //Average Rate
+
+            for (Proposal p: userFreelancerUpdate.getProposals()
+            ) {
+                if (p.getProposal_status_catalog_id()==3||p.getProposal_status_catalog_id()==5){
+                    if (p.getFreelancerGrade() !=null){
+                        sumBusiness += p.getFreelancerGrade();
+                        sizeBusiness++;
+
+                    }
+                }
+            }
+
+            if (sizeBusiness>0){
+                userBusinessUpdate.setAverageGrade(sumBusiness/sizeBusiness);
+                userBusinessRepository.save(userBusinessUpdate);
+            }
+
+
+
             message = "update success";
             logger.info("update obj success");
             return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);

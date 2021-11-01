@@ -34,6 +34,7 @@ import com.freelancer.utils.Constant;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class UserService {
@@ -249,6 +250,9 @@ public class UserService {
 			userBusiness.setUser_account_id(user.getId());
 			if (user.getUserBusinesses() != null) {
 				userBusiness.setId(user.getUserBusinesses().getId());
+				userBusiness.setAverageGrade(user.getUserBusinesses().getAverageGrade());
+			}else{
+				userBusiness.setAverageGrade(0);
 			}
 			UserBusiness result = userBusinessRepository.save(userBusiness);
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
@@ -267,9 +271,11 @@ public class UserService {
 			if (user.getUserFreelancers() != null) {
 				userFreelancer.setId(user.getUserFreelancers().getId());
 				userFreelancer.setStatusSearchJob(user.getUserFreelancers().getStatusSearchJob());
+				userFreelancer.setAverageGrade(user.getUserFreelancers().getAverageGrade());
 				hasSkillRepository.deleteSkills(user.getUserFreelancers().getId());
 			} else {
 				userFreelancer.setStatusSearchJob(1);
+				userFreelancer.setAverageGrade(0);
 			}
 			if (userFreelancer.getHasSkills().size() > 0) {
 				userFreelancer.getHasSkills().forEach(t -> t.setUser_freelancer_id(user.getUserFreelancers().getId()));
@@ -346,15 +352,15 @@ public class UserService {
 
 	public ResponseObject searchFreelancer(Specification<UserFreelancer> specification, int page, int size, int sort) {
 		List<UserFreelancer> list = null;
-		if (page > 0 && size > 0 && (sort > 4 || sort < 1)) {
+		if (page > 0 && size > 0 && (sort > 2 || sort < 1)) {
 			list = userFreelancerRepository.findAll(specification, PageRequest.of(page - 1, size)).getContent();
 		} else if (page > 0 && size > 0 && sort == 1) {
 			list = userFreelancerRepository
-					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").descending()))
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("averageGrade").descending()))
 					.getContent();
 		} else if (page > 0 && size > 0 && sort == 2) {
 			list = userFreelancerRepository
-					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("averageGrade").ascending()))
 					.getContent();
 		} else if (page == 0 && size == 0 && sort == 0) {
 			list = userFreelancerRepository.findAll(specification);
@@ -446,5 +452,41 @@ public class UserService {
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+	}
+
+	//Nạp tien
+	public ResponseObject recharge(String username, Double amount, String oderId) {
+		String message = "Insufficient account balance";
+		User user = userRepository.findByUsername(username);
+		if (user != null){
+			user.setBalance(user.getBalance()+amount);
+			message ="Success";
+			User result = userRepository.save(user);
+
+			//Transaction
+			Transaction transaction = new Transaction();
+			transaction.setUser_account_id(user.getId());
+			transaction.setPrice(amount);
+			transaction.setOrderID(oderId);
+			transaction.setContent("Recharge Cash");
+			transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+			transaction.setType(Transaction.TransactionType.RECHARGE);
+			transactionRepository.save(transaction);
+			//Send mail
+			String email = user.getEmail();
+			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Congratulations, you have successfully recharge "+amount+"$.Thank you for using our service!", "2"));
+
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+	}
+
+	public ResponseObject inviteEmail(String username, Long userId,Long jobId) {
+		String fullNameOwner = userRepository.findByUsername(username).getFullName();
+		String email = userRepository.findById(userId).get().getEmail();
+
+		//send mail
+		JwtAuthServiceApp.listSendMail.add(new SendMailModel(email, "Congratulations you have received a job offer from "+fullNameOwner+". Good luck!!!", jobId.toString()));
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "Sent!", null);
 	}
 }

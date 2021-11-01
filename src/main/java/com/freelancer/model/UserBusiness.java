@@ -54,10 +54,11 @@ public class UserBusiness {
 
 
 
-    public UserBusiness(Long id, Long user_account_id, String location, Long updateAt) {
+    public UserBusiness(Long id, Long user_account_id, String location, Long updateAt,Integer averageGrade) {
         this.id = id;
         this.user_account_id = user_account_id;
         this.location = location;
         this.updateAt = updateAt;
+        this.averageGrade = averageGrade;
     }
 }

@@ -81,4 +81,17 @@ public class UserFreelancerController {
         ResponseObject result = userService.changeStatusFreelancer(username);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
+    //Change Status
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+    @RequestMapping(value = "/invite", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ResponseObject> inviteEmail(HttpServletRequest request,@RequestParam Long userId,@RequestParam Long jobId) {
+        String token = request.getHeader(AUTHORIZATION);
+        String username = jwtTokenProvider.getUsername(token);
+        ResponseObject result = userService.inviteEmail(username,userId,jobId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 }
