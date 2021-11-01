@@ -19,6 +19,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
             "from transactions where createAt BETWEEN :start AND :end AND type = 3 GROUP BY day"
             ,nativeQuery=true)
     public List<Object[]> finDay(@Param("start") Long start, @Param("end")Long end);
+
+    @Query(value = "SELECT sum(round(price)) sum, date(FROM_UNIXTIME(createAt/1000)) day, type FROM `transactions` where createAt BETWEEN :start AND :end GROUP BY day, type ORDER BY `day` ASC",nativeQuery=true)
+    public List<Object[]> findAllMultipleChartJs(@Param("start") Long start, @Param("end") Long end);
 }
 
 //// postgresql
@@ -30,4 +33,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
 //            "from transactions where type = 3 GROUP BY day"
 //            ,nativeQuery=true)
 //    public List<Object[]> finDay();
+//@Query(value = "SELECT sum(round(price)) as sum, date(FROM_UNIXTIME(create_at/1000)) as day, type FROM transactions where create_at BETWEEN :start AND :end GROUP BY day, type ORDER BY day ASC",nativeQuery=true)
+//public List<Object[]> findAllMultipleChartJs(@Param("start") Long start, @Param("end") Long end);
 //}
