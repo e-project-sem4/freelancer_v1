@@ -72,7 +72,6 @@ public class UserService {
 	@Autowired
 	private HasSkillRepository hasSkillRepository;
 
-
 	public ResponseObject signinAdmin(String username, String password) {
 		String message = "Login fail";
 		try {
@@ -80,8 +79,8 @@ public class UserService {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 			User user = userRepository.findByUsername(username);
 			String token = jwtTokenProvider.createToken(username, user.getRoles());
-			Authentication authentication= jwtTokenProvider.getAuthentication(token);
-			if (!authentication.getAuthorities().iterator().next().toString().equals("ROLE_ADMIN")){
+			Authentication authentication = jwtTokenProvider.getAuthentication(token);
+			if (!authentication.getAuthorities().iterator().next().toString().equals("ROLE_ADMIN")) {
 				message = "username or password wrong";
 				return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 			}
@@ -94,7 +93,6 @@ public class UserService {
 		}
 	}
 
-
 	public ResponseObject signin(String username, String password) {
 		String message;
 		try {
@@ -103,7 +101,10 @@ public class UserService {
 			User user = userRepository.findByUsername(username);
 			UserFreelancer freelancer = userFreelancerRepository.getFreelancerByUserAccountId(user.getId());
 			UserBusiness business = userBusinessRepository.getBusinessByUserAccountId(user.getId());
-			List<ChatKeyUser> chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(), business.getId());
+			List<ChatKeyUser> chatKeyUsers = new ArrayList<>();
+			if (freelancer != null && business != null) {
+				chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(), business.getId());
+			}
 			user.setChatKeyUsers(chatKeyUsers);
 			user.setPassword(null);
 			String token = jwtTokenProvider.createToken(username, user.getRoles());
@@ -397,22 +398,22 @@ public class UserService {
 
 	public ResponseObject searchList(Specification<User> specification, int page, int size, int sort) {
 		List<User> list = null;
-		if (page > 0 && size > 0 && (sort > 4 || sort < 1 )) {
+		if (page > 0 && size > 0 && (sort > 4 || sort < 1)) {
 			list = userRepository.findAll(specification, PageRequest.of(page - 1, size)).getContent();
 		} else if (page > 0 && size > 0 && sort == 1) {
 			list = userRepository
 					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").descending()))
 					.getContent();
 		} else if (page > 0 && size > 0 && sort == 2) {
-			list = userRepository.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
+			list = userRepository
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
 					.getContent();
 		} else if (page > 0 && size > 0 && sort == 3) {
 			list = userRepository
 					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("balance").descending()))
 					.getContent();
 		} else if (page > 0 && size > 0 && sort == 4) {
-			list = userRepository
-					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("balance").ascending()))
+			list = userRepository.findAll(specification, PageRequest.of(page - 1, size, Sort.by("balance").ascending()))
 					.getContent();
 		} else if (page == 0 && size == 0 && sort == 0) {
 			list = userRepository.findAll(specification);
@@ -423,17 +424,16 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, total, list);
 	}
 
-
-	//Rut tien
+	// Rut tien
 	public ResponseObject withdrawCash(String username, Double amount) {
 		String message = "Insufficient account balance";
 		User user = userRepository.findByUsername(username);
-		if (user.getBalance()>=amount){
-			user.setBalance(user.getBalance()-amount);
-			message ="Success";
+		if (user.getBalance() >= amount) {
+			user.setBalance(user.getBalance() - amount);
+			message = "Success";
 			User result = userRepository.save(user);
 
-			//Transaction
+			// Transaction
 			Transaction transaction = new Transaction();
 			transaction.setUser_account_id(user.getId());
 			transaction.setPrice(amount);
@@ -442,10 +442,12 @@ public class UserService {
 			transaction.setType(Transaction.TransactionType.WITHDRAW);
 			transactionRepository.save(transaction);
 
-			//Send mail
+			// Send mail
 
 			String email = user.getEmail();
-			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Congratulations, you have successfully withdrawn "+amount+"$.Thank you for using our service!", "2"));
+			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,
+					"Congratulations, you have successfully withdrawn " + amount + "$.Thank you for using our service!",
+					"2"));
 
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		}
