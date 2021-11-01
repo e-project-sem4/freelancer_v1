@@ -69,7 +69,7 @@ public class User {
 	@Transient
 	List<ChatKeyUser> chatKeyUsers;
 
-	public User(Long id, String username, String email, String password, String phone, String fullName, List<Role> roles, Double balance, Long createAt, Long updateAt, Integer status) {
+	public User(Long id, String username, String email, String password, String phone, String fullName, List<Role> roles, Double balance, Long createAt, Long updateAt, Integer status,String thumbnail) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -81,5 +81,6 @@ public class User {
 		this.createAt = createAt;
 		this.updateAt = updateAt;
 		this.status = status;
+		this.thumbnail = thumbnail;
 	}
 }
