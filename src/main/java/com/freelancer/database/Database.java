@@ -91,50 +91,50 @@ public class Database implements CommandLineRunner {
 	private void seedUserAccount() {
 
 		userService.signup(new User(1L, "admin", "topworkrocker@gmail.com", "admin", "0987654321", "admin",
-				new ArrayList<Role>(Arrays.asList(Role.ROLE_ADMIN)), 2344.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				new ArrayList<Role>(Arrays.asList(Role.ROLE_ADMIN)), 10000.0, DateUtil.getTimeLongCurrent(),
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777096/c96t77vb9l6gqbwfeif5.jpg"));
 		userService.signup(new User(2L, "client", "topworkrocker@gmail.com", "client", "0987654322", "client",
-				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 2344.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 1000.0, DateUtil.getTimeLongCurrent(),
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777096/thg5ia3ykftzi1vto1gy.jpg"));
 		userService.signup(new User(3L, "client3", "topworkrocker@gmail.com", "client", "0987654323", "client3",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 34.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777096/spo6l13xakyodxzfoe08.jpg"));
 		userService.signup(new User(4L, "client4", "topworkrocker@gmail.com", "client", "0987654324", "client4",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 13.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777097/spxzqvirdqzelladfeko.jpg"));
 		userService.signup(new User(5L, "client5", "topworkrocker@gmail.com", "client", "0987654325", "client5",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 200.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777097/vzx4ei66t9zv5hcxtztg.jpg"));
 		userService.signup(new User(6L, "client6", "topworkrocker@gmail.com", "client", "0987654326", "client6",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 12.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777097/evnp4nq4nwedqrgozmee.jpg"));
 		userService.signup(new User(7L, "client7", "topworkrocker@gmail.com", "client", "0987654327", "client7",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 44.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777096/c96t77vb9l6gqbwfeif5.jpg"));
 		userService.signup(new User(8L, "client8", "topworkrocker@gmail.com", "client", "0987654328", "client8",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 44.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777097/evnp4nq4nwedqrgozmee.jpg"));
 		userService.signup(new User(9L, "client9", "topworkrocker@gmail.com", "client", "0987654322", "client9",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777096/thg5ia3ykftzi1vto1gy.jpg"));
 		userService.signup(new User(10L, "client10", "topworkrocker@gmail.com", "client", "0987654322", "client10",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777096/spo6l13xakyodxzfoe08.jpg"));
 		userService.signup(new User(11L, "client11", "topworkrocker@gmail.com", "client", "0987654322", "client11",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777097/vzx4ei66t9zv5hcxtztg.jpg"));
 		userService.signup(new User(12L, "client12", "topworkrocker@gmail.com", "client", "0987654322", "client12",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777097/spxzqvirdqzelladfeko.jpg"));
 		userService.signup(new User(13L, "client13", "topworkrocker@gmail.com", "client", "0987654322", "client13",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777096/c96t77vb9l6gqbwfeif5.jpg"));
 		userService.signup(new User(14L, "client14", "topworkrocker@gmail.com", "client", "0987654322", "client14",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777097/evnp4nq4nwedqrgozmee.jpg"));
 		userService.signup(new User(15L, "client15", "topworkrocker@gmail.com", "client", "0987654322", "client15",
 				new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)), 50.0, DateUtil.getTimeLongCurrent(),
-				DateUtil.getTimeLongCurrent(), 1));
+				DateUtil.getTimeLongCurrent(), 1,"https://res.cloudinary.com/trinhlh96/image/upload/v1635777096/thg5ia3ykftzi1vto1gy.jpg"));
 
 	}
 
@@ -170,26 +170,26 @@ public class Database implements CommandLineRunner {
 	}
 
 	private void seedUserFreelancer() {
-		freelancer.save(new UserFreelancer(1L, 2L, "Hà Nội", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1,0));
-		freelancer.save(new UserFreelancer(2L, 3L, "HCM", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm", "Chứng chỉ",
-				DateUtil.getTimeLongCurrent(), 1,0));
-		freelancer.save(new UserFreelancer(3L, 4L, "Đà Nẵng", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1,0));
-		freelancer.save(new UserFreelancer(4L, 5L, "Quảng Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1,0));
-		freelancer.save(new UserFreelancer(5L, 6L, "Quảng Ninh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1,0));
-		freelancer.save(new UserFreelancer(6L, 7L, "Hà Nam", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1,0));
-		freelancer.save(new UserFreelancer(7L, 8L, "Hòa Bình", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 1,0));
-		freelancer.save(new UserFreelancer(8L, 9L, "Hà Giang", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 0,0));
-		freelancer.save(new UserFreelancer(9L, 10L, "Hà Tĩnh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 0,0));
-		freelancer.save(new UserFreelancer(10L, 11L, "Vinh", "Tôi Là 1 Freelancer có nhiều năm kinh nghiệm",
-				"Chứng chỉ", DateUtil.getTimeLongCurrent(), 0,0));
+		freelancer.save(new UserFreelancer(1L, 2L, "Hà Nội", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 1,0));
+		freelancer.save(new UserFreelancer(2L, 3L, "HCM", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 1,0));
+		freelancer.save(new UserFreelancer(3L, 4L, "Đà Nẵng", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 1,0));
+		freelancer.save(new UserFreelancer(4L, 5L, "Quảng Bình", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 1,0));
+		freelancer.save(new UserFreelancer(5L, 6L, "Quảng Ninh", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 1,0));
+		freelancer.save(new UserFreelancer(6L, 7L, "Hà Nam", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 1,0));
+		freelancer.save(new UserFreelancer(7L, 8L, "Hòa Bình", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 1,0));
+		freelancer.save(new UserFreelancer(8L, 9L, "Hà Giang", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 0,0));
+		freelancer.save(new UserFreelancer(9L, 10L, "Hà Tĩnh", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 0,0));
+		freelancer.save(new UserFreelancer(10L, 11L, "Vinh", "Hello, I am Thuy Linh from Hanoi. I am 10 years old. My favorite hobbies are listening to teen  and romantic music while reading their lyrics. My family has 4 people: my parents, my brother and me. My brother is 15 year old. He is also in secondary school and in 9th grade. Everyone loves me and of course, I also love them so much. I wish them always happiness.",
+				"CISSP, CCNA, MCITP,MCTS", DateUtil.getTimeLongCurrent(), 0,0));
 	}
 
 	private void seedJob() {
@@ -529,427 +529,241 @@ public class Database implements CommandLineRunner {
 
 	private void seedTransaction() {
 		// nạp tiền
-		transactionRepository
-				.save(new Transaction(1L, 300.0, DateUtil.setDateLong(-40), Transaction.TransactionType.RECHARGE, 2L));
-		transactionRepository
-				.save(new Transaction(2L, 310.0, DateUtil.setDateLong(-39), Transaction.TransactionType.RECHARGE, 3L));
-		transactionRepository
-				.save(new Transaction(3L, 280.0, DateUtil.setDateLong(-38), Transaction.TransactionType.RECHARGE, 4L));
-		transactionRepository
-				.save(new Transaction(4L, 100.0, DateUtil.setDateLong(-37), Transaction.TransactionType.RECHARGE, 5L));
-		transactionRepository
-				.save(new Transaction(5L, 105.0, DateUtil.setDateLong(-36), Transaction.TransactionType.RECHARGE, 6L));
-		transactionRepository
-				.save(new Transaction(6L, 300.1, DateUtil.setDateLong(-35), Transaction.TransactionType.RECHARGE, 7L));
-		transactionRepository
-				.save(new Transaction(7L, 310.1, DateUtil.setDateLong(-34), Transaction.TransactionType.RECHARGE, 8L));
-		transactionRepository
-				.save(new Transaction(8L, 280.1, DateUtil.setDateLong(-33), Transaction.TransactionType.RECHARGE, 9L));
-		transactionRepository
-				.save(new Transaction(9L, 100.1, DateUtil.setDateLong(-32), Transaction.TransactionType.RECHARGE, 10L));
-		transactionRepository.save(
-				new Transaction(10L, 105.1, DateUtil.setDateLong(-31), Transaction.TransactionType.RECHARGE, 11L));
-		transactionRepository.save(
-				new Transaction(11L, 300.2, DateUtil.setDateLong(-30), Transaction.TransactionType.RECHARGE, 12L));
-		transactionRepository.save(
-				new Transaction(12L, 310.2, DateUtil.setDateLong(-29), Transaction.TransactionType.RECHARGE, 13L));
-		transactionRepository.save(
-				new Transaction(13L, 280.2, DateUtil.setDateLong(-28), Transaction.TransactionType.RECHARGE, 14L));
-		transactionRepository.save(
-				new Transaction(14L, 300.1, DateUtil.setDateLong(-27), Transaction.TransactionType.RECHARGE, 15L));
-		transactionRepository
-				.save(new Transaction(15L, 310.1, DateUtil.setDateLong(-26), Transaction.TransactionType.RECHARGE, 2L));
-		transactionRepository
-				.save(new Transaction(16L, 280.1, DateUtil.setDateLong(-25), Transaction.TransactionType.RECHARGE, 3L));
-		transactionRepository
-				.save(new Transaction(17L, 100.1, DateUtil.setDateLong(-24), Transaction.TransactionType.RECHARGE, 4L));
-		transactionRepository
-				.save(new Transaction(18L, 105.1, DateUtil.setDateLong(-23), Transaction.TransactionType.RECHARGE, 5L));
-		transactionRepository
-				.save(new Transaction(19L, 300.2, DateUtil.setDateLong(-22), Transaction.TransactionType.RECHARGE, 6L));
-		transactionRepository
-				.save(new Transaction(20L, 310.2, DateUtil.setDateLong(-21), Transaction.TransactionType.RECHARGE, 7L));
-		transactionRepository
-				.save(new Transaction(21L, 280.2, DateUtil.setDateLong(-20), Transaction.TransactionType.RECHARGE, 8L));
-		transactionRepository
-				.save(new Transaction(22L, 100.2, DateUtil.setDateLong(-19), Transaction.TransactionType.RECHARGE, 9L));
-		transactionRepository.save(
-				new Transaction(23L, 105.2, DateUtil.setDateLong(-18), Transaction.TransactionType.RECHARGE, 10L));
-		transactionRepository.save(
-				new Transaction(24L, 300.3, DateUtil.setDateLong(-17), Transaction.TransactionType.RECHARGE, 11L));
-		transactionRepository.save(
-				new Transaction(25L, 310.3, DateUtil.setDateLong(-16), Transaction.TransactionType.RECHARGE, 12L));
-		transactionRepository.save(
-				new Transaction(26L, 280.3, DateUtil.setDateLong(-15), Transaction.TransactionType.RECHARGE, 13L));
-		transactionRepository.save(
-				new Transaction(27L, 300.2, DateUtil.setDateLong(-14), Transaction.TransactionType.RECHARGE, 14L));
-		transactionRepository.save(
-				new Transaction(28L, 310.2, DateUtil.setDateLong(-13), Transaction.TransactionType.RECHARGE, 15L));
-		transactionRepository
-				.save(new Transaction(29L, 280.2, DateUtil.setDateLong(-12), Transaction.TransactionType.RECHARGE, 2L));
-		transactionRepository
-				.save(new Transaction(30L, 100.2, DateUtil.setDateLong(-11), Transaction.TransactionType.RECHARGE, 3L));
-		transactionRepository
-				.save(new Transaction(31L, 105.2, DateUtil.setDateLong(-10), Transaction.TransactionType.RECHARGE, 4L));
-		transactionRepository
-				.save(new Transaction(32L, 300.3, DateUtil.setDateLong(-9), Transaction.TransactionType.RECHARGE, 5L));
-		transactionRepository
-				.save(new Transaction(33L, 310.3, DateUtil.setDateLong(-8), Transaction.TransactionType.RECHARGE, 6L));
-		transactionRepository
-				.save(new Transaction(34L, 280.3, DateUtil.setDateLong(-7), Transaction.TransactionType.RECHARGE, 7L));
-		transactionRepository
-				.save(new Transaction(35L, 100.3, DateUtil.setDateLong(-6), Transaction.TransactionType.RECHARGE, 8L));
-		transactionRepository
-				.save(new Transaction(36L, 105.3, DateUtil.setDateLong(-5), Transaction.TransactionType.RECHARGE, 9L));
-		transactionRepository
-				.save(new Transaction(37L, 300.4, DateUtil.setDateLong(-4), Transaction.TransactionType.RECHARGE, 10L));
-		transactionRepository
-				.save(new Transaction(38L, 310.4, DateUtil.setDateLong(-3), Transaction.TransactionType.RECHARGE, 11L));
-		transactionRepository
-				.save(new Transaction(39L, 280.4, DateUtil.setDateLong(-2), Transaction.TransactionType.RECHARGE, 12L));
-		transactionRepository
-				.save(new Transaction(40L, 300.3, DateUtil.setDateLong(-1), Transaction.TransactionType.RECHARGE, 13L));
-		transactionRepository
-				.save(new Transaction(41L, 310.3, DateUtil.setDateLong(0), Transaction.TransactionType.RECHARGE, 14L));
-		transactionRepository.save(
-				new Transaction(42L, 280.3, DateUtil.setDateLong(-40), Transaction.TransactionType.RECHARGE, 15L));
-		transactionRepository
-				.save(new Transaction(43L, 100.3, DateUtil.setDateLong(-39), Transaction.TransactionType.RECHARGE, 2L));
-		transactionRepository
-				.save(new Transaction(44L, 105.3, DateUtil.setDateLong(-38), Transaction.TransactionType.RECHARGE, 3L));
-		transactionRepository
-				.save(new Transaction(45L, 300.4, DateUtil.setDateLong(-37), Transaction.TransactionType.RECHARGE, 4L));
-		transactionRepository
-				.save(new Transaction(46L, 310.4, DateUtil.setDateLong(-36), Transaction.TransactionType.RECHARGE, 5L));
-		transactionRepository
-				.save(new Transaction(47L, 280.4, DateUtil.setDateLong(-35), Transaction.TransactionType.RECHARGE, 6L));
-		transactionRepository
-				.save(new Transaction(48L, 100.4, DateUtil.setDateLong(-34), Transaction.TransactionType.RECHARGE, 7L));
-		transactionRepository
-				.save(new Transaction(49L, 105.4, DateUtil.setDateLong(-33), Transaction.TransactionType.RECHARGE, 8L));
-		transactionRepository
-				.save(new Transaction(50L, 300.5, DateUtil.setDateLong(-32), Transaction.TransactionType.RECHARGE, 9L));
-		transactionRepository.save(
-				new Transaction(51L, 310.5, DateUtil.setDateLong(-31), Transaction.TransactionType.RECHARGE, 10L));
-		transactionRepository.save(
-				new Transaction(52L, 280.5, DateUtil.setDateLong(-30), Transaction.TransactionType.RECHARGE, 11L));
-		transactionRepository.save(
-				new Transaction(53L, 300.4, DateUtil.setDateLong(-29), Transaction.TransactionType.RECHARGE, 12L));
-		transactionRepository.save(
-				new Transaction(54L, 310.4, DateUtil.setDateLong(-28), Transaction.TransactionType.RECHARGE, 13L));
-		transactionRepository.save(
-				new Transaction(55L, 280.4, DateUtil.setDateLong(-27), Transaction.TransactionType.RECHARGE, 14L));
-		transactionRepository.save(
-				new Transaction(56L, 100.4, DateUtil.setDateLong(-26), Transaction.TransactionType.RECHARGE, 15L));
-		transactionRepository
-				.save(new Transaction(57L, 105.4, DateUtil.setDateLong(-25), Transaction.TransactionType.RECHARGE, 2L));
-		transactionRepository
-				.save(new Transaction(58L, 300.5, DateUtil.setDateLong(-24), Transaction.TransactionType.RECHARGE, 3L));
-		transactionRepository
-				.save(new Transaction(59L, 310.5, DateUtil.setDateLong(-23), Transaction.TransactionType.RECHARGE, 4L));
-		transactionRepository
-				.save(new Transaction(60L, 280.5, DateUtil.setDateLong(-22), Transaction.TransactionType.RECHARGE, 5L));
-		transactionRepository
-				.save(new Transaction(61L, 100.5, DateUtil.setDateLong(-21), Transaction.TransactionType.RECHARGE, 6L));
-		transactionRepository
-				.save(new Transaction(62L, 105.5, DateUtil.setDateLong(-20), Transaction.TransactionType.RECHARGE, 7L));
-		transactionRepository
-				.save(new Transaction(63L, 300.6, DateUtil.setDateLong(-19), Transaction.TransactionType.RECHARGE, 8L));
-		transactionRepository
-				.save(new Transaction(64L, 310.6, DateUtil.setDateLong(-18), Transaction.TransactionType.RECHARGE, 9L));
-		transactionRepository.save(
-				new Transaction(65L, 280.6, DateUtil.setDateLong(-17), Transaction.TransactionType.RECHARGE, 10L));
-		transactionRepository.save(
-				new Transaction(66L, 300.5, DateUtil.setDateLong(-16), Transaction.TransactionType.RECHARGE, 11L));
-		transactionRepository.save(
-				new Transaction(67L, 310.5, DateUtil.setDateLong(-15), Transaction.TransactionType.RECHARGE, 12L));
-		transactionRepository.save(
-				new Transaction(68L, 280.5, DateUtil.setDateLong(-14), Transaction.TransactionType.RECHARGE, 13L));
-		transactionRepository.save(
-				new Transaction(69L, 100.5, DateUtil.setDateLong(-13), Transaction.TransactionType.RECHARGE, 14L));
-		transactionRepository.save(
-				new Transaction(70L, 105.5, DateUtil.setDateLong(-12), Transaction.TransactionType.RECHARGE, 15L));
-		transactionRepository
-				.save(new Transaction(71L, 300.6, DateUtil.setDateLong(-11), Transaction.TransactionType.RECHARGE, 2L));
-		transactionRepository
-				.save(new Transaction(72L, 310.6, DateUtil.setDateLong(-10), Transaction.TransactionType.RECHARGE, 3L));
-		transactionRepository
-				.save(new Transaction(73L, 280.6, DateUtil.setDateLong(-9), Transaction.TransactionType.RECHARGE, 4L));
-		transactionRepository
-				.save(new Transaction(74L, 100.6, DateUtil.setDateLong(-8), Transaction.TransactionType.RECHARGE, 5L));
-		transactionRepository
-				.save(new Transaction(75L, 105.6, DateUtil.setDateLong(-7), Transaction.TransactionType.RECHARGE, 6L));
-		transactionRepository
-				.save(new Transaction(76L, 300.7, DateUtil.setDateLong(-6), Transaction.TransactionType.RECHARGE, 7L));
-		transactionRepository
-				.save(new Transaction(77L, 310.7, DateUtil.setDateLong(-5), Transaction.TransactionType.RECHARGE, 8L));
-		transactionRepository
-				.save(new Transaction(78L, 280.7, DateUtil.setDateLong(-4), Transaction.TransactionType.RECHARGE, 9L));
-		transactionRepository
-				.save(new Transaction(79L, 300.6, DateUtil.setDateLong(-3), Transaction.TransactionType.RECHARGE, 10L));
-		transactionRepository
-				.save(new Transaction(80L, 310.6, DateUtil.setDateLong(-2), Transaction.TransactionType.RECHARGE, 11L));
-		transactionRepository
-				.save(new Transaction(81L, 280.6, DateUtil.setDateLong(-1), Transaction.TransactionType.RECHARGE, 12L));
-		transactionRepository
-				.save(new Transaction(82L, 100.6, DateUtil.setDateLong(0), Transaction.TransactionType.RECHARGE, 13L));
-		transactionRepository.save(
-				new Transaction(83L, 105.6, DateUtil.setDateLong(-40), Transaction.TransactionType.RECHARGE, 14L));
-		transactionRepository.save(
-				new Transaction(84L, 300.7, DateUtil.setDateLong(-39), Transaction.TransactionType.RECHARGE, 15L));
-		transactionRepository
-				.save(new Transaction(85L, 310.7, DateUtil.setDateLong(-38), Transaction.TransactionType.RECHARGE, 2L));
-		transactionRepository
-				.save(new Transaction(86L, 280.7, DateUtil.setDateLong(-37), Transaction.TransactionType.RECHARGE, 3L));
-		transactionRepository
-				.save(new Transaction(87L, 100.7, DateUtil.setDateLong(-36), Transaction.TransactionType.RECHARGE, 4L));
-		transactionRepository
-				.save(new Transaction(88L, 105.7, DateUtil.setDateLong(-35), Transaction.TransactionType.RECHARGE, 5L));
-		transactionRepository
-				.save(new Transaction(89L, 300.8, DateUtil.setDateLong(-34), Transaction.TransactionType.RECHARGE, 6L));
-		transactionRepository
-				.save(new Transaction(90L, 310.8, DateUtil.setDateLong(-33), Transaction.TransactionType.RECHARGE, 7L));
-		transactionRepository
-				.save(new Transaction(91L, 280.8, DateUtil.setDateLong(-32), Transaction.TransactionType.RECHARGE, 8L));
-		transactionRepository
-				.save(new Transaction(92L, 300.7, DateUtil.setDateLong(-31), Transaction.TransactionType.RECHARGE, 9L));
-		transactionRepository.save(
-				new Transaction(93L, 310.7, DateUtil.setDateLong(-30), Transaction.TransactionType.RECHARGE, 10L));
-		transactionRepository.save(
-				new Transaction(94L, 280.7, DateUtil.setDateLong(-29), Transaction.TransactionType.RECHARGE, 11L));
-		transactionRepository.save(
-				new Transaction(95L, 100.7, DateUtil.setDateLong(-28), Transaction.TransactionType.RECHARGE, 12L));
+		transactionRepository.save(new Transaction(1L ,543.0,DateUtil.setDateLong(-40),Transaction.TransactionType.RECHARGE,2L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(2L ,333.0,DateUtil.setDateLong(-39),Transaction.TransactionType.RECHARGE,3L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(3L ,223.0,DateUtil.setDateLong(-38),Transaction.TransactionType.RECHARGE,4L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(4L ,260.0,DateUtil.setDateLong(-37),Transaction.TransactionType.RECHARGE,5L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(5L ,220.0,DateUtil.setDateLong(-36),Transaction.TransactionType.RECHARGE,6L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(6L ,310.0,DateUtil.setDateLong(-35),Transaction.TransactionType.RECHARGE,7L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(7L ,340.0,DateUtil.setDateLong(-34),Transaction.TransactionType.RECHARGE,8L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(8L ,656.0,DateUtil.setDateLong(-33),Transaction.TransactionType.RECHARGE,9L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(9L ,300.0,DateUtil.setDateLong(-32),Transaction.TransactionType.RECHARGE,10L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(10L ,180.0,DateUtil.setDateLong(-31),Transaction.TransactionType.RECHARGE,11L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(11L ,170.0,DateUtil.setDateLong(-30),Transaction.TransactionType.RECHARGE,12L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(12L ,300.0,DateUtil.setDateLong(-29),Transaction.TransactionType.RECHARGE,13L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(13L ,320.0,DateUtil.setDateLong(-28),Transaction.TransactionType.RECHARGE,14L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(14L ,543.0,DateUtil.setDateLong(-27),Transaction.TransactionType.RECHARGE,15L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(15L ,678.0,DateUtil.setDateLong(-26),Transaction.TransactionType.RECHARGE,2L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(16L ,432.0,DateUtil.setDateLong(-25),Transaction.TransactionType.RECHARGE,3L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(17L ,342.0,DateUtil.setDateLong(-24),Transaction.TransactionType.RECHARGE,4L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(18L ,223.0,DateUtil.setDateLong(-23),Transaction.TransactionType.RECHARGE,5L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(19L ,325.0,DateUtil.setDateLong(-22),Transaction.TransactionType.RECHARGE,6L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(20L ,546.0,DateUtil.setDateLong(-21),Transaction.TransactionType.RECHARGE,7L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(21L ,432.0,DateUtil.setDateLong(-20),Transaction.TransactionType.RECHARGE,8L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(22L ,344.0,DateUtil.setDateLong(-19),Transaction.TransactionType.RECHARGE,9L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(23L ,345.0,DateUtil.setDateLong(-18),Transaction.TransactionType.RECHARGE,10L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(24L ,310.0,DateUtil.setDateLong(-17),Transaction.TransactionType.RECHARGE,11L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(25L ,240.0,DateUtil.setDateLong(-16),Transaction.TransactionType.RECHARGE,12L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(26L ,310.0,DateUtil.setDateLong(-15),Transaction.TransactionType.RECHARGE,13L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(27L ,290.0,DateUtil.setDateLong(-14),Transaction.TransactionType.RECHARGE,14L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(28L ,330.0,DateUtil.setDateLong(-13),Transaction.TransactionType.RECHARGE,15L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(29L ,170.0,DateUtil.setDateLong(-12),Transaction.TransactionType.RECHARGE,2L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(30L ,200.0,DateUtil.setDateLong(-11),Transaction.TransactionType.RECHARGE,3L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(31L ,230.0,DateUtil.setDateLong(-10),Transaction.TransactionType.RECHARGE,4L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(32L ,270.0,DateUtil.setDateLong(-9),Transaction.TransactionType.RECHARGE,5L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(33L ,340.0,DateUtil.setDateLong(-8),Transaction.TransactionType.RECHARGE,6L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(34L ,160.0,DateUtil.setDateLong(-7),Transaction.TransactionType.RECHARGE,7L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(35L ,190.0,DateUtil.setDateLong(-6),Transaction.TransactionType.RECHARGE,8L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(36L ,300.0,DateUtil.setDateLong(-5),Transaction.TransactionType.RECHARGE,9L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(37L ,543.0,DateUtil.setDateLong(-4),Transaction.TransactionType.RECHARGE,10L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(38L ,534.0,DateUtil.setDateLong(-3),Transaction.TransactionType.RECHARGE,11L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(39L ,270.0,DateUtil.setDateLong(-2),Transaction.TransactionType.RECHARGE,12L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(40L ,546.0,DateUtil.setDateLong(-1),Transaction.TransactionType.RECHARGE,13L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(41L ,157.0,DateUtil.setDateLong(0),Transaction.TransactionType.RECHARGE,14L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(42L ,200.0,DateUtil.setDateLong(-40),Transaction.TransactionType.RECHARGE,15L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(43L ,230.0,DateUtil.setDateLong(-39),Transaction.TransactionType.RECHARGE,2L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(44L ,280.0,DateUtil.setDateLong(-38),Transaction.TransactionType.RECHARGE,3L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(45L ,123.0,DateUtil.setDateLong(-37),Transaction.TransactionType.RECHARGE,4L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(46L ,432.0,DateUtil.setDateLong(-36),Transaction.TransactionType.RECHARGE,5L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(47L ,345.0,DateUtil.setDateLong(-35),Transaction.TransactionType.RECHARGE,6L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(48L ,160.0,DateUtil.setDateLong(-34),Transaction.TransactionType.RECHARGE,7L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(49L ,280.0,DateUtil.setDateLong(-33),Transaction.TransactionType.RECHARGE,8L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(50L ,978.0,DateUtil.setDateLong(-32),Transaction.TransactionType.RECHARGE,9L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(51L ,435.0,DateUtil.setDateLong(-31),Transaction.TransactionType.RECHARGE,10L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(52L ,543.0,DateUtil.setDateLong(-30),Transaction.TransactionType.RECHARGE,11L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(53L ,280.0,DateUtil.setDateLong(-29),Transaction.TransactionType.RECHARGE,12L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(54L ,210.0,DateUtil.setDateLong(-28),Transaction.TransactionType.RECHARGE,13L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(55L ,190.0,DateUtil.setDateLong(-27),Transaction.TransactionType.RECHARGE,14L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(56L ,978.0,DateUtil.setDateLong(-26),Transaction.TransactionType.RECHARGE,15L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(57L ,260.0,DateUtil.setDateLong(-25),Transaction.TransactionType.RECHARGE,2L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(58L ,330.0,DateUtil.setDateLong(-24),Transaction.TransactionType.RECHARGE,3L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(59L ,678.0,DateUtil.setDateLong(-23),Transaction.TransactionType.RECHARGE,4L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(60L ,234.0,DateUtil.setDateLong(-22),Transaction.TransactionType.RECHARGE,5L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(61L ,250.0,DateUtil.setDateLong(-21),Transaction.TransactionType.RECHARGE,6L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(62L ,180.0,DateUtil.setDateLong(-20),Transaction.TransactionType.RECHARGE,7L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(63L ,250.0,DateUtil.setDateLong(-19),Transaction.TransactionType.RECHARGE,8L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(64L ,323.0,DateUtil.setDateLong(-18),Transaction.TransactionType.RECHARGE,9L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(65L ,340.0,DateUtil.setDateLong(-17),Transaction.TransactionType.RECHARGE,10L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(66L ,210.0,DateUtil.setDateLong(-16),Transaction.TransactionType.RECHARGE,11L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(67L ,320.0,DateUtil.setDateLong(-15),Transaction.TransactionType.RECHARGE,12L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(68L ,342.0,DateUtil.setDateLong(-14),Transaction.TransactionType.RECHARGE,13L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(69L ,123.0,DateUtil.setDateLong(-13),Transaction.TransactionType.RECHARGE,14L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(70L ,105.5,DateUtil.setDateLong(-12),Transaction.TransactionType.RECHARGE,15L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(71L ,300.6,DateUtil.setDateLong(-11),Transaction.TransactionType.RECHARGE,2L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(72L ,310.6,DateUtil.setDateLong(-10),Transaction.TransactionType.RECHARGE,3L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(73L ,280.6,DateUtil.setDateLong(-9),Transaction.TransactionType.RECHARGE,4L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(74L ,100.6,DateUtil.setDateLong(-8),Transaction.TransactionType.RECHARGE,5L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(75L ,105.6,DateUtil.setDateLong(-7),Transaction.TransactionType.RECHARGE,6L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(76L ,300.7,DateUtil.setDateLong(-6),Transaction.TransactionType.RECHARGE,7L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(77L ,310.7,DateUtil.setDateLong(-5),Transaction.TransactionType.RECHARGE,8L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(78L ,280.7,DateUtil.setDateLong(-4),Transaction.TransactionType.RECHARGE,9L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(79L ,300.6,DateUtil.setDateLong(-3),Transaction.TransactionType.RECHARGE,10L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(80L ,310.6,DateUtil.setDateLong(-2),Transaction.TransactionType.RECHARGE,11L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(81L ,280.6,DateUtil.setDateLong(-1),Transaction.TransactionType.RECHARGE,12L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(82L ,100.6,DateUtil.setDateLong(0),Transaction.TransactionType.RECHARGE,13L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(83L ,105.6,DateUtil.setDateLong(-40),Transaction.TransactionType.RECHARGE,14L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(84L ,300.7,DateUtil.setDateLong(-39),Transaction.TransactionType.RECHARGE,15L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(85L ,310.7,DateUtil.setDateLong(-38),Transaction.TransactionType.RECHARGE,2L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(86L ,280.7,DateUtil.setDateLong(-37),Transaction.TransactionType.RECHARGE,3L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(87L ,100.7,DateUtil.setDateLong(-36),Transaction.TransactionType.RECHARGE,4L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(88L ,105.7,DateUtil.setDateLong(-35),Transaction.TransactionType.RECHARGE,5L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(89L ,300.8,DateUtil.setDateLong(-34),Transaction.TransactionType.RECHARGE,6L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(90L ,310.8,DateUtil.setDateLong(-33),Transaction.TransactionType.RECHARGE,7L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(91L ,280.8,DateUtil.setDateLong(-32),Transaction.TransactionType.RECHARGE,8L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(92L ,300.7,DateUtil.setDateLong(-31),Transaction.TransactionType.RECHARGE,9L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(93L ,310.7,DateUtil.setDateLong(-30),Transaction.TransactionType.RECHARGE,10L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(94L ,280.7,DateUtil.setDateLong(-29),Transaction.TransactionType.RECHARGE,11L ,"Deposit money into your account"));
+		transactionRepository.save(new Transaction(95L ,100.7,DateUtil.setDateLong(-28),Transaction.TransactionType.RECHARGE,12L ,"Deposit money into your account"));
+
 		// rút tiền
-		transactionRepository
-				.save(new Transaction(96L, 50.0, DateUtil.setDateLong(-40), Transaction.TransactionType.WITHDRAW, 2L));
-		transactionRepository
-				.save(new Transaction(97L, 100.0, DateUtil.setDateLong(-39), Transaction.TransactionType.WITHDRAW, 3L));
-		transactionRepository
-				.save(new Transaction(98L, 120.0, DateUtil.setDateLong(-38), Transaction.TransactionType.WITHDRAW, 4L));
-		transactionRepository
-				.save(new Transaction(99L, 50.0, DateUtil.setDateLong(-37), Transaction.TransactionType.WITHDRAW, 5L));
-		transactionRepository
-				.save(new Transaction(100L, 60.0, DateUtil.setDateLong(-36), Transaction.TransactionType.WITHDRAW, 6L));
-		transactionRepository
-				.save(new Transaction(101L, 50.1, DateUtil.setDateLong(-35), Transaction.TransactionType.WITHDRAW, 7L));
-		transactionRepository.save(
-				new Transaction(102L, 100.1, DateUtil.setDateLong(-34), Transaction.TransactionType.WITHDRAW, 8L));
-		transactionRepository.save(
-				new Transaction(103L, 120.1, DateUtil.setDateLong(-33), Transaction.TransactionType.WITHDRAW, 9L));
-		transactionRepository.save(
-				new Transaction(104L, 50.1, DateUtil.setDateLong(-32), Transaction.TransactionType.WITHDRAW, 10L));
-		transactionRepository.save(
-				new Transaction(105L, 60.1, DateUtil.setDateLong(-31), Transaction.TransactionType.WITHDRAW, 11L));
-		transactionRepository.save(
-				new Transaction(106L, 50.2, DateUtil.setDateLong(-30), Transaction.TransactionType.WITHDRAW, 12L));
-		transactionRepository.save(
-				new Transaction(107L, 100.2, DateUtil.setDateLong(-29), Transaction.TransactionType.WITHDRAW, 13L));
-		transactionRepository.save(
-				new Transaction(108L, 120.2, DateUtil.setDateLong(-28), Transaction.TransactionType.WITHDRAW, 14L));
-		transactionRepository.save(
-				new Transaction(109L, 50.2, DateUtil.setDateLong(-27), Transaction.TransactionType.WITHDRAW, 15L));
-		transactionRepository
-				.save(new Transaction(110L, 60.2, DateUtil.setDateLong(-26), Transaction.TransactionType.WITHDRAW, 2L));
-		transactionRepository
-				.save(new Transaction(111L, 50.3, DateUtil.setDateLong(-25), Transaction.TransactionType.WITHDRAW, 3L));
-		transactionRepository.save(
-				new Transaction(112L, 100.3, DateUtil.setDateLong(-24), Transaction.TransactionType.WITHDRAW, 4L));
-		transactionRepository.save(
-				new Transaction(113L, 120.3, DateUtil.setDateLong(-23), Transaction.TransactionType.WITHDRAW, 5L));
-		transactionRepository
-				.save(new Transaction(114L, 50.3, DateUtil.setDateLong(-22), Transaction.TransactionType.WITHDRAW, 6L));
-		transactionRepository
-				.save(new Transaction(115L, 60.3, DateUtil.setDateLong(-21), Transaction.TransactionType.WITHDRAW, 7L));
-		transactionRepository
-				.save(new Transaction(116L, 50.4, DateUtil.setDateLong(-20), Transaction.TransactionType.WITHDRAW, 8L));
-		transactionRepository.save(
-				new Transaction(117L, 100.4, DateUtil.setDateLong(-19), Transaction.TransactionType.WITHDRAW, 9L));
-		transactionRepository.save(
-				new Transaction(118L, 120.4, DateUtil.setDateLong(-18), Transaction.TransactionType.WITHDRAW, 10L));
-		transactionRepository.save(
-				new Transaction(119L, 50.4, DateUtil.setDateLong(-17), Transaction.TransactionType.WITHDRAW, 11L));
-		transactionRepository.save(
-				new Transaction(120L, 60.4, DateUtil.setDateLong(-16), Transaction.TransactionType.WITHDRAW, 12L));
-		transactionRepository.save(
-				new Transaction(121L, 50.5, DateUtil.setDateLong(-15), Transaction.TransactionType.WITHDRAW, 13L));
-		transactionRepository.save(
-				new Transaction(122L, 100.5, DateUtil.setDateLong(-14), Transaction.TransactionType.WITHDRAW, 14L));
-		transactionRepository.save(
-				new Transaction(123L, 120.5, DateUtil.setDateLong(-13), Transaction.TransactionType.WITHDRAW, 15L));
-		transactionRepository
-				.save(new Transaction(124L, 50.5, DateUtil.setDateLong(-12), Transaction.TransactionType.WITHDRAW, 2L));
-		transactionRepository
-				.save(new Transaction(125L, 60.5, DateUtil.setDateLong(-11), Transaction.TransactionType.WITHDRAW, 3L));
-		transactionRepository
-				.save(new Transaction(126L, 50.6, DateUtil.setDateLong(-10), Transaction.TransactionType.WITHDRAW, 4L));
-		transactionRepository
-				.save(new Transaction(127L, 100.6, DateUtil.setDateLong(-9), Transaction.TransactionType.WITHDRAW, 5L));
-		transactionRepository
-				.save(new Transaction(128L, 120.6, DateUtil.setDateLong(-8), Transaction.TransactionType.WITHDRAW, 6L));
-		transactionRepository
-				.save(new Transaction(129L, 50.6, DateUtil.setDateLong(-7), Transaction.TransactionType.WITHDRAW, 7L));
-		transactionRepository
-				.save(new Transaction(130L, 60.6, DateUtil.setDateLong(-6), Transaction.TransactionType.WITHDRAW, 8L));
-		transactionRepository
-				.save(new Transaction(131L, 50.7, DateUtil.setDateLong(-5), Transaction.TransactionType.WITHDRAW, 9L));
-		transactionRepository.save(
-				new Transaction(132L, 100.7, DateUtil.setDateLong(-4), Transaction.TransactionType.WITHDRAW, 10L));
-		transactionRepository.save(
-				new Transaction(133L, 120.7, DateUtil.setDateLong(-3), Transaction.TransactionType.WITHDRAW, 11L));
-		transactionRepository
-				.save(new Transaction(134L, 50.7, DateUtil.setDateLong(-2), Transaction.TransactionType.WITHDRAW, 12L));
-		transactionRepository
-				.save(new Transaction(135L, 60.7, DateUtil.setDateLong(-1), Transaction.TransactionType.WITHDRAW, 13L));
-		transactionRepository
-				.save(new Transaction(136L, 50.8, DateUtil.setDateLong(0), Transaction.TransactionType.WITHDRAW, 14L));
-		transactionRepository.save(
-				new Transaction(137L, 100.8, DateUtil.setDateLong(-40), Transaction.TransactionType.WITHDRAW, 15L));
-		transactionRepository.save(
-				new Transaction(138L, 120.8, DateUtil.setDateLong(-39), Transaction.TransactionType.WITHDRAW, 2L));
-		transactionRepository
-				.save(new Transaction(139L, 50.8, DateUtil.setDateLong(-38), Transaction.TransactionType.WITHDRAW, 3L));
-		transactionRepository
-				.save(new Transaction(140L, 60.8, DateUtil.setDateLong(-37), Transaction.TransactionType.WITHDRAW, 4L));
-		transactionRepository
-				.save(new Transaction(141L, 50.9, DateUtil.setDateLong(-36), Transaction.TransactionType.WITHDRAW, 5L));
-		transactionRepository.save(
-				new Transaction(142L, 100.9, DateUtil.setDateLong(-35), Transaction.TransactionType.WITHDRAW, 6L));
-		transactionRepository.save(
-				new Transaction(143L, 120.9, DateUtil.setDateLong(-34), Transaction.TransactionType.WITHDRAW, 7L));
-		transactionRepository
-				.save(new Transaction(144L, 50.9, DateUtil.setDateLong(-33), Transaction.TransactionType.WITHDRAW, 8L));
-		transactionRepository
-				.save(new Transaction(145L, 60.9, DateUtil.setDateLong(-32), Transaction.TransactionType.WITHDRAW, 9L));
-		transactionRepository.save(
-				new Transaction(146L, 50.10, DateUtil.setDateLong(-31), Transaction.TransactionType.WITHDRAW, 10L));
-		transactionRepository.save(
-				new Transaction(147L, 100.10, DateUtil.setDateLong(-30), Transaction.TransactionType.WITHDRAW, 11L));
-		transactionRepository.save(
-				new Transaction(148L, 120.10, DateUtil.setDateLong(-29), Transaction.TransactionType.WITHDRAW, 12L));
-		transactionRepository.save(
-				new Transaction(149L, 50.10, DateUtil.setDateLong(-28), Transaction.TransactionType.WITHDRAW, 13L));
-		transactionRepository.save(
-				new Transaction(150L, 60.10, DateUtil.setDateLong(-27), Transaction.TransactionType.WITHDRAW, 14L));
-		transactionRepository.save(
-				new Transaction(151L, 50.11, DateUtil.setDateLong(-26), Transaction.TransactionType.WITHDRAW, 15L));
-		transactionRepository.save(
-				new Transaction(152L, 100.11, DateUtil.setDateLong(-25), Transaction.TransactionType.WITHDRAW, 2L));
-		transactionRepository.save(
-				new Transaction(153L, 120.11, DateUtil.setDateLong(-24), Transaction.TransactionType.WITHDRAW, 3L));
-		transactionRepository.save(
-				new Transaction(154L, 50.11, DateUtil.setDateLong(-23), Transaction.TransactionType.WITHDRAW, 4L));
-		transactionRepository.save(
-				new Transaction(155L, 60.11, DateUtil.setDateLong(-22), Transaction.TransactionType.WITHDRAW, 5L));
-		transactionRepository.save(
-				new Transaction(156L, 50.12, DateUtil.setDateLong(-21), Transaction.TransactionType.WITHDRAW, 6L));
-		transactionRepository.save(
-				new Transaction(157L, 100.12, DateUtil.setDateLong(-20), Transaction.TransactionType.WITHDRAW, 7L));
-		transactionRepository.save(
-				new Transaction(158L, 120.12, DateUtil.setDateLong(-19), Transaction.TransactionType.WITHDRAW, 8L));
-		transactionRepository.save(
-				new Transaction(159L, 50.12, DateUtil.setDateLong(-18), Transaction.TransactionType.WITHDRAW, 9L));
-		transactionRepository.save(
-				new Transaction(160L, 60.12, DateUtil.setDateLong(-17), Transaction.TransactionType.WITHDRAW, 10L));
-		transactionRepository.save(
-				new Transaction(161L, 50.13, DateUtil.setDateLong(-16), Transaction.TransactionType.WITHDRAW, 11L));
-		transactionRepository.save(
-				new Transaction(162L, 100.13, DateUtil.setDateLong(-15), Transaction.TransactionType.WITHDRAW, 12L));
-		transactionRepository.save(
-				new Transaction(163L, 120.13, DateUtil.setDateLong(-14), Transaction.TransactionType.WITHDRAW, 13L));
-		transactionRepository.save(
-				new Transaction(164L, 50.13, DateUtil.setDateLong(-13), Transaction.TransactionType.WITHDRAW, 14L));
-		transactionRepository.save(
-				new Transaction(165L, 60.13, DateUtil.setDateLong(-12), Transaction.TransactionType.WITHDRAW, 15L));
-		transactionRepository.save(
-				new Transaction(166L, 50.14, DateUtil.setDateLong(-11), Transaction.TransactionType.WITHDRAW, 2L));
-		transactionRepository.save(
-				new Transaction(167L, 100.14, DateUtil.setDateLong(-10), Transaction.TransactionType.WITHDRAW, 3L));
-		transactionRepository.save(
-				new Transaction(168L, 120.14, DateUtil.setDateLong(-9), Transaction.TransactionType.WITHDRAW, 4L));
-		transactionRepository
-				.save(new Transaction(169L, 50.14, DateUtil.setDateLong(-8), Transaction.TransactionType.WITHDRAW, 5L));
-		transactionRepository
-				.save(new Transaction(170L, 60.14, DateUtil.setDateLong(-7), Transaction.TransactionType.WITHDRAW, 6L));
-		transactionRepository
-				.save(new Transaction(171L, 50.15, DateUtil.setDateLong(-6), Transaction.TransactionType.WITHDRAW, 7L));
-		transactionRepository.save(
-				new Transaction(172L, 100.15, DateUtil.setDateLong(-5), Transaction.TransactionType.WITHDRAW, 8L));
-		transactionRepository.save(
-				new Transaction(173L, 120.15, DateUtil.setDateLong(-4), Transaction.TransactionType.WITHDRAW, 9L));
-		transactionRepository.save(
-				new Transaction(174L, 50.15, DateUtil.setDateLong(-3), Transaction.TransactionType.WITHDRAW, 10L));
-		transactionRepository.save(
-				new Transaction(175L, 60.15, DateUtil.setDateLong(-2), Transaction.TransactionType.WITHDRAW, 11L));
-		transactionRepository.save(
-				new Transaction(176L, 50.16, DateUtil.setDateLong(-1), Transaction.TransactionType.WITHDRAW, 12L));
-		transactionRepository.save(
-				new Transaction(177L, 100.16, DateUtil.setDateLong(0), Transaction.TransactionType.WITHDRAW, 13L));
-		transactionRepository.save(
-				new Transaction(178L, 120.16, DateUtil.setDateLong(-40), Transaction.TransactionType.WITHDRAW, 14L));
-		transactionRepository.save(
-				new Transaction(179L, 50.16, DateUtil.setDateLong(-39), Transaction.TransactionType.WITHDRAW, 15L));
-		transactionRepository.save(
-				new Transaction(180L, 60.16, DateUtil.setDateLong(-38), Transaction.TransactionType.WITHDRAW, 2L));
-		transactionRepository.save(
-				new Transaction(181L, 50.17, DateUtil.setDateLong(-37), Transaction.TransactionType.WITHDRAW, 3L));
-		transactionRepository.save(
-				new Transaction(182L, 100.17, DateUtil.setDateLong(-36), Transaction.TransactionType.WITHDRAW, 4L));
-		transactionRepository.save(
-				new Transaction(183L, 120.17, DateUtil.setDateLong(-35), Transaction.TransactionType.WITHDRAW, 5L));
-		transactionRepository.save(
-				new Transaction(184L, 50.17, DateUtil.setDateLong(-34), Transaction.TransactionType.WITHDRAW, 6L));
-		transactionRepository.save(
-				new Transaction(185L, 60.17, DateUtil.setDateLong(-33), Transaction.TransactionType.WITHDRAW, 7L));
-		transactionRepository.save(
-				new Transaction(186L, 50.18, DateUtil.setDateLong(-32), Transaction.TransactionType.WITHDRAW, 8L));
-		transactionRepository.save(
-				new Transaction(187L, 100.18, DateUtil.setDateLong(-31), Transaction.TransactionType.WITHDRAW, 9L));
-		transactionRepository.save(
-				new Transaction(188L, 120.18, DateUtil.setDateLong(-30), Transaction.TransactionType.WITHDRAW, 10L));
-		transactionRepository.save(
-				new Transaction(189L, 50.18, DateUtil.setDateLong(-29), Transaction.TransactionType.WITHDRAW, 11L));
-		transactionRepository.save(
-				new Transaction(190L, 60.18, DateUtil.setDateLong(-28), Transaction.TransactionType.WITHDRAW, 12L));
+		transactionRepository.save(new Transaction(96L ,543.0,DateUtil.setDateLong(-40),Transaction.TransactionType.WITHDRAW,2L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(97L ,333.0,DateUtil.setDateLong(-39),Transaction.TransactionType.WITHDRAW,3L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(98L ,223.0,DateUtil.setDateLong(-38),Transaction.TransactionType.WITHDRAW,4L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(99L ,260.0,DateUtil.setDateLong(-37),Transaction.TransactionType.WITHDRAW,5L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(100L ,220.0,DateUtil.setDateLong(-36),Transaction.TransactionType.WITHDRAW,6L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(101L ,310.0,DateUtil.setDateLong(-35),Transaction.TransactionType.WITHDRAW,7L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(102L ,340.0,DateUtil.setDateLong(-34),Transaction.TransactionType.WITHDRAW,8L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(103L ,656.0,DateUtil.setDateLong(-33),Transaction.TransactionType.WITHDRAW,9L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(104L ,300.0,DateUtil.setDateLong(-32),Transaction.TransactionType.WITHDRAW,10L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(105L ,180.0,DateUtil.setDateLong(-31),Transaction.TransactionType.WITHDRAW,11L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(106L ,170.0,DateUtil.setDateLong(-30),Transaction.TransactionType.WITHDRAW,12L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(107L ,300.0,DateUtil.setDateLong(-29),Transaction.TransactionType.WITHDRAW,13L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(108L ,320.0,DateUtil.setDateLong(-28),Transaction.TransactionType.WITHDRAW,14L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(109L ,543.0,DateUtil.setDateLong(-27),Transaction.TransactionType.WITHDRAW,15L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(110L ,678.0,DateUtil.setDateLong(-26),Transaction.TransactionType.WITHDRAW,2L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(111L ,432.0,DateUtil.setDateLong(-25),Transaction.TransactionType.WITHDRAW,3L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(112L ,342.0,DateUtil.setDateLong(-24),Transaction.TransactionType.WITHDRAW,4L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(113L ,223.0,DateUtil.setDateLong(-23),Transaction.TransactionType.WITHDRAW,5L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(114L ,325.0,DateUtil.setDateLong(-22),Transaction.TransactionType.WITHDRAW,6L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(115L ,546.0,DateUtil.setDateLong(-21),Transaction.TransactionType.WITHDRAW,7L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(116L ,432.0,DateUtil.setDateLong(-20),Transaction.TransactionType.WITHDRAW,8L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(117L ,344.0,DateUtil.setDateLong(-19),Transaction.TransactionType.WITHDRAW,9L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(118L ,345.0,DateUtil.setDateLong(-18),Transaction.TransactionType.WITHDRAW,10L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(119L ,310.0,DateUtil.setDateLong(-17),Transaction.TransactionType.WITHDRAW,11L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(120L ,240.0,DateUtil.setDateLong(-16),Transaction.TransactionType.WITHDRAW,12L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(121L ,310.0,DateUtil.setDateLong(-15),Transaction.TransactionType.WITHDRAW,13L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(122L ,290.0,DateUtil.setDateLong(-14),Transaction.TransactionType.WITHDRAW,14L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(123L ,330.0,DateUtil.setDateLong(-13),Transaction.TransactionType.WITHDRAW,15L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(124L ,170.0,DateUtil.setDateLong(-12),Transaction.TransactionType.WITHDRAW,2L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(125L ,200.0,DateUtil.setDateLong(-11),Transaction.TransactionType.WITHDRAW,3L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(126L ,230.0,DateUtil.setDateLong(-10),Transaction.TransactionType.WITHDRAW,4L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(127L ,270.0,DateUtil.setDateLong(-9),Transaction.TransactionType.WITHDRAW,5L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(128L ,340.0,DateUtil.setDateLong(-8),Transaction.TransactionType.WITHDRAW,6L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(129L ,160.0,DateUtil.setDateLong(-7),Transaction.TransactionType.WITHDRAW,7L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(130L ,190.0,DateUtil.setDateLong(-6),Transaction.TransactionType.WITHDRAW,8L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(131L ,300.0,DateUtil.setDateLong(-5),Transaction.TransactionType.WITHDRAW,9L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(132L ,543.0,DateUtil.setDateLong(-4),Transaction.TransactionType.WITHDRAW,10L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(133L ,534.0,DateUtil.setDateLong(-3),Transaction.TransactionType.WITHDRAW,11L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(134L ,270.0,DateUtil.setDateLong(-2),Transaction.TransactionType.WITHDRAW,12L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(135L ,546.0,DateUtil.setDateLong(-1),Transaction.TransactionType.WITHDRAW,13L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(136L ,157.0,DateUtil.setDateLong(0),Transaction.TransactionType.WITHDRAW,14L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(137L ,200.0,DateUtil.setDateLong(-40),Transaction.TransactionType.WITHDRAW,15L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(138L ,230.0,DateUtil.setDateLong(-39),Transaction.TransactionType.WITHDRAW,2L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(139L ,280.0,DateUtil.setDateLong(-38),Transaction.TransactionType.WITHDRAW,3L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(140L ,123.0,DateUtil.setDateLong(-37),Transaction.TransactionType.WITHDRAW,4L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(141L ,432.0,DateUtil.setDateLong(-36),Transaction.TransactionType.WITHDRAW,5L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(142L ,345.0,DateUtil.setDateLong(-35),Transaction.TransactionType.WITHDRAW,6L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(143L ,160.0,DateUtil.setDateLong(-34),Transaction.TransactionType.WITHDRAW,7L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(144L ,280.0,DateUtil.setDateLong(-33),Transaction.TransactionType.WITHDRAW,8L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(145L ,978.0,DateUtil.setDateLong(-32),Transaction.TransactionType.WITHDRAW,9L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(146L ,435.0,DateUtil.setDateLong(-31),Transaction.TransactionType.WITHDRAW,10L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(147L ,543.0,DateUtil.setDateLong(-30),Transaction.TransactionType.WITHDRAW,11L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(148L ,280.0,DateUtil.setDateLong(-29),Transaction.TransactionType.WITHDRAW,12L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(149L ,210.0,DateUtil.setDateLong(-28),Transaction.TransactionType.WITHDRAW,13L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(150L ,190.0,DateUtil.setDateLong(-27),Transaction.TransactionType.WITHDRAW,14L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(151L ,978.0,DateUtil.setDateLong(-26),Transaction.TransactionType.WITHDRAW,15L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(152L ,260.0,DateUtil.setDateLong(-25),Transaction.TransactionType.WITHDRAW,2L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(153L ,330.0,DateUtil.setDateLong(-24),Transaction.TransactionType.WITHDRAW,3L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(154L ,678.0,DateUtil.setDateLong(-23),Transaction.TransactionType.WITHDRAW,4L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(155L ,234.0,DateUtil.setDateLong(-22),Transaction.TransactionType.WITHDRAW,5L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(156L ,250.0,DateUtil.setDateLong(-21),Transaction.TransactionType.WITHDRAW,6L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(157L ,180.0,DateUtil.setDateLong(-20),Transaction.TransactionType.WITHDRAW,7L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(158L ,250.0,DateUtil.setDateLong(-19),Transaction.TransactionType.WITHDRAW,8L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(159L ,323.0,DateUtil.setDateLong(-18),Transaction.TransactionType.WITHDRAW,9L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(160L ,340.0,DateUtil.setDateLong(-17),Transaction.TransactionType.WITHDRAW,10L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(161L ,210.0,DateUtil.setDateLong(-16),Transaction.TransactionType.WITHDRAW,11L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(162L ,320.0,DateUtil.setDateLong(-15),Transaction.TransactionType.WITHDRAW,12L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(163L ,342.0,DateUtil.setDateLong(-14),Transaction.TransactionType.WITHDRAW,13L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(164L ,123.0,DateUtil.setDateLong(-13),Transaction.TransactionType.WITHDRAW,14L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(165L ,234.0,DateUtil.setDateLong(-12),Transaction.TransactionType.WITHDRAW,15L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(166L ,543.0,DateUtil.setDateLong(-11),Transaction.TransactionType.WITHDRAW,2L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(167L ,340.0,DateUtil.setDateLong(-10),Transaction.TransactionType.WITHDRAW,3L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(168L ,180.0,DateUtil.setDateLong(-9),Transaction.TransactionType.WITHDRAW,4L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(169L ,333.0,DateUtil.setDateLong(-8),Transaction.TransactionType.WITHDRAW,5L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(170L ,320.0,DateUtil.setDateLong(-7),Transaction.TransactionType.WITHDRAW,6L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(171L ,432.0,DateUtil.setDateLong(-6),Transaction.TransactionType.WITHDRAW,7L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(172L ,345.0,DateUtil.setDateLong(-5),Transaction.TransactionType.WITHDRAW,8L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(173L ,250.0,DateUtil.setDateLong(-4),Transaction.TransactionType.WITHDRAW,9L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(174L ,260.0,DateUtil.setDateLong(-3),Transaction.TransactionType.WITHDRAW,10L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(175L ,230.0,DateUtil.setDateLong(-2),Transaction.TransactionType.WITHDRAW,11L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(176L ,333.0,DateUtil.setDateLong(-1),Transaction.TransactionType.WITHDRAW,12L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(177L ,223.0,DateUtil.setDateLong(0),Transaction.TransactionType.WITHDRAW,13L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(178L ,534.0,DateUtil.setDateLong(-40),Transaction.TransactionType.WITHDRAW,14L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(179L ,280.0,DateUtil.setDateLong(-39),Transaction.TransactionType.WITHDRAW,15L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(180L ,435.0,DateUtil.setDateLong(-38),Transaction.TransactionType.WITHDRAW,2L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(181L ,190.0,DateUtil.setDateLong(-37),Transaction.TransactionType.WITHDRAW,3L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(182L ,260.0,DateUtil.setDateLong(-36),Transaction.TransactionType.WITHDRAW,4L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(183L ,344.0,DateUtil.setDateLong(-35),Transaction.TransactionType.WITHDRAW,5L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(184L ,310.0,DateUtil.setDateLong(-34),Transaction.TransactionType.WITHDRAW,6L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(185L ,290.0,DateUtil.setDateLong(-33),Transaction.TransactionType.WITHDRAW,7L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(186L ,190.0,DateUtil.setDateLong(-32),Transaction.TransactionType.WITHDRAW,8L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(187L ,234.0,DateUtil.setDateLong(-31),Transaction.TransactionType.WITHDRAW,9L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(188L ,180.0,DateUtil.setDateLong(-30),Transaction.TransactionType.WITHDRAW,10L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(189L ,323.0,DateUtil.setDateLong(-29),Transaction.TransactionType.WITHDRAW,11L ,"Withdraw money"));
+		transactionRepository.save(new Transaction(190L ,534.0,DateUtil.setDateLong(-28),Transaction.TransactionType.WITHDRAW,12L ,"Withdraw money"));
+
 
 		// tiền lương
-		transactionRepository.save(
-				new Transaction(191L, 100.0, DateUtil.setDateLong(-40), Transaction.TransactionType.WAGE, 19L, 2L));
-		transactionRepository.save(
-				new Transaction(192L, 100.0, DateUtil.setDateLong(-39), Transaction.TransactionType.WAGE, 18L, 3L));
-		transactionRepository.save(
-				new Transaction(193L, 120.0, DateUtil.setDateLong(-38), Transaction.TransactionType.WAGE, 17L, 4L));
-		transactionRepository.save(
-				new Transaction(194L, 150.0, DateUtil.setDateLong(-37), Transaction.TransactionType.WAGE, 16L, 5L));
-		transactionRepository.save(
-				new Transaction(195L, 160.0, DateUtil.setDateLong(-36), Transaction.TransactionType.WAGE, 15L, 6L));
-		transactionRepository.save(
-				new Transaction(196L, 150.1, DateUtil.setDateLong(-35), Transaction.TransactionType.WAGE, 14L, 7L));
-		transactionRepository.save(
-				new Transaction(197L, 200.1, DateUtil.setDateLong(-34), Transaction.TransactionType.WAGE, 13L, 8L));
-		transactionRepository.save(
-				new Transaction(198L, 100.0, DateUtil.setDateLong(-33), Transaction.TransactionType.WAGE, 12L, 9L));
-		transactionRepository.save(
-				new Transaction(199L, 100.0, DateUtil.setDateLong(-32), Transaction.TransactionType.WAGE, 11L, 10L));
-		transactionRepository.save(
-				new Transaction(200L, 120.1, DateUtil.setDateLong(-31), Transaction.TransactionType.WAGE, 10L, 11L));
-		transactionRepository.save(
-				new Transaction(201L, 150.1, DateUtil.setDateLong(-30), Transaction.TransactionType.WAGE, 9L, 12L));
-		transactionRepository.save(
-				new Transaction(202L, 160.1, DateUtil.setDateLong(-29), Transaction.TransactionType.WAGE, 8L, 13L));
-		transactionRepository.save(
-				new Transaction(203L, 150.2, DateUtil.setDateLong(-28), Transaction.TransactionType.WAGE, 7L, 14L));
-		transactionRepository.save(
-				new Transaction(204L, 200.2, DateUtil.setDateLong(-27), Transaction.TransactionType.WAGE, 6L, 15L));
-		transactionRepository.save(
-				new Transaction(205L, 100.0, DateUtil.setDateLong(-26), Transaction.TransactionType.WAGE, 5L, 2L));
-		transactionRepository.save(
-				new Transaction(206L, 100.0, DateUtil.setDateLong(-25), Transaction.TransactionType.WAGE, 4L, 3L));
-		transactionRepository.save(
-				new Transaction(207L, 120.2, DateUtil.setDateLong(-24), Transaction.TransactionType.WAGE, 3L, 4L));
-		transactionRepository.save(
-				new Transaction(208L, 150.2, DateUtil.setDateLong(-23), Transaction.TransactionType.WAGE, 2L, 5L));
-		transactionRepository.save(
-				new Transaction(209L, 160.2, DateUtil.setDateLong(-22), Transaction.TransactionType.WAGE, 1L, 6L));
+		transactionRepository.save(new Transaction(191L ,340.0,DateUtil.setDateLong(-40),Transaction.TransactionType.WAGE,19L,2L ,"Pay for work"));
+		transactionRepository.save(new Transaction(192L ,434.0,DateUtil.setDateLong(-39),Transaction.TransactionType.WAGE,18L,3L ,"Pay for work"));
+		transactionRepository.save(new Transaction(193L ,344.0,DateUtil.setDateLong(-38),Transaction.TransactionType.WAGE,17L,4L ,"Pay for work"));
+		transactionRepository.save(new Transaction(194L ,223.0,DateUtil.setDateLong(-37),Transaction.TransactionType.WAGE,16L,5L ,"Pay for work"));
+		transactionRepository.save(new Transaction(195L ,656.0,DateUtil.setDateLong(-36),Transaction.TransactionType.WAGE,15L,6L ,"Pay for work"));
+		transactionRepository.save(new Transaction(196L ,170.0,DateUtil.setDateLong(-35),Transaction.TransactionType.WAGE,14L,7L ,"Pay for work"));
+		transactionRepository.save(new Transaction(197L ,342.0,DateUtil.setDateLong(-34),Transaction.TransactionType.WAGE,13L,8L ,"Pay for work"));
+		transactionRepository.save(new Transaction(198L ,325.0,DateUtil.setDateLong(-33),Transaction.TransactionType.WAGE,12L,9L ,"Pay for work"));
+		transactionRepository.save(new Transaction(199L ,432.0,DateUtil.setDateLong(-32),Transaction.TransactionType.WAGE,11L,10L ,"Pay for work"));
+		transactionRepository.save(new Transaction(200L ,160.0,DateUtil.setDateLong(-31),Transaction.TransactionType.WAGE,10L,11L ,"Pay for work"));
+		transactionRepository.save(new Transaction(201L ,978.0,DateUtil.setDateLong(-30),Transaction.TransactionType.WAGE,9L,12L ,"Pay for work"));
+		transactionRepository.save(new Transaction(202L ,678.0,DateUtil.setDateLong(-29),Transaction.TransactionType.WAGE,8L,13L ,"Pay for work"));
+		transactionRepository.save(new Transaction(203L ,678.0,DateUtil.setDateLong(-28),Transaction.TransactionType.WAGE,7L,14L ,"Pay for work"));
+		transactionRepository.save(new Transaction(204L ,230.0,DateUtil.setDateLong(-27),Transaction.TransactionType.WAGE,6L,15L ,"Pay for work"));
+		transactionRepository.save(new Transaction(205L ,432.0,DateUtil.setDateLong(-26),Transaction.TransactionType.WAGE,5L,2L ,"Pay for work"));
+		transactionRepository.save(new Transaction(206L ,210.0,DateUtil.setDateLong(-25),Transaction.TransactionType.WAGE,4L,3L ,"Pay for work"));
+		transactionRepository.save(new Transaction(207L ,260.0,DateUtil.setDateLong(-24),Transaction.TransactionType.WAGE,3L,4L ,"Pay for work"));
+		transactionRepository.save(new Transaction(208L ,250.0,DateUtil.setDateLong(-23),Transaction.TransactionType.WAGE,2L,5L ,"Pay for work"));
+		transactionRepository.save(new Transaction(209L ,270.0,DateUtil.setDateLong(-22),Transaction.TransactionType.WAGE,1L,6L ,"Pay for work"));
+		// tiền tạo job paypal
+		transactionRepository.save(new Transaction(210L ,300.0,DateUtil.setDateLong(-22),Transaction.TransactionType.PAYMENT,19L,2L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(211L ,123.0,DateUtil.setDateLong(-21),Transaction.TransactionType.PAYMENT,18L,3L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(212L ,270.0,DateUtil.setDateLong(-20),Transaction.TransactionType.PAYMENT,17L,4L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(213L ,157.0,DateUtil.setDateLong(-19),Transaction.TransactionType.PAYMENT,16L,5L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(214L ,280.0,DateUtil.setDateLong(-18),Transaction.TransactionType.PAYMENT,15L,6L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(215L ,160.0,DateUtil.setDateLong(-17),Transaction.TransactionType.PAYMENT,14L,7L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(216L ,170.0,DateUtil.setDateLong(-16),Transaction.TransactionType.PAYMENT,13L,8L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(217L ,240.0,DateUtil.setDateLong(-15),Transaction.TransactionType.PAYMENT,12L,9L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(218L ,330.0,DateUtil.setDateLong(-14),Transaction.TransactionType.PAYMENT,11L,10L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(219L ,340.0,DateUtil.setDateLong(-13),Transaction.TransactionType.PAYMENT,10L,11L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(220L ,220.0,DateUtil.setDateLong(-12),Transaction.TransactionType.PAYMENT,9L,12L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(221L ,310.0,DateUtil.setDateLong(-11),Transaction.TransactionType.PAYMENT,8L,13L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(222L ,300.0,DateUtil.setDateLong(-10),Transaction.TransactionType.PAYMENT,7L,14L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(223L ,330.0,DateUtil.setDateLong(-9),Transaction.TransactionType.PAYMENT,6L,15L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(224L ,190.0,DateUtil.setDateLong(-8),Transaction.TransactionType.PAYMENT,5L,2L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(225L ,342.0,DateUtil.setDateLong(-7),Transaction.TransactionType.PAYMENT,4L,3L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(226L ,546.0,DateUtil.setDateLong(-6),Transaction.TransactionType.PAYMENT,3L,4L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(227L ,656.0,DateUtil.setDateLong(-5),Transaction.TransactionType.PAYMENT,2L,5L ,"Pay for posting"));
+		transactionRepository.save(new Transaction(228L ,345.0,DateUtil.setDateLong(-4),Transaction.TransactionType.PAYMENT,1L,6L ,"Pay for posting"));
+
 
 	}
 }
