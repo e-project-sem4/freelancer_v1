@@ -48,16 +48,40 @@ public class DashboardController {
         jsonObject.add("price", jsonPrice);
         return jsonObject.toString();
     }
-    @GetMapping()
-    @RequestMapping("/multiplelinechartdata")
-    public ResponseEntity<?> getDataForMultipleLine() {
-        List<Transaction> dataList = transactionRepository.findAll();
-        Map<Transaction.TransactionType, List<Transaction>> mappedData = new HashMap<>();
-        for(Transaction data : dataList) {
+
+    @RequestMapping(value = "/multiplelinechartdata", method = RequestMethod.GET,produces = "application/json")
+    public ResponseEntity<?> getDataForMultipleLine(@RequestParam(value = "start", required = false) Long start,
+                                                    @RequestParam(value = "end", required = false) Long end) {
+        Long startLong,endLong;
+        if ((start == null) ||  (end == null)){
+            startLong = DateUtil.setDateLong(-30);
+            endLong = DateUtil.getTimeLongCurrent();
+        }else {
+            startLong = start;
+            endLong = end;
+        }
+        List<Object[]> dataList = transactionRepository.findAllMultipleChartJs(startLong, endLong);
+
+        List<TransactionDTO> list = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+        for (Object[] obj : dataList){
+            TransactionDTO transactionDTO = new TransactionDTO();
+            Double price = (Double) obj[0];
+            Date day = (Date) obj[1];
+            Integer type = (Integer) obj[2];
+            calendar.setTime(day);
+            transactionDTO.setPrice(price);
+            transactionDTO.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+            transactionDTO.setType(type);
+            list.add(transactionDTO);
+            System.out.println(list);
+        }
+        Map<Integer, List<TransactionDTO>> mappedData = new HashMap<>();
+        for(TransactionDTO data : list) {
             if(mappedData.containsKey(data.getType())) {
                 mappedData.get(data.getType()).add(data);
             }else {
-                List<Transaction> tempList = new ArrayList<Transaction>();
+                List<TransactionDTO> tempList = new ArrayList<TransactionDTO>();
                 tempList.add(data);
                 mappedData.put(data.getType(), tempList);
             }
@@ -83,7 +107,6 @@ public class DashboardController {
                 System.out.println(e);
             }
         }
-        System.out.println(list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -92,7 +115,7 @@ public class DashboardController {
        Long startLong,endLong;
 
         if ((start == null || start.isEmpty()) || (end == null  || end.isEmpty())){
-            startLong = DateUtil.getLongStartOfMonth();
+            startLong = DateUtil.setDateLong(-30);
             endLong = DateUtil.getTimeLongCurrent();
         }else {
              startLong = DateUtil.setStartDayLong(start + " 00:00:00");
