@@ -7,11 +7,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.freelancer.JwtAuthServiceApp;
-import com.freelancer.model.*;
-import com.freelancer.repository.*;
-import com.freelancer.sendmail.SendMailModel;
-import com.freelancer.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,15 +21,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
+import com.freelancer.model.ChatKeyUser;
+import com.freelancer.model.Job;
+import com.freelancer.model.Proposal;
+import com.freelancer.model.ResponseObject;
+import com.freelancer.model.Role;
+import com.freelancer.model.Transaction;
+import com.freelancer.model.User;
+import com.freelancer.model.UserBusiness;
+import com.freelancer.model.UserFreelancer;
+import com.freelancer.repository.ChatKeyUserRepository;
+import com.freelancer.repository.HasSkillRepository;
+import com.freelancer.repository.JobRepository;
+import com.freelancer.repository.TransactionRepository;
+import com.freelancer.repository.UserBusinessRepository;
+import com.freelancer.repository.UserFreelancerRepository;
+import com.freelancer.repository.UserRepository;
 import com.freelancer.security.JwtTokenProvider;
+import com.freelancer.sendmail.SendMailModel;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
+import com.freelancer.utils.DateUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class UserService {
@@ -165,24 +178,32 @@ public class UserService {
 		ResponseProfileUserDto profileUserDto = null;
 		Optional<User> optionalUser = userRepository.findById(userRepository.findByUsername(username).getId());
 		String message = "can not find user";
+		UserBusiness business;
+		UserFreelancer freelancer = null;
+		List<ChatKeyUser> chatKeyUsers = null;
 		User user = null;
 		if (optionalUser.isPresent()) {
 			message = "success";
 			user = optionalUser.get();
 			user.setPassword(null);
 			logger.info("get user success");
-			UserBusiness business = user.getUserBusinesses();
-			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
-			for (Job j : listJob) {
-				j.setUserBusiness(null);
-			}
-			business.setListJob(listJob);
-			UserFreelancer freelancer = user.getUserFreelancers();
+			business = user.getUserBusinesses();
+			if (business != null) {
+				List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+				for (Job j : listJob) {
+					j.setUserBusiness(null);
+				}
+				business.setListJob(listJob);
+				freelancer = user.getUserFreelancers();
 
-			for (Proposal p : freelancer.getProposals()) {
-				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+				if (freelancer != null) {
+					for (Proposal p : freelancer.getProposals()) {
+						p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+					}
+					chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(),
+							business.getId());
+				}
 			}
-			List<ChatKeyUser> chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(), business.getId());
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, chatKeyUsers);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
@@ -194,26 +215,29 @@ public class UserService {
 		Optional<User> optionalUser = userRepository.findById(id);
 		String message = "can not find user";
 		User user = null;
+		UserBusiness business;
+		UserFreelancer freelancer = null;
 		if (optionalUser.isPresent()) {
 			message = "success";
 			user = optionalUser.get();
 			user.setPhone(null);
 			user.setEmail(null);
 			user.setRoles(null);
-			user.getUserBusinesses().setLocation(null);
-			user.getUserFreelancers().setLocation(null);
 			user.setPassword(null);
 			logger.info("get user success");
-			UserBusiness business = user.getUserBusinesses();
-			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
-			for (Job j : listJob) {
-				j.setUserBusiness(null);
-			}
-			business.setListJob(listJob);
-			UserFreelancer freelancer = user.getUserFreelancers();
-
-			for (Proposal p : freelancer.getProposals()) {
-				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+			business = user.getUserBusinesses();
+			if (business != null) {
+				List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+				for (Job j : listJob) {
+					j.setUserBusiness(null);
+				}
+				business.setListJob(listJob);
+				freelancer = user.getUserFreelancers();
+				if (freelancer != null) {
+					for (Proposal p : freelancer.getProposals()) {
+						p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+					}
+				}
 			}
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, null);
 		}
@@ -251,7 +275,7 @@ public class UserService {
 			if (user.getUserBusinesses() != null) {
 				userBusiness.setId(user.getUserBusinesses().getId());
 				userBusiness.setAverageGrade(user.getUserBusinesses().getAverageGrade());
-			}else{
+			} else {
 				userBusiness.setAverageGrade(0);
 			}
 			UserBusiness result = userBusinessRepository.save(userBusiness);
@@ -454,16 +478,16 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 	}
 
-	//Nạp tien
+	// Nạp tien
 	public ResponseObject recharge(String username, Double amount, String oderId) {
 		String message = "Insufficient account balance";
 		User user = userRepository.findByUsername(username);
-		if (user != null){
-			user.setBalance(user.getBalance()+amount);
-			message ="Success";
+		if (user != null) {
+			user.setBalance(user.getBalance() + amount);
+			message = "Success";
 			User result = userRepository.save(user);
 
-			//Transaction
+			// Transaction
 			Transaction transaction = new Transaction();
 			transaction.setUser_account_id(user.getId());
 			transaction.setPrice(amount);
@@ -472,21 +496,25 @@ public class UserService {
 			transaction.setCreateAt(DateUtil.getTimeLongCurrent());
 			transaction.setType(Transaction.TransactionType.RECHARGE);
 			transactionRepository.save(transaction);
-			//Send mail
+			// Send mail
 			String email = user.getEmail();
-			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Congratulations, you have successfully recharge "+amount+"$.Thank you for using our service!", "2"));
+			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,
+					"Congratulations, you have successfully recharge " + amount + "$.Thank you for using our service!",
+					"2"));
 
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 	}
 
-	public ResponseObject inviteEmail(String username, Long userId,Long jobId) {
+	public ResponseObject inviteEmail(String username, Long userId, Long jobId) {
 		String fullNameOwner = userRepository.findByUsername(username).getFullName();
 		String email = userRepository.findById(userId).get().getEmail();
 
-		//send mail
-		JwtAuthServiceApp.listSendMail.add(new SendMailModel(email, "Congratulations you have received a job offer from "+fullNameOwner+". Good luck!!!", jobId.toString()));
+		// send mail
+		JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,
+				"Congratulations you have received a job offer from " + fullNameOwner + ". Good luck!!!",
+				jobId.toString()));
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "Sent!", null);
 	}
 }
