@@ -65,7 +65,7 @@ public class ExpectedDurationService {
         ExpectedDuration obj1 = expectedDurationRepository.getOne(id);
         String message = "can not find obj";
         ExpectedDuration result = null;
-        if (obj.getId()!=null) {
+        if (obj1.getId()!=null) {
             if (obj.getDurationText()!=null && !obj.getDurationText().isEmpty()){
                 obj1.setDurationText(obj.getDurationText());
             }
@@ -110,7 +110,7 @@ public class ExpectedDurationService {
         }else if (page>0&&size>0&&sort==1){
             list = expectedDurationRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
         }else if (page>0&&size>0&&sort==2){
-            list = expectedDurationRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").descending())).getContent();
+            list = expectedDurationRepository.findAll(specification,PageRequest.of(page-1,size, Sort.by("createAt").ascending())).getContent();
         }else if (page==0&&size==0&&sort==0){
             list = expectedDurationRepository.findAll(specification);
         }
