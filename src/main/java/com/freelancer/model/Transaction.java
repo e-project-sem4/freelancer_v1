@@ -45,20 +45,22 @@ public class Transaction {
     @JoinColumn(name = "user_account_id ",referencedColumnName = "id", insertable=false, updatable=false)
     private User user;
 
-    public Transaction(Long id, Double price, Long createAt, TransactionType type, Long user_account_id) {
+    public Transaction(Long id, Double price, Long createAt, TransactionType type, Long user_account_id, String content) {
         this.id = id;
         this.price = price;
         this.createAt = createAt;
         this.type = type;
         this.user_account_id = user_account_id;
+        this.content = content;
     }
 
-    public Transaction(Long id, Double price, Long createAt, TransactionType type, Long job_id, Long user_account_id) {
+    public Transaction(Long id, Double price, Long createAt, TransactionType type, Long job_id, Long user_account_id, String content) {
         this.id = id;
         this.price = price;
         this.createAt = createAt;
         this.type = type;
         this.job_id = job_id;
         this.user_account_id = user_account_id;
+        this.content = content;
     }
 }

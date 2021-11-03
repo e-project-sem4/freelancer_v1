@@ -53,8 +53,8 @@ public class TransactionSpecification implements Specification<Transaction> {
 
             case "likeUsername":
                 Join<Transaction, User> transactionUser = root.join("user");
-                return criteriaBuilder.like(transactionUser.get(searchCriteria.getKey()),
-                        "%" + searchCriteria.getValue().toString() + "%");
+                return criteriaBuilder.equal(transactionUser.get(searchCriteria.getKey()),
+                        searchCriteria.getValue().toString());
             case "likeJobname":
                 Join<Transaction, Job> transactionJob = root.join("job");
                 return criteriaBuilder.like(transactionJob.get(searchCriteria.getKey()),
