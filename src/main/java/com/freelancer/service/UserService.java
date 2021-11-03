@@ -25,6 +25,7 @@ import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
 import com.freelancer.model.ChatKeyUser;
+import com.freelancer.model.HasSkill;
 import com.freelancer.model.Job;
 import com.freelancer.model.Proposal;
 import com.freelancer.model.ResponseObject;
@@ -292,6 +293,7 @@ public class UserService {
 			userFreelancer.setUpdateAt(System.currentTimeMillis());
 			User user = userRepository.findByUsername(userCreate);
 			userFreelancer.setUser_account_id(user.getId());
+			UserFreelancer result = null;
 			if (user.getUserFreelancers() != null) {
 				userFreelancer.setId(user.getUserFreelancers().getId());
 				userFreelancer.setStatusSearchJob(user.getUserFreelancers().getStatusSearchJob());
@@ -302,11 +304,13 @@ public class UserService {
 				userFreelancer.setAverageGrade(0);
 			}
 			if (userFreelancer.getHasSkills().size() > 0) {
-				userFreelancer.getHasSkills().forEach(t -> t.setUser_freelancer_id(user.getUserFreelancers().getId()));
+				result = userFreelancerRepository.save(userFreelancer);
+				for (HasSkill item : userFreelancer.getHasSkills()) {
+					item.setUser_freelancer_id(result.getId());
+				}
 				hasSkillRepository.saveAll(userFreelancer.getHasSkills());
 				userFreelancer.setHasSkills(null);
 			}
-			UserFreelancer result = userFreelancerRepository.save(userFreelancer);
 
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "success", result);
 		} catch (Exception e) {
