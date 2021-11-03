@@ -74,7 +74,6 @@ public class DashboardController {
             transactionDTO.setDay(calendar.get(Calendar.DAY_OF_MONTH));
             transactionDTO.setType(type);
             list.add(transactionDTO);
-            System.out.println(list);
         }
         Map<Integer, List<TransactionDTO>> mappedData = new HashMap<>();
         for(TransactionDTO data : list) {
@@ -101,7 +100,6 @@ public class DashboardController {
             transactionDTO.setMonth(month);
            list.add(transactionDTO);
         }
-        System.out.println(objectsList);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
