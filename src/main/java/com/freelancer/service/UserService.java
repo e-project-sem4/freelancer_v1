@@ -165,24 +165,32 @@ public class UserService {
 		ResponseProfileUserDto profileUserDto = null;
 		Optional<User> optionalUser = userRepository.findById(userRepository.findByUsername(username).getId());
 		String message = "can not find user";
+		UserBusiness business;
+		UserFreelancer freelancer = null;
+		List<ChatKeyUser> chatKeyUsers = null;
 		User user = null;
 		if (optionalUser.isPresent()) {
 			message = "success";
 			user = optionalUser.get();
 			user.setPassword(null);
 			logger.info("get user success");
-			UserBusiness business = user.getUserBusinesses();
-			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
-			for (Job j : listJob) {
-				j.setUserBusiness(null);
-			}
-			business.setListJob(listJob);
-			UserFreelancer freelancer = user.getUserFreelancers();
+			business = user.getUserBusinesses();
+			if (business != null) {
+				List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+				for (Job j : listJob) {
+					j.setUserBusiness(null);
+				}
+				business.setListJob(listJob);
+				freelancer = user.getUserFreelancers();
 
-			for (Proposal p : freelancer.getProposals()) {
-				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+				if (freelancer != null) {
+					for (Proposal p : freelancer.getProposals()) {
+						p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+					}
+					chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(),
+							business.getId());
+				}
 			}
-			List<ChatKeyUser> chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(), business.getId());
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, chatKeyUsers);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
@@ -251,7 +259,7 @@ public class UserService {
 			if (user.getUserBusinesses() != null) {
 				userBusiness.setId(user.getUserBusinesses().getId());
 				userBusiness.setAverageGrade(user.getUserBusinesses().getAverageGrade());
-			}else{
+			} else {
 				userBusiness.setAverageGrade(0);
 			}
 			UserBusiness result = userBusinessRepository.save(userBusiness);
@@ -454,16 +462,16 @@ public class UserService {
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 	}
 
-	//Nạp tien
+	// Nạp tien
 	public ResponseObject recharge(String username, Double amount, String oderId) {
 		String message = "Insufficient account balance";
 		User user = userRepository.findByUsername(username);
-		if (user != null){
-			user.setBalance(user.getBalance()+amount);
-			message ="Success";
+		if (user != null) {
+			user.setBalance(user.getBalance() + amount);
+			message = "Success";
 			User result = userRepository.save(user);
 
-			//Transaction
+			// Transaction
 			Transaction transaction = new Transaction();
 			transaction.setUser_account_id(user.getId());
 			transaction.setPrice(amount);
@@ -472,21 +480,25 @@ public class UserService {
 			transaction.setCreateAt(DateUtil.getTimeLongCurrent());
 			transaction.setType(Transaction.TransactionType.RECHARGE);
 			transactionRepository.save(transaction);
-			//Send mail
+			// Send mail
 			String email = user.getEmail();
-			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,"Congratulations, you have successfully recharge "+amount+"$.Thank you for using our service!", "2"));
+			JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,
+					"Congratulations, you have successfully recharge " + amount + "$.Thank you for using our service!",
+					"2"));
 
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 	}
 
-	public ResponseObject inviteEmail(String username, Long userId,Long jobId) {
+	public ResponseObject inviteEmail(String username, Long userId, Long jobId) {
 		String fullNameOwner = userRepository.findByUsername(username).getFullName();
 		String email = userRepository.findById(userId).get().getEmail();
 
-		//send mail
-		JwtAuthServiceApp.listSendMail.add(new SendMailModel(email, "Congratulations you have received a job offer from "+fullNameOwner+". Good luck!!!", jobId.toString()));
+		// send mail
+		JwtAuthServiceApp.listSendMail.add(new SendMailModel(email,
+				"Congratulations you have received a job offer from " + fullNameOwner + ". Good luck!!!",
+				jobId.toString()));
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "Sent!", null);
 	}
 }

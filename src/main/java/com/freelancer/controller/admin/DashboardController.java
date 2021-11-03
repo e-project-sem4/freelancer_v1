@@ -74,7 +74,6 @@ public class DashboardController {
             transactionDTO.setDay(calendar.get(Calendar.DAY_OF_MONTH));
             transactionDTO.setType(type);
             list.add(transactionDTO);
-            System.out.println(list);
         }
         Map<Integer, List<TransactionDTO>> mappedData = new HashMap<>();
         for(TransactionDTO data : list) {
