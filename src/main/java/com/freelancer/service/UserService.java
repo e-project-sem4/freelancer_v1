@@ -187,8 +187,7 @@ public class UserService {
 					for (Proposal p : freelancer.getProposals()) {
 						p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
 					}
-					chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(),
-							business.getId());
+					chatKeyUsers = chatKeyUserRepository.findChatKey(freelancer.getId(), business.getId());
 				}
 			}
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, chatKeyUsers);
@@ -202,26 +201,29 @@ public class UserService {
 		Optional<User> optionalUser = userRepository.findById(id);
 		String message = "can not find user";
 		User user = null;
+		UserBusiness business;
+		UserFreelancer freelancer = null;
 		if (optionalUser.isPresent()) {
 			message = "success";
 			user = optionalUser.get();
 			user.setPhone(null);
 			user.setEmail(null);
 			user.setRoles(null);
-			user.getUserBusinesses().setLocation(null);
-			user.getUserFreelancers().setLocation(null);
 			user.setPassword(null);
 			logger.info("get user success");
-			UserBusiness business = user.getUserBusinesses();
-			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
-			for (Job j : listJob) {
-				j.setUserBusiness(null);
-			}
-			business.setListJob(listJob);
-			UserFreelancer freelancer = user.getUserFreelancers();
-
-			for (Proposal p : freelancer.getProposals()) {
-				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+			business = user.getUserBusinesses();
+			if (business != null) {
+				List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+				for (Job j : listJob) {
+					j.setUserBusiness(null);
+				}
+				business.setListJob(listJob);
+				freelancer = user.getUserFreelancers();
+				if (freelancer != null) {
+					for (Proposal p : freelancer.getProposals()) {
+						p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+					}
+				}
 			}
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, null);
 		}
