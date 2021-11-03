@@ -7,11 +7,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.freelancer.JwtAuthServiceApp;
-import com.freelancer.model.*;
-import com.freelancer.repository.*;
-import com.freelancer.sendmail.SendMailModel;
-import com.freelancer.utils.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,15 +21,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
+import com.freelancer.model.ChatKeyUser;
+import com.freelancer.model.Job;
+import com.freelancer.model.Proposal;
+import com.freelancer.model.ResponseObject;
+import com.freelancer.model.Role;
+import com.freelancer.model.Transaction;
+import com.freelancer.model.User;
+import com.freelancer.model.UserBusiness;
+import com.freelancer.model.UserFreelancer;
+import com.freelancer.repository.ChatKeyUserRepository;
+import com.freelancer.repository.HasSkillRepository;
+import com.freelancer.repository.JobRepository;
+import com.freelancer.repository.TransactionRepository;
+import com.freelancer.repository.UserBusinessRepository;
+import com.freelancer.repository.UserFreelancerRepository;
+import com.freelancer.repository.UserRepository;
 import com.freelancer.security.JwtTokenProvider;
+import com.freelancer.sendmail.SendMailModel;
 import com.freelancer.utils.ConfigLog;
 import com.freelancer.utils.Constant;
+import com.freelancer.utils.DateUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class UserService {
@@ -202,26 +215,29 @@ public class UserService {
 		Optional<User> optionalUser = userRepository.findById(id);
 		String message = "can not find user";
 		User user = null;
+		UserBusiness business;
+		UserFreelancer freelancer = null;
 		if (optionalUser.isPresent()) {
 			message = "success";
 			user = optionalUser.get();
 			user.setPhone(null);
 			user.setEmail(null);
 			user.setRoles(null);
-			user.getUserBusinesses().setLocation(null);
-			user.getUserFreelancers().setLocation(null);
 			user.setPassword(null);
 			logger.info("get user success");
-			UserBusiness business = user.getUserBusinesses();
-			List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
-			for (Job j : listJob) {
-				j.setUserBusiness(null);
-			}
-			business.setListJob(listJob);
-			UserFreelancer freelancer = user.getUserFreelancers();
-
-			for (Proposal p : freelancer.getProposals()) {
-				p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+			business = user.getUserBusinesses();
+			if (business != null) {
+				List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+				for (Job j : listJob) {
+					j.setUserBusiness(null);
+				}
+				business.setListJob(listJob);
+				freelancer = user.getUserFreelancers();
+				if (freelancer != null) {
+					for (Proposal p : freelancer.getProposals()) {
+						p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+					}
+				}
 			}
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, null);
 		}
