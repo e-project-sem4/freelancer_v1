@@ -63,7 +63,7 @@ public class SkillService {
 		Skill obj1 = skillRepository.getOne(id);
 		String message = "can not find obj";
 		Skill result = null;
-		if (obj.getId() != null) {
+		if (obj1.getId() != null) {
 			if (obj.getSkillName() != null && !obj.getSkillName().isEmpty()) {
 				obj1.setSkillName(obj.getSkillName());
 			}
@@ -109,7 +109,7 @@ public class SkillService {
 					.getContent();
 		} else if (page > 0 && size > 0 && sort == 2) {
 			list = skillRepository
-					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").descending()))
+					.findAll(specification, PageRequest.of(page - 1, size, Sort.by("createAt").ascending()))
 					.getContent();
 		} else if (page == 0 && size == 0 && sort == 0) {
 			list = skillRepository.findAll(specification);
