@@ -521,4 +521,35 @@ public class UserService {
 				jobId.toString()));
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, "Sent!", null);
 	}
+	public ResponseObject getAccount(Long id) {
+		logger.info("call to get user by id: " + id);
+		ResponseProfileUserDto profileUserDto = null;
+		Optional<User> optionalUser = userRepository.findById(id);
+		String message = "can not find user";
+		User user = null;
+		UserBusiness business;
+		UserFreelancer freelancer = null;
+		if (optionalUser.isPresent()) {
+			message = "success";
+			user = optionalUser.get();
+			user.setPassword(null);
+			logger.info("get user success");
+			business = user.getUserBusinesses();
+			if (business != null) {
+				List<Job> listJob = jobRepository.findAllByUser_business_id(business.getId());
+				for (Job j : listJob) {
+					j.setUserBusiness(null);
+				}
+				business.setListJob(listJob);
+				freelancer = user.getUserFreelancers();
+				if (freelancer != null) {
+					for (Proposal p : freelancer.getProposals()) {
+						p.setJobName(jobRepository.findById(p.getJob_id()).get().getName());
+					}
+				}
+			}
+			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, null);
+		}
+		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
+	}
 }

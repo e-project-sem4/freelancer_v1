@@ -232,4 +232,10 @@ public class UserController {
 	public String successPay () {
 		return "Thành công";
 	}
+
+	@RequestMapping(value = "account/{id}", method = RequestMethod.GET, produces = "application/json", consumes = "application/json")
+	public ResponseEntity<ResponseObject> getAccountById(@PathVariable Long id) {
+		ResponseObject result = userService.getAccount(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }
