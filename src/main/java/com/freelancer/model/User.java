@@ -73,9 +73,9 @@ public class User {
 		this.id = id;
 		this.username = username;
 		this.email = email;
-		this.password = password;
-		this.phone = phone;
 		this.fullName = fullName;
+		this.phone = phone;
+		this.password = password;
 		this.roles = roles;
 		this.balance = balance;
 		this.createAt = createAt;
