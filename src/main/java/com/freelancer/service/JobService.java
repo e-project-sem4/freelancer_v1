@@ -29,6 +29,8 @@ public class JobService {
 	Logger logger = ConfigLog.getLogger(JobService.class);
 
 	@Autowired
+	private UserBusinessRepository userBusinessRepository;
+	@Autowired
 	private TransactionRepository transactionRepository;
 	@Autowired
 	private JobRepository jobRepository;
@@ -152,6 +154,24 @@ public class JobService {
 			obj.setStatus(0);
 			result = jobRepository.save(obj);
 			message = "delete success";
+			//Refund
+			Optional<User> user = userRepository.findById(obj.getUserBusiness().getUser_account_id());
+			if (!user.isPresent()){
+				message = "can not find user";
+			}
+			user.get().setBalance(user.get().getBalance()+obj.getPaymentAmount());
+			userRepository.save(user.get());
+
+			//Add transaction
+			Transaction transaction = new Transaction();
+			transaction.setPrice(obj.getPaymentAmount());
+			transaction.setContent("Refund for delete job!");
+			transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+			transaction.setType(Transaction.TransactionType.WAGE);
+			transaction.setJob_id(obj.getId());
+			transaction.setUser_account_id(user.get().getId());
+			transactionRepository.save(transaction);
+
 			logger.info("delete obj success");
 			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
 		} else {
