@@ -238,4 +238,14 @@ public class UserController {
 		ResponseObject result = userService.getAccount(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
+
+	//Update
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "admin/{id}", method = RequestMethod.PATCH, produces = "application/json")
+	public ResponseEntity<ResponseObject> updateProfile(@RequestBody User obj, @PathVariable Long id) {
+
+		ResponseObject result = userService.updateProfile(obj, id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }

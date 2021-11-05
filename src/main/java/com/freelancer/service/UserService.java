@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.freelancer.model.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -24,16 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.freelancer.JwtAuthServiceApp;
 import com.freelancer.dto.ResponseProfileUserDto;
 import com.freelancer.exception.CustomException;
-import com.freelancer.model.ChatKeyUser;
-import com.freelancer.model.HasSkill;
-import com.freelancer.model.Job;
-import com.freelancer.model.Proposal;
-import com.freelancer.model.ResponseObject;
-import com.freelancer.model.Role;
-import com.freelancer.model.Transaction;
-import com.freelancer.model.User;
-import com.freelancer.model.UserBusiness;
-import com.freelancer.model.UserFreelancer;
 import com.freelancer.repository.ChatKeyUserRepository;
 import com.freelancer.repository.HasSkillRepository;
 import com.freelancer.repository.JobRepository;
@@ -551,5 +542,37 @@ public class UserService {
 			profileUserDto = new ResponseProfileUserDto(user, business, freelancer, null);
 		}
 		return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, profileUserDto);
+	}
+
+
+	public ResponseObject updateProfile(User obj, Long id) {
+		logger.info("call to get obj to update by id: " + id);
+		User obj1 = userRepository.getOne(id);
+		String message = "can not find obj";
+
+		if (obj1.getId() != null) {
+			if (obj.getFullName() != null && !obj.getFullName().isEmpty()) {
+				obj1.setFullName(obj.getFullName());
+			}
+			if (obj.getThumbnail() != null && !obj.getThumbnail().isEmpty()) {
+				obj1.setThumbnail(obj.getThumbnail());
+			}
+			if (obj.getEmail() != null && !obj.getEmail().isEmpty()) {
+				obj1.setEmail(obj.getEmail());
+			}
+			if (obj.getBalance() != null ) {
+				obj1.setBalance(obj.getBalance());
+			}
+			if (obj.getStatus() != null) {
+				obj1.setStatus(obj.getStatus());
+			}
+			obj1.setUpdateAt(DateUtil.getTimeLongCurrent());
+			 User result = userRepository.save(obj1);
+			message = "update success";
+			logger.info("update obj success");
+			return new ResponseObject(Constant.STATUS_ACTION_SUCCESS, message, result);
+		} else {
+			return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
+		}
 	}
 }
