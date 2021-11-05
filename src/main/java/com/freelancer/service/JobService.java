@@ -167,7 +167,7 @@ public class JobService {
 			transaction.setPrice(obj.getPaymentAmount());
 			transaction.setContent("Refund for delete job!");
 			transaction.setCreateAt(DateUtil.getTimeLongCurrent());
-			transaction.setType(Transaction.TransactionType.WAGE);
+			transaction.setType(Transaction.TransactionType.REFUND);
 			transaction.setJob_id(obj.getId());
 			transaction.setUser_account_id(user.get().getId());
 			transactionRepository.save(transaction);
@@ -205,7 +205,18 @@ public class JobService {
 						jobCurrent.setPaymentAmount(jobUpdate.getPaymentAmount());
 						// cộng thêm tiền chênh lệch cho User
 						user.setBalance(user.getBalance() + difference);
+						//Add transaction hoàn tiền thừa
+						Transaction transaction = new Transaction();
+						transaction.setPrice(difference);
+						transaction.setContent("Job update refund!");
+						transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+						transaction.setType(Transaction.TransactionType.REFUND);
+						transaction.setJob_id(jobCurrent.getId());
+						transaction.setUser_account_id(user.getId());
+						transactionRepository.save(transaction);
+
 						userRepository.save(user);
+
 					} else { // nếu số tiền đã thanh toán bé hơn số tiền muốn update
 						// check số dư
 						// nếu số dư lớn bé hơn tiền chênh lệch (nhân -1 để lấy số dương) thì
@@ -220,6 +231,15 @@ public class JobService {
 						jobCurrent.setPaymentAmount(jobUpdate.getPaymentAmount());
 						// trừ tiền trong tài khoản Usẻ
 						user.setBalance(user.getBalance() - difference * (-1));
+						//Add transaction thanh toán thêm tiền job
+						Transaction transaction = new Transaction();
+						transaction.setPrice(difference * (-1));
+						transaction.setContent("Update job create money!");
+						transaction.setCreateAt(DateUtil.getTimeLongCurrent());
+						transaction.setType(Transaction.TransactionType.PAYMENT);
+						transaction.setJob_id(jobCurrent.getId());
+						transaction.setUser_account_id(user.getId());
+						transactionRepository.save(transaction);
 						userRepository.save(user);
 					}
 				}
