@@ -1,23 +1,25 @@
 package com.freelancer.controller;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.freelancer.model.ResponseObject;
 import com.freelancer.model.Transaction;
+import com.freelancer.repository.TransactionRepository;
 import com.freelancer.search.SearchCriteria;
 import com.freelancer.search.TransactionSpecification;
 import com.freelancer.service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -25,7 +27,7 @@ import com.freelancer.service.TransactionService;
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
-
+    private TransactionRepository transactionRepository;
 
     //get All/SEARCH
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
@@ -79,4 +81,18 @@ public class TransactionController {
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
+
+    @RequestMapping(value = "/export/excel/transaction/admin", method = RequestMethod.GET, produces = "application/octet-stream")
+    public ResponseEntity<Resource> getFileTransactionAdmin() {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String filename = "transaction_" + currentDateTime + ".xlsx";
+        InputStreamResource file = new InputStreamResource(transactionService.loadTransactionAdmin());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
+    }
+
 }
