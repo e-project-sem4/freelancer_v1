@@ -33,7 +33,7 @@ public class Transaction {
     private Long job_id;  // khóa ngoại
     private Long user_account_id; // khóa ngoại
     public enum TransactionType{//  ,nạp tiền vào tài khoản, rút tiền, chuyển khoản(nạp tiền tạo job) , thanh toán (nhận tiê,
-        RECHARGE, WITHDRAW, PAYMENT, WAGE
+        RECHARGE, WITHDRAW, PAYMENT, WAGE, REFUND; // hoàn tiền
     }
     @JsonBackReference(value = "job")
     @ManyToOne
