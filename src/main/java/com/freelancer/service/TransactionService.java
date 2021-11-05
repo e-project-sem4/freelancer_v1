@@ -1,5 +1,6 @@
 package com.freelancer.service;
 
+import com.freelancer.excel.ExcelHelper;
 import com.freelancer.model.*;
 import com.freelancer.repository.TransactionRepository;
 import com.freelancer.repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,4 +79,11 @@ public class TransactionService {
         return new ResponseObject(Constant.STATUS_ACTION_FAIL, message, null);
 
     }
+
+    public ByteArrayInputStream loadTransactionAdmin() {
+        List<Transaction> tutorials = transactionRepository.findAll(Sort.by("id").ascending());;
+        ByteArrayInputStream in = ExcelHelper.tutorialsToExcel(tutorials);
+        return in;
+    }
+
 }
