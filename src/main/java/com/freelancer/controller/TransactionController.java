@@ -111,5 +111,16 @@ public class TransactionController {
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(file);
     }
-    
+    @RequestMapping(value = "/export/excel/transaction/user/{username}", method = RequestMethod.GET, produces = "application/octet-stream")
+    public ResponseEntity<Resource> getFileTransactionUser(@PathVariable String username) {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String filename = "transaction_" + currentDateTime + ".xlsx";
+        InputStreamResource file = new InputStreamResource(transactionService.loadTransactionUser(username));
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
+    }
 }
