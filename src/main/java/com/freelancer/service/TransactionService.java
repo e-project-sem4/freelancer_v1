@@ -93,4 +93,10 @@ public class TransactionService {
         return in;
     }
 
+    public ByteArrayInputStream loadTransactionUser(String username) {
+        User user = userRepository.findByUsername(username);
+        List<Transaction> tutorials = transactionRepository.findAllByUser(user.getId());;
+        ByteArrayInputStream in = ExcelHelper.tutorialsToExcel(tutorials);
+        return in;
+    }
 }

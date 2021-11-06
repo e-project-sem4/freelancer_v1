@@ -24,7 +24,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
     public List<Object[]> findAllMultipleChartJs(@Param("start") Long start, @Param("end") Long end);
 
     public List<Transaction> findAllByType(Transaction.TransactionType type);
-
+    @Query("SELECT a FROM Transaction a WHERE a.user_account_id = :accountId")
+    public List<Transaction> findAllByUser(@Param("accountId") Long accountId);
 }
 
 //// postgresql
