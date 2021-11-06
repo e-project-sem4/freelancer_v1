@@ -22,6 +22,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
 
     @Query(value = "SELECT sum(round(price)) sum, date(FROM_UNIXTIME(createAt/1000)) day, type FROM `transactions` where createAt BETWEEN :start AND :end GROUP BY day, type ORDER BY `day` ASC",nativeQuery=true)
     public List<Object[]> findAllMultipleChartJs(@Param("start") Long start, @Param("end") Long end);
+
+    public List<Transaction> findAllByType(Transaction.TransactionType type);
+
 }
 
 //// postgresql
