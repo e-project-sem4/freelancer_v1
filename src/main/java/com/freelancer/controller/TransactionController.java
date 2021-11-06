@@ -5,6 +5,7 @@ import com.freelancer.model.Transaction;
 import com.freelancer.repository.TransactionRepository;
 import com.freelancer.search.SearchCriteria;
 import com.freelancer.search.TransactionSpecification;
+import com.freelancer.security.JwtTokenProvider;
 import com.freelancer.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,8 +28,11 @@ import java.util.Optional;
 @RequestMapping("/api/v1/transactions")
 public class TransactionController {
     @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    private static final String AUTHORIZATION = "Authorization";
+    @Autowired
     private TransactionService transactionService;
-    private TransactionRepository transactionRepository;
 
     //get All/SEARCH
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json")
@@ -94,5 +99,17 @@ public class TransactionController {
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(file);
     }
+    @RequestMapping(value = "/export/excel/revenue/admin", method = RequestMethod.GET, produces = "application/octet-stream")
+    public ResponseEntity<Resource> getFileRevenueAdmin() {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String filename = "transaction_" + currentDateTime + ".xlsx";
+        InputStreamResource file = new InputStreamResource(transactionService.loadRevenueAdmin());
 
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
+    }
+    
 }
