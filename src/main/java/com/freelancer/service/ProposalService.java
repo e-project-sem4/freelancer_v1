@@ -154,7 +154,7 @@ public class ProposalService {
                     transaction.setCreateAt(DateUtil.getTimeLongCurrent());
                     transaction.setType(Transaction.TransactionType.WAGE);
                     transaction.setJob_id(obj1.getJob_id());
-                    transaction.setUser_account_id(obj1.getUserAccountId());
+                    transaction.setUser_account_id(userFreelancerRepository.getOne(obj1.getUser_freelancer_id()).getUser_account_id());
                     transactionRepository.save(transaction);
 
                     //send mail
