@@ -75,7 +75,7 @@ public class ContractService {
 					transaction.setPrice(difference);
 					transaction.setContent("Refund for change price!");
 					transaction.setCreateAt(DateUtil.getTimeLongCurrent());
-					transaction.setType(Transaction.TransactionType.WAGE);
+					transaction.setType(Transaction.TransactionType.REFUND);
 					transaction.setJob_id(currentJobOptional.get().getId());
 					transaction.setUser_account_id(user.getId());
 					transactionRepository.save(transaction);
