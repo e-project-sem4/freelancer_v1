@@ -323,18 +323,18 @@ public class Database implements CommandLineRunner {
 	}
 
 	private void seedProposalStatus() {
-		proposalStatus.save(new ProposalStatusCatalog(1L, "Đã gửi", DateUtil.getTimeLongCurrent(),
+		proposalStatus.save(new ProposalStatusCatalog(1L, "Sent", DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		proposalStatus.save(new ProposalStatusCatalog(2L, "Chấp thuận", DateUtil.getTimeLongCurrent(),
+		proposalStatus.save(new ProposalStatusCatalog(2L, "Acceptance", DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		proposalStatus.save(new ProposalStatusCatalog(3L, "Hoàn thành", DateUtil.getTimeLongCurrent(),
+		proposalStatus.save(new ProposalStatusCatalog(3L, "Complete", DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		proposalStatus.save(new ProposalStatusCatalog(4L, "Business Hủy", DateUtil.getTimeLongCurrent(),
+		proposalStatus.save(new ProposalStatusCatalog(4L, "Business Cancel", DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
-		proposalStatus.save(new ProposalStatusCatalog(5L, "FreeLancer Hủy", DateUtil.getTimeLongCurrent(),
+		proposalStatus.save(new ProposalStatusCatalog(5L, "FreeLancer Cancel", DateUtil.getTimeLongCurrent(),
 				DateUtil.getTimeLongCurrent(), 1));
 		proposalStatus.save(
-				new ProposalStatusCatalog(99L, "Xóa", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
+				new ProposalStatusCatalog(99L, "Delete", DateUtil.getTimeLongCurrent(), DateUtil.getTimeLongCurrent(), 1));
 
 	}
 
